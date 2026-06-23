@@ -220,6 +220,7 @@ h1.h1{font-family:'Plus Jakarta Sans';font-weight:800;letter-spacing:-.02em;
   <!-- ============ SLIDE 3 — OPPORTUNITY ============ -->
   <section class="slide">
     <img
+      id="slide3-product-img"
       src="assets/images/slides/products-portrait.png"
       alt="Premium supplement selection at Healthy Cart"
       style="
@@ -636,11 +637,24 @@ h1.h1{font-family:'Plus Jakarta Sans';font-weight:800;letter-spacing:-.02em;
 
 <script>
 /* ---- THEME TOGGLE (interactive only; in-memory) ---- */
+function updateThemeImages(theme){
+  const imgs=[
+    {id:'slide3-product-img',
+     light:'assets/images/slides/products-portrait.png',
+     dark:'assets/images/slides/products-portrait-dark.png'}
+  ];
+  imgs.forEach(item=>{
+    const el=document.getElementById(item.id);
+    if(el) el.src=theme==='dark'?item.dark:item.light;
+  });
+}
+
 function toggleTheme(){
   const r=document.documentElement;
   const next=r.getAttribute('data-theme')==='light'?'dark':'light';
   r.setAttribute('data-theme',next);
   document.getElementById('tgl-label').textContent=next==='light'?'Dark mode':'Light mode';
+  updateThemeImages(next);
 }
 
 /* ---- POSITIONING MATRIX (truth lives in JS-built DOM, but renders before print since it runs on load) ---- */
@@ -665,6 +679,8 @@ function toggleTheme(){
     tb.appendChild(tr);
   });
 })();
+
+updateThemeImages(document.documentElement.getAttribute('data-theme')||'light');
 </script>
 
 <!-- DEV TOOL - REMOVE BEFORE FINAL -->
