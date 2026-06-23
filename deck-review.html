@@ -1,0 +1,1118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FSH Design · Deck Review — Healthy Cart Canada</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ── RESET ── */
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#F4F5F3;
+  --surface:#FFFFFF;
+  --surface-2:#F0F2EE;
+  --text:#0D0D0D;
+  --text-2:#4A4A4A;
+  --text-3:#8A8A8A;
+  --line:#E4E6E0;
+  --fsh:#1A1A1A;
+
+  /* change type colors */
+  --removed:#C0392B;
+  --removed-bg:#FEF2F1;
+  --removed-border:#F5B7B1;
+  --added:#1A7A2E;
+  --added-bg:#F0FAF2;
+  --added-border:#A8DDB5;
+  --softened:#B87333;
+  --softened-bg:#FDF6EC;
+  --softened-border:#F0C98A;
+  --legal:#6B3FA0;
+  --legal-bg:#F5F0FA;
+  --legal-border:#C9AEE8;
+  --design:#1A6B8A;
+  --design-bg:#EEF7FB;
+  --design-border:#9ACFE0;
+
+  --shadow:0 2px 16px rgba(0,0,0,0.07);
+  --shadow-lg:0 8px 40px rgba(0,0,0,0.12);
+  --radius:14px;
+}
+
+html{scroll-behavior:smooth}
+body{
+  font-family:'Inter',system-ui,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  -webkit-font-smoothing:antialiased;
+  min-height:100vh;
+}
+
+/* ── HEADER ── */
+.header{
+  position:sticky;top:0;z-index:100;
+  background:rgba(244,245,243,0.92);
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--line);
+  padding:0 32px;
+  display:flex;align-items:center;justify-content:space-between;
+  height:64px;
+}
+.brand{display:flex;align-items:center;gap:14px}
+.fsh-logo{
+  display:flex;align-items:center;gap:0;
+  font-family:'Plus Jakarta Sans';font-size:18px;font-weight:800;
+  letter-spacing:-.02em;color:var(--fsh)
+}
+.fsh-logo .fsh{font-weight:800;color:#1A1A1A}
+.fsh-logo .design{font-weight:500;color:#6B6B6B}
+.brand-divider{width:1px;height:28px;background:var(--line)}
+.tool-label{
+  font-size:12px;font-weight:600;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--text-3)
+}
+.tool-name{
+  font-family:'Plus Jakarta Sans';font-size:15px;font-weight:700;
+  color:var(--text);letter-spacing:-.01em
+}
+.header-right{display:flex;align-items:center;gap:16px}
+.slide-count{font-size:13px;color:var(--text-3);font-weight:500}
+.client-badge{
+  padding:6px 14px;border-radius:999px;
+  background:var(--surface);border:1px solid var(--line);
+  font-size:13px;font-weight:600;color:var(--text-2)
+}
+@media(max-width:600px){
+  .header{flex-wrap:wrap;height:auto;padding:12px 16px;gap:6px}
+  .client-badge{display:none}
+  .brand-divider{display:none}
+  .tool-label{display:none}
+  .slide-count{font-size:12px}
+}
+
+/* ── LEGEND ── */
+.legend{
+  display:flex;align-items:center;gap:20px;flex-wrap:wrap;
+  padding:16px 32px;
+  background:var(--surface);
+  border-bottom:1px solid var(--line);
+}
+.legend-title{font-size:12px;font-weight:600;color:var(--text-3);
+  text-transform:uppercase;letter-spacing:.08em;margin-right:4px}
+.legend-item{
+  display:flex;align-items:center;gap:7px;
+  font-size:13px;font-weight:500;color:var(--text-2);cursor:default
+}
+.legend-dot{width:10px;height:10px;border-radius:3px;flex:none}
+
+/* ── MAIN LAYOUT ── */
+.main{max-width:1320px;margin:0 auto;padding:40px 32px 80px}
+
+/* ── SLIDE CARD ── */
+.slide-card{
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  margin-bottom:32px;
+  overflow:hidden;
+  animation:fadeUp .5s ease both;
+}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+
+.slide-header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:20px 28px;
+  border-bottom:1px solid var(--line);
+  cursor:pointer;
+  user-select:none;
+  transition:background .15s;
+}
+.slide-header:hover{background:var(--bg)}
+.slide-header-left{display:flex;align-items:center;gap:14px}
+.slide-num{
+  width:38px;height:38px;border-radius:10px;
+  background:var(--fsh);color:#fff;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Plus Jakarta Sans';font-weight:800;font-size:14px;flex:none
+}
+.slide-title-block{}
+.slide-label{font-size:12px;font-weight:600;color:var(--text-3);
+  text-transform:uppercase;letter-spacing:.08em}
+.slide-name{font-family:'Plus Jakarta Sans';font-weight:700;
+  font-size:18px;color:var(--text);letter-spacing:-.01em}
+.slide-header-right{display:flex;align-items:center;gap:10px}
+.change-count{
+  display:flex;align-items:center;gap:6px;
+  padding:5px 12px;border-radius:999px;
+  background:var(--bg);border:1px solid var(--line);
+  font-size:13px;font-weight:600;color:var(--text-2)
+}
+.chevron{
+  width:20px;height:20px;color:var(--text-3);
+  transition:transform .25s ease;flex:none
+}
+.slide-card.open .chevron{transform:rotate(180deg)}
+
+.slide-body{
+  display:none;
+  padding:0 28px 28px;
+  animation:bodyIn .3s ease;
+}
+@keyframes bodyIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+.slide-card.open .slide-body{display:block}
+
+/* ── CHANGE ITEM ── */
+.change-list{display:flex;flex-direction:column;gap:14px;margin-top:20px}
+
+.change-item{
+  display:grid;
+  grid-template-columns:auto 1fr;
+  gap:0 16px;
+  border-radius:12px;
+  overflow:hidden;
+  border:1px solid transparent;
+  transition:box-shadow .2s,transform .2s;
+}
+.change-item:hover{
+  box-shadow:var(--shadow-lg);
+  transform:translateY(-1px);
+}
+
+.change-type-bar{
+  width:5px;
+  border-radius:0;
+  flex:none;
+}
+.change-content{padding:18px 20px 18px 0}
+
+/* type variants */
+.change-item.removed{background:var(--removed-bg);border-color:var(--removed-border)}
+.change-item.removed .change-type-bar{background:var(--removed)}
+.change-item.added{background:var(--added-bg);border-color:var(--added-border)}
+.change-item.added .change-type-bar{background:var(--added)}
+.change-item.softened{background:var(--softened-bg);border-color:var(--softened-border)}
+.change-item.softened .change-type-bar{background:var(--softened)}
+.change-item.legal{background:var(--legal-bg);border-color:var(--legal-border)}
+.change-item.legal .change-type-bar{background:var(--legal)}
+.change-item.design{background:var(--design-bg);border-color:var(--design-border)}
+.change-item.design .change-type-bar{background:var(--design)}
+
+.change-tag{
+  display:inline-flex;align-items:center;gap:5px;
+  padding:3px 10px;border-radius:999px;
+  font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+  margin-bottom:8px;
+}
+.removed .change-tag{background:var(--removed);color:#fff}
+.added .change-tag{background:var(--added);color:#fff}
+.softened .change-tag{background:var(--softened);color:#fff}
+.legal .change-tag{background:var(--legal);color:#fff}
+.design .change-tag{background:var(--design);color:#fff}
+
+.change-heading{
+  font-family:'Plus Jakarta Sans';font-weight:700;
+  font-size:16px;color:var(--text);margin-bottom:6px;letter-spacing:-.01em
+}
+.change-reason{font-size:14px;color:var(--text-2);line-height:1.6}
+
+/* before/after */
+.before-after{
+  display:grid;grid-template-columns:1fr 1fr;gap:12px;
+  margin-top:14px;
+}
+@media(max-width:640px){.before-after{grid-template-columns:1fr}}
+.ba-block{border-radius:8px;padding:12px 14px}
+.ba-label{font-size:11px;font-weight:700;letter-spacing:.07em;
+  text-transform:uppercase;margin-bottom:5px;opacity:.7}
+.ba-text{font-size:13px;line-height:1.55;font-style:italic}
+.ba-before{background:rgba(192,57,43,0.08)}
+.ba-before .ba-label{color:var(--removed)}
+.ba-before .ba-text{color:var(--removed);text-decoration:line-through;
+  text-decoration-color:rgba(192,57,43,0.4)}
+.ba-after{background:rgba(26,122,46,0.08)}
+.ba-after .ba-label{color:var(--added)}
+.ba-after .ba-text{color:var(--added)}
+
+/* citation tooltip */
+.citation-row{
+  display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin-top:12px
+}
+.citation{
+  position:relative;display:inline-flex;align-items:center;gap:5px;
+  padding:4px 11px;border-radius:999px;
+  border:1px solid currentColor;
+  font-size:12px;font-weight:600;cursor:help;
+  transition:background .15s;
+}
+.removed .citation{color:var(--removed)}
+.added .citation{color:var(--added)}
+.softened .citation{color:var(--softened)}
+.legal .citation{color:var(--legal)}
+.design .citation{color:var(--design)}
+.citation:hover{opacity:.8}
+.citation .tip{
+  display:none;
+  position:absolute;bottom:calc(100% + 8px);left:0;
+  width:280px;background:#1A1A1A;color:#fff;
+  border-radius:8px;padding:10px 12px;
+  font-size:12px;font-weight:400;line-height:1.55;
+  box-shadow:0 8px 24px rgba(0,0,0,0.25);
+  z-index:200;pointer-events:auto;
+  white-space:normal;letter-spacing:0;text-transform:none;
+}
+.citation .tip::after{
+  content:'';position:absolute;top:100%;left:14px;
+  border:5px solid transparent;border-top-color:#1A1A1A;
+}
+
+/* ── STATS BAR ── */
+.stats-bar{
+  display:grid;grid-template-columns:repeat(5,1fr);gap:1px;
+  background:var(--line);
+  border:1px solid var(--line);border-radius:var(--radius);
+  overflow:hidden;margin-bottom:32px;
+  box-shadow:var(--shadow);
+}
+.stat-cell{
+  background:var(--surface);
+  padding:20px 24px;text-align:center;
+}
+.stat-num{
+  font-family:'Plus Jakarta Sans';font-weight:800;font-size:32px;
+  letter-spacing:-.02em;line-height:1;
+}
+.stat-label{font-size:12px;font-weight:500;color:var(--text-3);
+  margin-top:4px;text-transform:uppercase;letter-spacing:.06em}
+.stat-cell.s-removed .stat-num{color:var(--removed)}
+.stat-cell.s-added .stat-num{color:var(--added)}
+.stat-cell.s-softened .stat-num{color:var(--softened)}
+.stat-cell.s-legal .stat-num{color:var(--legal)}
+.stat-cell.s-design .stat-num{color:var(--design)}
+
+/* ── FILTER BAR ── */
+.filter-bar{
+  display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:28px
+}
+.filter-btn{
+  padding:8px 16px;border-radius:999px;border:1px solid var(--line);
+  background:var(--surface);font-size:13px;font-weight:600;
+  color:var(--text-2);cursor:pointer;transition:all .15s;font-family:inherit;
+}
+.filter-btn:hover{border-color:var(--text-2);color:var(--text)}
+.filter-btn.active{background:var(--fsh);color:#fff;border-color:var(--fsh)}
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  .stats-bar{grid-template-columns:repeat(3,1fr)}
+  .header{padding:0 20px}
+  .main{padding:28px 16px 60px}
+  .legend{padding:12px 20px}
+}
+@media(max-width:600px){
+  .stats-bar{grid-template-columns:1fr 1fr}
+  .fsh-logo{font-size:16px}
+  .tool-name{font-size:14px}
+  .slide-name{font-size:16px}
+  .change-heading{font-size:15px}
+}
+
+/* ── INTRO BANNER ── */
+.intro{
+  background:var(--fsh);color:#fff;border-radius:var(--radius);
+  padding:28px 32px;margin-bottom:32px;
+  display:flex;align-items:center;justify-content:space-between;gap:20px;
+  flex-wrap:wrap;
+}
+.intro-left{}
+.intro-title{font-family:'Plus Jakarta Sans';font-weight:800;font-size:22px;
+  letter-spacing:-.02em;margin-bottom:6px}
+.intro-sub{font-size:14px;opacity:.65;line-height:1.55;max-width:580px}
+.intro-date{font-size:13px;opacity:.5;margin-top:8px;font-weight:500}
+.internal-badge{
+  padding:8px 18px;border-radius:999px;border:1px solid rgba(255,255,255,0.25);
+  font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  color:rgba(255,255,255,0.7);white-space:nowrap;flex:none;
+}
+</style>
+</head>
+<body>
+
+<!-- ── HEADER ── -->
+<header class="header">
+  <div class="brand">
+    <div class="fsh-logo">
+      <span class="fsh">FSH</span><span class="design">Design</span>
+    </div>
+    <div class="brand-divider"></div>
+    <div>
+      <div class="tool-label">Internal Review Tool</div>
+      <div class="tool-name">Deck Delta — Healthy Cart Canada</div>
+    </div>
+  </div>
+  <div class="header-right">
+    <span class="client-badge">Healthy Cart Canada</span>
+    <span class="slide-count">12 slides · 23 changes</span>
+  </div>
+</header>
+
+<!-- ── LEGEND ── -->
+<div class="legend">
+  <span class="legend-title">Change types</span>
+  <span class="legend-item"><span class="legend-dot" style="background:var(--removed)"></span>Removed</span>
+  <span class="legend-item"><span class="legend-dot" style="background:var(--softened)"></span>Softened</span>
+  <span class="legend-item"><span class="legend-dot" style="background:var(--legal)"></span>Legal fix</span>
+  <span class="legend-item"><span class="legend-dot" style="background:var(--added)"></span>Added</span>
+  <span class="legend-item"><span class="legend-dot" style="background:var(--design)"></span>Design</span>
+  <span style="margin-left:auto;font-size:12px;color:var(--text-3)">Hover citations for sources</span>
+</div>
+
+<!-- ── MAIN ── -->
+<main class="main">
+
+  <!-- INTRO BANNER -->
+  <div class="intro">
+    <div class="intro-left">
+      <div class="intro-title">V1 → V2 Change Review</div>
+      <div class="intro-sub">A complete audit of every change made to the Healthy Cart Canada investor pitch deck — what was changed, removed, or added, and the exact reason why. Citations are sourced from Preeti's Critical Concerns document, Perplexity research, and Canadian franchise law.</div>
+      <div class="intro-date">Prepared by Jastej · FSH Design · June 23, 2026</div>
+    </div>
+    <span class="internal-badge">🔒 Internal Only</span>
+  </div>
+
+  <!-- STATS BAR -->
+  <div class="stats-bar">
+    <div class="stat-cell s-removed"><div class="stat-num">8</div><div class="stat-label">Removed</div></div>
+    <div class="stat-cell s-softened"><div class="stat-num">7</div><div class="stat-label">Softened</div></div>
+    <div class="stat-cell s-legal"><div class="stat-num">4</div><div class="stat-label">Legal fixes</div></div>
+    <div class="stat-cell s-added"><div class="stat-num">3</div><div class="stat-label">Added</div></div>
+    <div class="stat-cell s-design"><div class="stat-num">5</div><div class="stat-label">Design fixes</div></div>
+  </div>
+
+  <!-- FILTER BAR -->
+  <div class="filter-bar">
+    <button class="filter-btn active" onclick="filterSlides('all',this)">All slides</button>
+    <button class="filter-btn" onclick="filterSlides('removed',this)">Removed</button>
+    <button class="filter-btn" onclick="filterSlides('softened',this)">Softened</button>
+    <button class="filter-btn" onclick="filterSlides('legal',this)">Legal fixes</button>
+    <button class="filter-btn" onclick="filterSlides('added',this)">Added</button>
+    <button class="filter-btn" onclick="filterSlides('design',this)">Design</button>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       SLIDE CARDS
+  ══════════════════════════════════════════ -->
+
+  <!-- SLIDE 1 -->
+  <div class="slide-card" data-tags="removed design">
+    <div class="slide-header" onclick="toggleSlide(this)">
+      <div class="slide-header-left">
+        <div class="slide-num">01</div>
+        <div class="slide-title-block">
+          <div class="slide-label">Cover</div>
+          <div class="slide-name">Build the future of premium wellness retail</div>
+        </div>
+      </div>
+      <div class="slide-header-right">
+        <span class="change-count">3 changes</span>
+        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+    </div>
+    <div class="slide-body">
+      <div class="change-list">
+
+        <div class="change-item removed">
+          <div class="change-type-bar"></div>
+          <div class="change-content">
+            <span class="change-tag">Removed</span>
+            <div class="change-heading">"Canada's Fastest-Growing Premium Supplement Franchise"</div>
+            <div class="change-reason">This superlative claim is unverifiable and directly collides with Supplement King's own public marketing, which uses the identical phrase. In franchise solicitation materials, unsubstantiated superlatives can be treated as misrepresentation if a prospect relies on them.</div>
+            <div class="before-after">
+              <div class="ba-block ba-before"><div class="ba-label">Original</div><div class="ba-text">"Canada's Fastest-Growing Premium Supplement Franchise"</div></div>
+              <div class="ba-block ba-after"><div class="ba-label">New version</div><div class="ba-text">"A premium supplement retail franchise — engineered for the modern fitness consumer."</div></div>
+            </div>
+            <div class="citation-row">
+              <span class="citation">Supplement King
+                <span class="tip">Supplement King's own franchise ownership page uses "fastest growing supplement retailer in Canada" — direct collision with Healthy Cart's claim.<a href="https://supplementking.ca/ownership-opportunities" target="_blank" rel="noopener noreferrer" style="color:#5FC447;font-weight:700;text-decoration:underline;display:block;margin-top:8px;font-size:12px">supplementking.ca/ownership-opportunities ↗</a></span>
+              </span>
+              <span class="citation">Preeti's Critical Concerns
+                <span class="tip">Preeti flagged this superlative as unverifiable and recommended removal from all franchise solicitation materials.</span>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="change-item removed">
+          <div class="change-type-bar"></div>
+          <div class="change-content">
+            <span class="change-tag">Removed</span>
+            <div class="change-heading">Optimum Nutrition Gold Standard Whey product image</div>
+            <div class="change-reason">A competitor brand's product (Optimum Nutrition) was the hero visual on the cover slide. This was replaced with a generated store interior showing the Healthy Cart Canada logo — correct brand representation.</div>
+            <div class="before-after">
+              <div class="ba-block ba-before"><div class="ba-label">Original</div><div class="ba-text">Optimum Nutrition Gold Standard 100% Whey tub prominently placed as cover hero image</div></div>
+              <div class="ba-block ba-after"><div class="ba-label">New version</div><div class="ba-text">Generated Healthy Cart Canada store interior with brand logo visible — right-side bleed fading to white</div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="change-item design">
+          <div class="change-type-bar"></div>
+          <div class="change-content">
+            <span class="change-tag">Design</span>
+            <div class="change-heading">Typography hierarchy — all-bold everything removed</div>
+            <div class="change-reason">The original deck used bold weight on virtually every text element, which flattens hierarchy and makes nothing stand out. New version uses a clear weight system: 800 for display headlines, 400/500 for body, 600 for labels. One bold element per slide draws the eye.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 2 -->
+  <div class="slide-card" data-tags="softened design">
+    <div class="slide-header" onclick="toggleSlide(this)">
+      <div class="slide-header-left">
+        <div class="slide-num">02</div>
+        <div class="slide-title-block">
+          <div class="slide-label">Leadership</div>
+          <div class="slide-name">Led by retail & wellness expertise</div>
+        </div>
+      </div>
+      <div class="slide-header-right">
+        <span class="change-count">2 changes</span>
+        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+    </div>
+    <div class="slide-body">
+      <div class="change-list">
+
+        <div class="change-item softened">
+          <div class="change-type-bar"></div>
+          <div class="change-content">
+            <span class="change-tag">Softened</span>
+            <div class="change-heading">"Plans to open 10 additional locations in 2026"</div>
+            <div class="change-reason">This hard commitment — if the locations haven't opened by the time the deck is reviewed — damages credibility and could be considered a misleading forward-looking statement. Replaced with directional language that is still aspirational without creating a falsifiable claim.</div>
+            <div class="before-after">
+              <div class="ba-block ba-before"><div class="ba-label">Original</div><div class="ba-text">"plans to open 10 additional locations in 2026"</div></div>
+              <div class="ba-block ba-after"><div class="ba-label">New version</div><div class="ba-text">"Driving expansion toward premium retail destinations, with new locations planned across high-traffic markets."</div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="change-item design">
+          <div class="change-type-bar"></div>
+          <div class="change-content">
+            <span class="change-tag">Design</span>
+            <div class="change-heading">Wall of bold text replaced with 3 scannable blocks</div>
+            <div class="change-reason">The original slide had 3 dense paragraphs of all-bold text. Investors will not read this during a pitch. Redesigned as 3 clearly labelled blocks with a header and 1–2 sentences each — scannable in under 10 seconds.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 3 -->
+  <div class="slide-card" data-tags="design">
+    <div class="slide-header" onclick="toggleSlide(this)">
+      <div class="slide-header-left">
+        <div class="slide-num">03</div>
+        <div class="slide-title-block">
+          <div class="slide-label">The Opportunity</div>
+          <div class="slide-name">Today's wellness consumer wants more than a discount shelf</div>
+        </div>
+      </div>
+      <div class="slide-header-right">
+        <span class="change-count">2 changes</span>
+        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+    </div>
+    <div class="slide-body">
+      <div class="change-list">
+
+        <div class="change-item design">
+          <div class="change-type-bar"></div>
+          <div class="change-content">
+            <span class="change-tag">Design</span>
+            <div class="change-heading">Broken grammar fixed</div>
+            <div class="change-reason">Original copy read: "Today's health-conscious consumers demand more than discount retail for they seek premium products…" — an incomplete sentence. Fixed to grammatically correct copy.</div>
+            <div class="before-after">
+              <div class="ba-block ba-before"><div class="ba-label">Original</div><div class="ba-text">"demand more than discount retail for they seek premium products"</div></div>
+              <div class="ba-block ba-after"><div class="ba-label">New version</div><div class="ba-text">"Health-conscious shoppers are looking for premium products, expert guidance, and a brand they trust."</div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="change-item added">
+          <div class="change-type-bar"></div>
+          <div class="change-content">
+            <span class="change-tag">Added</span>
+            <div class="change-heading">Product range image added (right-side bleed)</div>
+            <div class="change-reason">Slide was text-only. Added a product photography image of the supplement range Healthy Cart carries — showing recognizable brands (Dymatize, Optimum Nutrition, Ghost, C4, etc.) reinforces that they stock premium, well-known products. Appropriate since Healthy Cart is a multi-brand retailer.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 4 -->
+  <div class="slide-card" data-tags="removed softened added">
+    <div class="slide-header" onclick="toggleSlide(this)">
+      <div class="slide-header-left">
+        <div class="slide-num">04</div>
+        <div class="slide-title-block">
+          <div class="slide-label">Market</div>
+          <div class="slide-name">A large and growing Canadian market</div>
+        </div>
+      </div>
+      <div class="slide-header-right">
+        <span class="change-count">4 changes</span>
+        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+    </div>
+    <div class="slide-body">
+      <div class="change-list">
+
+        <div class="change-item removed">
+          <div class="change-type-bar"></div>
+          <div class="change-content">
+            <span class="change-tag">Removed</span>
+            <div class="change-heading">"$7.2B+ nutritional supplement market in Canada"</div>
+            <div class="change-reason">This figure is overstated as a current Canada-only number. The actual Canadian dietary supplements market was approximately USD $4.02B in 2024. The $7.2B figure may reference a broader nutraceuticals category or a long-range forecast — presenting it as the current Canada supplement market is misleading.</div>
+            <div class="before-after">
+              <div class="ba-block ba-before"><div class="ba-label">Original</div><div class="ba-text">"$7.2B+ nutritional supplement market in Canada"</div></div>
+              <div class="ba-block ba-after"><div class="ba-label">New version</div><div class="ba-text">"~$4B Canadian dietary supplements market (2024), projected to ~$6.9B by 2030"</div></div>
+            </div>
+            <div class="citation-row">
+              <span class="citation">Grand View Research
+                <span class="tip">Canada dietary supplements market size was $4.02B in 2024, projected to reach $6.89B by 2030 at a 9.5% CAGR.<a href="https://grandviewresearch.com/industry-analysis/canada-dietary-supplements-market-report" target="_blank" rel="noopener noreferrer" style="color:#5FC447;font-weight:700;text-decoration:underline;display:block;margin-top:8px;font-size:12px">grandviewresearch.com/industry-analysis/canada-dietary-supplements-market-report ↗</a></span>
+              </span>
+              <span class="citation">Mordor Intelligence
+                <span class="tip">Canada nutraceuticals market independently corroborates the $4–4.5B current market size range.<a href="https://mordorintelligence.com/industry-reports/canada-nutraceuticals-market" target="_blank" rel="noopener noreferrer" style="color:#5FC447;font-weight:700;text-decoration:underline;display:block;margin-top:8px;font-size:12px">mordorintelligence.com/industry-reports/canada-nutraceuticals-market ↗</a></span>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="change-item removed">
+          <div class="change-type-bar"></div>
+          <div class="change-content">
+            <span class="change-tag">Removed</span>
+            <div class="change-heading">"23% year-over-year growth in protein and recovery products"</div>
+            <div class="change-reason">This figure appears to be adapted from global product-launch data (sports nutrition product launches with recovery claims, 2021–2025) — not Canadian year-over-year sales growth. The actual Canadian sports nutrition CAGR is approximately 5–10%, not 23%.</div>
+            <div class="before-after">
+              <div class="ba-block ba-before"><div class="ba-label">Original</div><div class="ba-text">"23% year-over-year growth in protein and recovery products"</div></div>
+              <div class="ba-block ba-after"><div class="ba-label">New version</div><div class="ba-text">"~9.5% projected annual growth (CAGR, 2025–2030)"</div></div>
+            </div>
+            <div class="citation-row">
+              <span class="citation">Grand View Research
+                <span class="tip">9.5% CAGR for Canadian dietary supplements market 2025–2030.<a href="https://grandviewresearch.com/industry-analysis/canada-dietary-supplements-market-report" target="_blank" rel="noopener noreferrer" style="color:#5FC447;font-weight:700;text-decoration:underline;display:block;margin-top:8px;font-size:12px">grandviewresearch.com/industry-analysis/canada-dietary-supplements-market-report ↗</a></span>
+              </span>
+              <span class="citation">Market Research Future
+                <span class="tip">Canadian sports nutrition CAGRs are generally in the mid-single to low-double digit range — not 23%.<a href="https://marketresearchfuture.com/reports/canada-sports-nutrition-market" target="_blank" rel="noopener noreferrer" style="color:#5FC447;font-weight:700;text-decoration:underline;display:block;margin-top:8px;font-size:12px">marketresearchfuture.com/reports/canada-sports-nutrition-market ↗</a></span>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="change-item removed">
+          <div class="change-type-bar"></div>
+          <div class="change-content">
+            <span class="change-tag">Removed</span>
+            <div class="change-heading">"65.50%" floating chart stat</div>
+            <div class="change-reason">This number appeared in the market slide chart with no axis label, no time period, no citation, and no explanation of what it measured. It could not be verified against any Canadian fitness or supplement industry dataset. A number with no context destroys credibility with investors.</div>
+          </div>
+        </div>
+
+        <div class="change-item design">
+          <div class="change-type-bar"></div>
+          <div class="change-content">
+            <span class="change-tag">Design</span>
+            <div class="change-heading">Corrupt clip-art chart replaced with clean custom SVG</div>
+            <div class="change-reason">The original chart was a screenshot from a third-party report with unreadable labels ("6FK", "Senowt") and broken rendering. Replaced with a clean, custom-built SVG bar chart using real sourced data with legible axis labels.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 5 -->
+  <div class="slide-card" data-tags="design">
+    <div class="slide-header" onclick="toggleSlide(this)">
+      <div class="slide-header-left">
+        <div class="slide-num">05</div>
+        <div class="slide-title-block">
+          <div class="slide-label">The Difference</div>
+          <div class="slide-name">Why Healthy Cart stands apart</div>
+        </div>
+      </div>
+      <div class="slide-header-right">
+        <span class="change-count">2 changes</span>
+        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+    </div>
+    <div class="slide-body">
+      <div class="change-list">
+
+        <div class="change-item design">
+          <div class="change-type-bar"></div>
+          <div class="change-content">
+            <span class="change-tag">Design</span>
+            <div class="change-heading">Typo fixed + truncated card removed ("Dominatesthe" / cut-off text)</div>
+            <div class="change-reason">Slide title read "Why Healthy Cart Dominatesthe Category" — missing space. Card 06 (Operational Simplicity) was cut off mid-sentence: "maximize profitability while". Both indicate zero proofreading. Fixed and consolidated from 6 cards to 4 strongest differentiators.</div>
+            <div class="before-after">
+              <div class="ba-block ba-before"><div class="ba-label">Original</div><div class="ba-text">"Why Healthy Cart Dominatesthe Category" (typo) + "maximize profitability while" (cut off)</div></div>
+              <div class="ba-block ba-after"><div class="ba-label">New version</div><div class="ba-text">"Why Healthy Cart stands apart" — 4 complete, well-written cards</div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="change-item removed">
+          <div class="change-type-bar"></div>
+          <div class="change-content">
+            <span class="change-tag">Removed</span>
+            <div class="change-heading">"Dominates the category" / "No competitor offers this"</div>
+            <div class="change-reason">Competitors like Supplement King and Reflex Supplements already combine brick-and-mortar, e-commerce, athlete/influencer presence, and gym proximity. "No competitor offers this" is factually aggressive and challengeable. Replaced with defensible positioning language.</div>
+            <div class="citation-row">
+              <span class="citation">Reflex Supplements
+                <span class="tip">Reflex Supplements operates franchise locations with similar combined retail + athlete partnership model.<a href="https://reflexsupplements.com/about/franchising" target="_blank" rel="noopener noreferrer" style="color:#5FC447;font-weight:700;text-decoration:underline;display:block;margin-top:8px;font-size:12px">reflexsupplements.com/about/franchising ↗</a></span>
+              </span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 6 -->
+  <div class="slide-card" data-tags="softened design">
+    <div class="slide-header" onclick="toggleSlide(this)">
+      <div class="slide-header-left">
+        <div class="slide-num">06</div>
+        <div class="slide-title-block">
+          <div class="slide-label">Positioning</div>
+          <div class="slide-name">Built for a gap the market hasn't filled</div>
+        </div>
+      </div>
+      <div class="slide-header-right">
+        <span class="change-count">2 changes</span>
+        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+    </div>
+    <div class="slide-body">
+      <div class="change-list">
+
+        <div class="change-item softened">
+          <div class="change-type-bar"></div>
+          <div class="change-content">
+            <span class="change-tag">Softened</span>
+            <div class="change-heading">"Competitor 1 / Competitor 2" replaced with category comparison</div>
+            <div class="change-reason">The original slide listed unnamed "Competitor 1" and "Competitor 2" with no actual names — which destroyed credibility. Rather than naming specific brands (which creates legal risk of false comparative advertising), the new version uses category labels: Traditional Supplement Retail vs Online-Only.</div>
+            <div class="before-after">
+              <div class="ba-block ba-before"><div class="ba-label">Original</div><div class="ba-text">"Competitor 1" / "Competitor 2" — unnamed, no context</div></div>
+              <div class="ba-block ba-after"><div class="ba-label">New version</div><div class="ba-text">"Traditional Supplement Retail" / "Online-Only" — category comparison</div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="change-item design">
+          <div class="change-type-bar"></div>
+          <div class="change-content">
+            <span class="change-tag">Design</span>
+            <div class="change-heading">Dymatize product bottle removed from comparison table</div>
+            <div class="change-reason">The original competitive slide had a Dymatize Super Mass Gainer product floating over the comparison table — a competitor brand used as decoration in a slide meant to show Healthy Cart's superiority. Removed entirely.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 8 -->
+  <div class="slide-card" data-tags="legal softened">
+    <div class="slide-header" onclick="toggleSlide(this)">
+      <div class="slide-header-left">
+        <div class="slide-num">08</div>
+        <div class="slide-title-block">
+          <div class="slide-label">Support</div>
+          <div class="slide-name">End-to-end franchise support</div>
+        </div>
+      </div>
+      <div class="slide-header-right">
+        <span class="change-count">2 changes · 🚨 Legal</span>
+        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+    </div>
+    <div class="slide-body">
+      <div class="change-list">
+
+        <div class="change-item legal">
+          <div class="change-type-bar"></div>
+          <div class="change-content">
+            <span class="change-tag">Legal fix</span>
+            <div class="change-heading">"5-year initial term" → "10-year initial term"</div>
+            <div class="change-reason">The original deck stated "5-year initial term with renewal options." The Franchise Agreement (FA) Section 3.1 specifies a 10-year initial term. This is a direct factual contradiction between the marketing material and the binding legal agreement — if a prospect relied on the 5-year figure when signing a 10-year contract, it creates significant legal exposure.</div>
+            <div class="before-after">
+              <div class="ba-block ba-before"><div class="ba-label">Original</div><div class="ba-text">"5-year initial term with renewal options and clear exit policies discussed after NDA"</div></div>
+              <div class="ba-block ba-after"><div class="ba-label">New version</div><div class="ba-text">"10-year initial term with renewal option. Full terms are provided in the Franchise Disclosure Document (FDD)."</div></div>
+            </div>
+            <div class="citation-row">
+              <span class="citation">Preeti's Critical Concerns
+                <span class="tip">Preeti's document explicitly flags this: "FA Section 3.1 provides a 10-year initial term (expiring the day before the 10th anniversary of store opening)" and recommends revising to "10-Year Initial Term with Renewal Option."</span>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="change-item softened">
+          <div class="change-type-bar"></div>
+          <div class="change-content">
+            <span class="change-tag">Softened</span>
+            <div class="change-heading">"2–3 months from signing to grand opening" → variability-aware language</div>
+            <div class="change-reason">The original stated this as a hard commitment. The FDD contains no such timeline guarantee. Third-party dependencies — permitting, landlord approvals, construction — routinely extend Canadian retail buildouts to 3–6+ months. A hard promise that isn't kept creates disputes.</div>
+            <div class="before-after">
+              <div class="ba-block ba-before"><div class="ba-label">Original</div><div class="ba-text">"2-3 months from signing to grand opening4fast, efficient, and stress-free launch process"</div></div>
+              <div class="ba-block ba-after"><div class="ba-label">New version</div><div class="ba-text">"A structured launch process from signing to opening. Timelines vary based on site selection, permitting, construction, and landlord approvals."</div></div>
+            </div>
+            <div class="citation-row">
+              <span class="citation">Preeti's Critical Concerns
+                <span class="tip">Preeti's document notes no specific timeline guarantee is present in the FDD and recommends language that acknowledges variability.</span>
+              </span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 9 -->
+  <div class="slide-card" data-tags="legal removed added">
+    <div class="slide-header" onclick="toggleSlide(this)">
+      <div class="slide-header-left">
+        <div class="slide-num">09</div>
+        <div class="slide-title-block">
+          <div class="slide-label">Financials</div>
+          <div class="slide-name">The investment model</div>
+        </div>
+      </div>
+      <div class="slide-header-right">
+        <span class="change-count">3 changes · 🚨 Legal</span>
+        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+    </div>
+    <div class="slide-body">
+      <div class="change-list">
+
+        <div class="change-item legal">
+          <div class="change-type-bar"></div>
+          <div class="change-content">
+            <span class="change-tag">Legal fix</span>
+            <div class="change-heading">"Strong Returns, Proven Performance" title removed</div>
+            <div class="change-reason">The FDD explicitly avoids earnings representations. The phrase "proven performance" combined with a revenue/profit chart constitutes an implied earnings representation. If a franchisee loses money and points to this slide, it creates liability.</div>
+            <div class="before-after">
+              <div class="ba-block ba-before"><div class="ba-label">Original</div><div class="ba-text">"Financial Model: Strong Returns, Proven Performance"</div></div>
+              <div class="ba-block ba-after"><div class="ba-label">New version</div><div class="ba-text">"The investment model"</div></div>
+            </div>
+            <div class="citation-row">
+              <span class="citation">Preeti's Critical Concerns
+                <span class="tip">Memo recommends changing to neutral wording like "Scalable Retail Model" or removing earnings-implying language from the title entirely.</span>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="change-item removed">
+          <div class="change-type-bar"></div>
+          <div class="change-content">
+            <span class="change-tag">Removed</span>
+            <div class="change-heading">Revenue/profit/cost bar chart replaced</div>
+            <div class="change-reason">The original showed bars for Average Revenue, Net Profit, and Operating Costs "based on current operating locations" with no time period, no store count, no source, and no clarification of whether figures are actual or projected. This is an unauthorized earnings representation under Canadian franchise law. Replaced with an investment-allocation donut chart — which describes cost structure, not earnings.</div>
+            <div class="citation-row">
+              <span class="citation">Preeti's Critical Concerns
+                <span class="tip">Memo explicitly states: "chart lacks any explanation of data source, store count, time period, or whether it reflects actual vs projected performance" and recommends only using such charts if supported by a proper Financial Performance Representation in the FDD.</span>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="change-item added">
+          <div class="change-type-bar"></div>
+          <div class="change-content">
+            <span class="change-tag">Added</span>
+            <div class="change-heading">Financial disclaimer added (must print)</div>
+            <div class="change-reason">Added a mandatory disclaimer on the financials slide that prints in the PDF: "Figures are illustrative and based on a limited number of operating locations. They are not a guarantee of revenue, profit, or individual results. This document does not constitute a financial performance representation. Please refer to the FDD for complete information."</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 10 -->
+  <div class="slide-card" data-tags="legal removed added">
+    <div class="slide-header" onclick="toggleSlide(this)">
+      <div class="slide-header-left">
+        <div class="slide-num">10</div>
+        <div class="slide-title-block">
+          <div class="slide-label">The Model</div>
+          <div class="slide-name">A model built for durability</div>
+        </div>
+      </div>
+      <div class="slide-header-right">
+        <span class="change-count">3 changes · 🚨 Highest risk</span>
+        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+    </div>
+    <div class="slide-body">
+      <div class="change-list">
+
+        <div class="change-item legal">
+          <div class="change-type-bar"></div>
+          <div class="change-content">
+            <span class="change-tag">Legal fix · Highest risk</span>
+            <div class="change-heading">"12 Months to ROI" — removed entirely</div>
+            <div class="change-reason">This was the single highest legal-risk claim in the entire deck. The FDD includes language stating the franchisor makes no representation or warranty as to actual revenues or expenses. Stating "12 months to ROI" as a headline fact directly contradicts this. Industry data shows retail franchise payback realistically takes 2–5+ years. If a franchisee's business does not achieve ROI in 12 months, this slide is evidence of misrepresentation.</div>
+            <div class="before-after">
+              <div class="ba-block ba-before"><div class="ba-label">Original</div><div class="ba-text">"12 — Months to ROI — Rapid payback period driven by high margins and repeat customers"</div></div>
+              <div class="ba-block ba-after"><div class="ba-label">New version</div><div class="ba-text">Removed entirely. Replaced with qualitative "Premium positioning" and "Recurring demand" cards — no ROI timeframe claim.</div></div>
+            </div>
+            <div class="citation-row">
+              <span class="citation">Preeti's Critical Concerns
+                <span class="tip">Memo explicitly recommends removing the "12 Months to ROI" statement entirely. FDD language disclaims any earnings representation.</span>
+              </span>
+              <span class="citation">Paul Schlanger · Franchise ROI Guide
+                <span class="tip">Realistic franchise payback expectations are 2–5+ years for most retail franchises.<a href="https://paulschlanger.com/post/how-much-does-a-franchise-cost-and-what-roi-can-you-expect" target="_blank" rel="noopener noreferrer" style="color:#5FC447;font-weight:700;text-decoration:underline;display:block;margin-top:8px;font-size:12px">paulschlanger.com/post/how-much-does-a-franchise-cost-and-what-roi-can-you-expect ↗</a></span>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="change-item legal">
+          <div class="change-type-bar"></div>
+          <div class="change-content">
+            <span class="change-tag">Legal fix</span>
+            <div class="change-heading">"30–35% Net Margin" — removed entirely</div>
+            <div class="change-reason">Industry benchmarks for supplement retail and franchise retail show typical net margins of 5–15%, with many retail franchises in the 2–6% range after rent, labour, royalties, and marketing. The 30–35% claim is not supported by the FDD's Financial Performance Representation section, which means it cannot be legally cited in franchise solicitation materials.</div>
+            <div class="before-after">
+              <div class="ba-block ba-before"><div class="ba-label">Original</div><div class="ba-text">"30–35% — Net Margin — Industry-leading profitability outperforming typical retail franchises"</div></div>
+              <div class="ba-block ba-after"><div class="ba-label">New version</div><div class="ba-text">Removed. Replaced with "Premium positioning — a curated product mix designed to support healthy margins." No % claim.</div></div>
+            </div>
+            <div class="citation-row">
+              <span class="citation">Dojo Business · Supplement Retail Margins
+                <span class="tip">Supplement retail net margins typically fall in the 5–15% range. 30–35% is significantly above retail benchmarks.<a href="https://dojobusiness.com/blogs/news/supplement-retail-margin" target="_blank" rel="noopener noreferrer" style="color:#5FC447;font-weight:700;text-decoration:underline;display:block;margin-top:8px;font-size:12px">dojobusiness.com/blogs/news/supplement-retail-margin ↗</a></span>
+              </span>
+              <span class="citation">Preeti's Critical Concerns
+                <span class="tip">No Financial Performance Representation in the FDD supports the 30–35% claim. Memo recommends removal from all materials.</span>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="change-item added">
+          <div class="change-type-bar"></div>
+          <div class="change-content">
+            <span class="change-tag">Added</span>
+            <div class="change-heading">Model disclaimer added (must print)</div>
+            <div class="change-reason">Added: "This page describes the franchise model and does not represent or guarantee any level of revenue, profit, margin, or return. Individual results vary. Refer to the FDD and Franchise Agreement for binding terms."</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 11 -->
+  <div class="slide-card" data-tags="legal softened design">
+    <div class="slide-header" onclick="toggleSlide(this)">
+      <div class="slide-header-left">
+        <div class="slide-num">11</div>
+        <div class="slide-title-block">
+          <div class="slide-label">Franchisee Profile</div>
+          <div class="slide-name">Who becomes a Healthy Cart franchisee</div>
+        </div>
+      </div>
+      <div class="slide-header-right">
+        <span class="change-count">2 changes</span>
+        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+    </div>
+    <div class="slide-body">
+      <div class="change-list">
+
+        <div class="change-item legal">
+          <div class="change-type-bar"></div>
+          <div class="change-content">
+            <span class="change-tag">Legal fix</span>
+            <div class="change-heading">"Corporates Wanting Passive Income" → "Business Investors"</div>
+            <div class="change-reason">The Franchise Agreement requires the business to be under direct supervision of a designated Operator. Marketing the franchise as suitable for "passive income" attracts investors who expect hands-off ownership — which contradicts the operator requirement. When those franchisees underperform because they are not actively operating, this slide is evidence of misrepresentation.</div>
+            <div class="before-after">
+              <div class="ba-block ba-before"><div class="ba-label">Original</div><div class="ba-text">"Corporates Wanting Passive Income — Savvy investors and corporate professionals looking for a robust, managed investment with strong returns."</div></div>
+              <div class="ba-block ba-after"><div class="ba-label">New version</div><div class="ba-text">"Business Investors — Business professionals and growth-oriented investors seeking an ownership opportunity."</div></div>
+            </div>
+            <div class="citation-row">
+              <span class="citation">Preeti's Critical Concerns
+                <span class="tip">Memo: "The FA requires the business to be under direct supervision of an Operator, and recommends rephrasing to 'Business professionals seeking ownership opportunities' or 'Multi-unit and growth-oriented investors'."</span>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="change-item design">
+          <div class="change-type-bar"></div>
+          <div class="change-content">
+            <span class="change-tag">Design</span>
+            <div class="change-heading">Duplicate slide removed (original slides 11 and 13 were identical)</div>
+            <div class="change-reason">Slides 11 and 13 in the original deck were pixel-for-pixel identical — the exact same "Who Becomes a Healthy Cart Franchisee?" content. This indicates zero quality review before the deck was sent to prospects. One instance kept, duplicate deleted.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 12 -->
+  <div class="slide-card" data-tags="removed softened design">
+    <div class="slide-header" onclick="toggleSlide(this)">
+      <div class="slide-header-left">
+        <div class="slide-num">12</div>
+        <div class="slide-title-block">
+          <div class="slide-label">Contact / CTA</div>
+          <div class="slide-name">Let's open your Healthy Cart franchise</div>
+        </div>
+      </div>
+      <div class="slide-header-right">
+        <span class="change-count">4 changes</span>
+        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+    </div>
+    <div class="slide-body">
+      <div class="change-list">
+
+        <div class="change-item removed">
+          <div class="change-type-bar"></div>
+          <div class="change-content">
+            <span class="change-tag">Removed</span>
+            <div class="change-heading">"Canada's #1 premium supplement franchise"</div>
+            <div class="change-reason">No independent ranking or third-party award substantiates this claim. Established chains including Reflex Supplements have significantly more locations and longer operating history. In franchise solicitation, "#1" without a source can constitute misrepresentation.</div>
+            <div class="citation-row">
+              <span class="citation">Reflex Supplements
+                <span class="tip">Reflex Supplements has a larger national footprint and longer history than Healthy Cart Canada. No third-party ranking places Healthy Cart as #1.<a href="https://reflexsupplements.com/about/franchising" target="_blank" rel="noopener noreferrer" style="color:#5FC447;font-weight:700;text-decoration:underline;display:block;margin-top:8px;font-size:12px">reflexsupplements.com/about/franchising ↗</a></span>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="change-item softened">
+          <div class="change-type-bar"></div>
+          <div class="change-content">
+            <span class="change-tag">Softened</span>
+            <div class="change-heading">"Proven System, No Experience Required" → "Training & Support Provided"</div>
+            <div class="change-reason">"No experience required" reads as a guarantee of success for inexperienced owners. This sets false expectations. "Comprehensive Training & Support Provided" is accurate, compelling, and legally safe.</div>
+            <div class="before-after">
+              <div class="ba-block ba-before"><div class="ba-label">Original</div><div class="ba-text">"Proven System, No Experience Required — Comprehensive training and ongoing coaching ensure success regardless of retail"</div></div>
+              <div class="ba-block ba-after"><div class="ba-label">New version</div><div class="ba-text">"Training & Support Provided — Comprehensive training and ongoing coaching for new operators."</div></div>
+            </div>
+            <div class="citation-row">
+              <span class="citation">Preeti's Critical Concerns
+                <span class="tip">Memo recommends changing to "Comprehensive Training and Support Provided" as more accurate and less absolute than "No Experience Required."</span>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="change-item softened">
+          <div class="change-type-bar"></div>
+          <div class="change-content">
+            <span class="change-tag">Softened</span>
+            <div class="change-heading">"15,000 followers and athlete endorsements from day one" → "active and growing social community"</div>
+            <div class="change-reason">The 15,000 follower count is not publicly verifiable across known brand handles. "Immediate Brand Recognition" is also inflated for a brand founded in 2020 with approximately 3–5 operating locations. Replaced with language that is defensible without a specific figure that could be challenged.</div>
+            <div class="citation-row">
+              <span class="citation">LinkedIn / Public Social Check
+                <span class="tip">Healthy Cart Canada's public social media following could not be independently verified at 15,000+ across known platform handles at time of review.</span>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="change-item design">
+          <div class="change-type-bar"></div>
+          <div class="change-content">
+            <span class="change-tag">Design</span>
+            <div class="change-heading">5 competitor product bottles removed from closing slide</div>
+            <div class="change-reason">The original closing slide featured a lineup of 5 competitor brand products (Optimum Nutrition, ALLMAX AminoCore, Diesel Whey, Perfect Sports, Dymatize Mass Gainer) as the main visual. No Healthy Cart branded visuals appeared anywhere. Replaced with clean contact information and CTA.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<script>
+function toggleSlide(header) {
+  const card = header.closest('.slide-card');
+  const isOpen = card.classList.contains('open');
+
+  document.querySelectorAll('.slide-card.open').forEach(c => c.classList.remove('open'));
+
+  if (!isOpen) {
+    card.classList.add('open');
+    const headerH = document.querySelector('.header').offsetHeight;
+    const top = card.getBoundingClientRect().top + window.scrollY - headerH - 16;
+    window.scrollTo({ top, behavior: 'smooth' });
+  }
+}
+
+function filterSlides(type, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.slide-card').forEach(card => {
+    if (type === 'all') {
+      card.style.display = '';
+    } else {
+      const tags = card.getAttribute('data-tags') || '';
+      card.style.display = tags.includes(type) ? '' : 'none';
+    }
+  });
+}
+
+// stagger card animations
+document.querySelectorAll('.slide-card').forEach((card, i) => {
+  card.style.animationDelay = (i * 0.05) + 's';
+});
+
+document.querySelectorAll('.citation').forEach(cit => {
+  const tip = cit.querySelector('.tip');
+  if (!tip) return;
+  let hideTimer;
+
+  cit.addEventListener('mouseenter', () => {
+    clearTimeout(hideTimer);
+    tip.style.display = 'block';
+  });
+  cit.addEventListener('mouseleave', () => {
+    hideTimer = setTimeout(() => {
+      tip.style.display = 'none';
+    }, 180);
+  });
+  tip.addEventListener('mouseenter', () => {
+    clearTimeout(hideTimer);
+  });
+  tip.addEventListener('mouseleave', () => {
+    hideTimer = setTimeout(() => {
+      tip.style.display = 'none';
+    }, 180);
+  });
+});
+</script>
+</body>
+</html>
