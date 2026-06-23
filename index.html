@@ -118,10 +118,21 @@ h1.h1{font-family:'Plus Jakarta Sans';font-weight:800;letter-spacing:-.02em;
 .slide-cover{position:relative;overflow:hidden}
 .cover-img{
   position:absolute;right:0;top:0;bottom:0;
-  width:58%;
-  object-fit:cover;object-position:center center;
-  mask-image:linear-gradient(to right,transparent 0%,rgba(255,255,255,0.2) 18%,white 38%);
-  -webkit-mask-image:linear-gradient(to right,transparent 0%,rgba(255,255,255,0.2) 18%,white 38%);
+  width:32%;
+  height:100%;
+  object-fit:cover;object-position:60% center;
+  mask-image:linear-gradient(
+    to right,
+    transparent 0%,
+    rgba(255,255,255,0.1) 10%,
+    white 30%
+  );
+  -webkit-mask-image:linear-gradient(
+    to right,
+    transparent 0%,
+    rgba(255,255,255,0.1) 10%,
+    white 30%
+  );
   z-index:0}
 [data-theme="dark"] .cover-img{
   opacity:0.25;
@@ -155,8 +166,8 @@ h1.h1{font-family:'Plus Jakarta Sans';font-weight:800;letter-spacing:-.02em;
 
   <!-- ============ SLIDE 1 — COVER ============ -->
   <section class="slide slide-cover">
-    <img src="assets/images/slides/store.jpg" alt="" class="cover-img interactive-only" aria-hidden="true">
-    <img src="assets/images/slides/store.jpg" alt="" class="cover-img print-only" aria-hidden="true" style="opacity:0.12">
+    <img src="assets/images/slides/store.png" alt="" class="cover-img interactive-only" aria-hidden="true">
+    <img src="assets/images/slides/store.png" alt="" class="cover-img print-only" aria-hidden="true" style="opacity:0.12">
     <div class="pad" style="position:relative;z-index:1">
       <!-- logo lockup -->
       <div class="reveal d1">
@@ -372,8 +383,8 @@ h1.h1{font-family:'Plus Jakarta Sans';font-weight:800;letter-spacing:-.02em;
         </div>
       </div>
       <div class="imgph reveal d2" style="flex:0 0 500px;align-self:stretch">
-        <span>[ASSET] Real Healthy Cart store interior<br>assets/images/slides/store.jpg</span>
-        <!-- replace with <img src="assets/images/slides/store.jpg" alt="Healthy Cart store interior"> -->
+        <span>[ASSET] Real Healthy Cart store interior<br>assets/images/slides/store.png</span>
+        <!-- replace with <img src="assets/images/slides/store.png" alt="Healthy Cart store interior"> -->
       </div>
     </div>
     <div class="foot"><span class="brandmark"><span class="leaf"></span>Healthy Cart Canada</span><span>07 · The Experience</span></div>
@@ -627,5 +638,232 @@ function toggleTheme(){
   });
 })();
 </script>
+
+<!-- DEV TOOL - REMOVE BEFORE FINAL -->
+<style>
+@media print { #devtool-panel { display: none !important; } }
+.dt-btn {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.18);
+  color: #d0d0d0;
+  border-radius: 4px;
+  cursor: pointer;
+  padding: 3px 8px;
+  font-family: monospace;
+  font-size: 11px;
+}
+.dt-btn:hover:not(:disabled) { background: rgba(255,255,255,0.16); }
+.dt-btn:disabled { opacity: 0.3; cursor: default; }
+.dt-val { display: inline-block; width: 58px; text-align: center; color: #7dff6b; font-weight: 700; }
+.dt-lbl { display: inline-block; width: 54px; color: #888; }
+.dt-sec { font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: #555; margin: 10px 0 5px; }
+#dt-slide-sel {
+  width: 100%; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.18);
+  color: #fff; font-family: monospace; font-size: 12px; padding: 5px 8px;
+  border-radius: 5px; margin-bottom: 5px; cursor: pointer; outline: none;
+}
+#dt-status { font-size: 10px; color: #7dff6b; margin-bottom: 6px; min-height: 13px; }
+</style>
+
+<div id="devtool-panel" style="position:fixed;top:80px;left:16px;z-index:9999;background:rgba(12,12,12,0.92);color:#fff;font-family:monospace;font-size:12px;padding:16px 18px;border-radius:10px;min-width:284px;box-shadow:0 4px 32px rgba(0,0,0,0.6);border:1px solid rgba(255,255,255,0.1);backdrop-filter:blur(4px)">
+  <div style="font-weight:700;font-size:13px;margin-bottom:10px;color:#7dff6b">&#9881; DEV &middot; Image Positioner</div>
+
+  <select id="dt-slide-sel"></select>
+  <div id="dt-status"></div>
+
+  <div id="dt-controls">
+    <div class="dt-sec">Position</div>
+    <div style="display:flex;align-items:center;gap:5px;margin-bottom:5px">
+      <span class="dt-lbl">X offset:</span>
+      <button class="dt-btn" onclick="devAdj('x',-10)">&#8592; &minus;10px</button>
+      <span class="dt-val" id="dt-x">+0px</span>
+      <button class="dt-btn" onclick="devAdj('x',10)">+10px &#8594;</button>
+    </div>
+    <div style="display:flex;align-items:center;gap:5px;margin-bottom:10px">
+      <span class="dt-lbl">Y offset:</span>
+      <button class="dt-btn" onclick="devAdj('y',-10)">&#8593; &minus;10px</button>
+      <span class="dt-val" id="dt-y">+0px</span>
+      <button class="dt-btn" onclick="devAdj('y',10)">&#8595; +10px</button>
+    </div>
+
+    <div class="dt-sec">Size</div>
+    <div style="display:flex;align-items:center;gap:5px;margin-bottom:10px">
+      <span class="dt-lbl">Width:</span>
+      <button class="dt-btn" onclick="devAdj('w',-5)">&minus;5%</button>
+      <span class="dt-val" id="dt-w">50%</span>
+      <button class="dt-btn" onclick="devAdj('w',5)">+5%</button>
+    </div>
+
+    <div class="dt-sec">Fade (gradient start)</div>
+    <div style="display:flex;align-items:center;gap:5px;margin-bottom:10px">
+      <span class="dt-lbl">Fade at:</span>
+      <button class="dt-btn" onclick="devAdj('f',-5)">&minus;5%</button>
+      <span class="dt-val" id="dt-f">30%</span>
+      <button class="dt-btn" onclick="devAdj('f',5)">+5%</button>
+    </div>
+
+    <div class="dt-sec">Zoom (object-position X)</div>
+    <div style="display:flex;align-items:center;gap:5px;margin-bottom:14px">
+      <span class="dt-lbl">Crop X:</span>
+      <button class="dt-btn" onclick="devAdj('c',-5)">&#8592;</button>
+      <span class="dt-val" id="dt-c">50%</span>
+      <button class="dt-btn" onclick="devAdj('c',5)">&#8594;</button>
+    </div>
+
+    <button id="dt-copy" onclick="devCopy()" style="width:100%;padding:8px 0;background:rgba(125,255,107,0.12);border:1px solid rgba(125,255,107,0.35);color:#7dff6b;border-radius:6px;cursor:pointer;font-family:monospace;font-size:12px;font-weight:700;letter-spacing:.06em">COPY CSS</button>
+  </div>
+</div>
+
+<script>
+(function () {
+  if (!new URLSearchParams(window.location.search).has('devtools')) {
+    document.getElementById('devtool-panel').style.display = 'none';
+    return;
+  }
+
+  var SLIDE_NAMES = ['Cover','Leadership','Opportunity','Market','Why HC','Positioning','Store Concept','Support','Financials','The Model','Franchisee','CTA'];
+
+  // Per-slide initial defaults. Slide 1 matches the current .cover-img stylesheet values.
+  var DEFAULTS = [
+    { x:0, y:0, w:32, f:30, c:60 }  // slide 1 — matches .cover-img rule
+  ];
+  function makeDefault(idx) {
+    return DEFAULTS[idx] ? Object.assign({}, DEFAULTS[idx]) : { x:0, y:0, w:50, f:30, c:50 };
+  }
+
+  var slides = Array.from(document.querySelectorAll('.slide'));
+  var stateMap = {};
+  var currentImg = null;
+  var currentIdx = 0;
+
+  // Populate dropdown
+  var sel = document.getElementById('dt-slide-sel');
+  slides.forEach(function(s, i) {
+    var opt = document.createElement('option');
+    opt.value = i;
+    opt.textContent = (i + 1) + ' · ' + (SLIDE_NAMES[i] || 'Slide ' + (i + 1));
+    sel.appendChild(opt);
+  });
+
+  function buildMask(f) {
+    var mid = Math.max(0, f - 20);
+    return 'linear-gradient(to right, transparent 0%, rgba(255,255,255,0.1) ' + mid + '%, white ' + f + '%)';
+  }
+
+  function setEnabled(on) {
+    document.getElementById('dt-controls').style.opacity = on ? '1' : '0.3';
+    document.querySelectorAll('#dt-controls .dt-btn, #dt-copy').forEach(function(b) { b.disabled = !on; });
+  }
+
+  function updateDisplays() {
+    var s = stateMap[currentIdx] || makeDefault(currentIdx);
+    document.getElementById('dt-x').textContent = (s.x >= 0 ? '+' : '') + s.x + 'px';
+    document.getElementById('dt-y').textContent = (s.y >= 0 ? '+' : '') + s.y + 'px';
+    document.getElementById('dt-w').textContent = s.w + '%';
+    document.getElementById('dt-f').textContent = s.f + '%';
+    document.getElementById('dt-c').textContent = s.c + '%';
+  }
+
+  function applyToImg() {
+    if (!currentImg) return;
+    var s = stateMap[currentIdx];
+    currentImg.style.width = s.w + '%';
+    currentImg.style.objectPosition = s.c + '% center';
+    currentImg.style.transform = (s.x || s.y) ? 'translate(' + s.x + 'px,' + s.y + 'px)' : '';
+    var mask = buildMask(s.f);
+    currentImg.style.maskImage = mask;
+    currentImg.style.webkitMaskImage = mask;
+    updateDisplays();
+  }
+
+  function loadSlide(idx) {
+    currentIdx = idx;
+    // Find first real img, skip print-only duplicates
+    currentImg = slides[idx].querySelector('img:not(.print-only)');
+
+    var statusEl = document.getElementById('dt-status');
+    if (currentImg) {
+      // Derive a readable selector from the img's classes (strip utility classes)
+      var meaningful = (currentImg.className || '').split(' ').filter(function(c) {
+        return c && c !== 'interactive-only' && c !== 'print-only';
+      });
+      statusEl.textContent = 'img' + (meaningful.length ? '.' + meaningful.join('.') : ' (no class)');
+      statusEl.style.color = '#7dff6b';
+      setEnabled(true);
+      if (!stateMap[idx]) stateMap[idx] = makeDefault(idx);
+      applyToImg();
+    } else {
+      statusEl.textContent = 'No image in this slide';
+      statusEl.style.color = '#ff7b7b';
+      setEnabled(false);
+      updateDisplays();
+    }
+  }
+
+  window.devAdj = function(key, delta) {
+    if (!currentImg) return;
+    var s = stateMap[currentIdx];
+    s[key] = Math.round((s[key] + delta) * 10) / 10;
+    applyToImg();
+  };
+
+  window.devCopy = function() {
+    var s = stateMap[currentIdx];
+    if (!s || !currentImg) return;
+    var mid = Math.max(0, s.f - 20);
+    var xform = (s.x || s.y) ? '\n  transform: translate(' + s.x + 'px, ' + s.y + 'px);' : '';
+    // Build selector from meaningful classes; fall back to a placeholder comment
+    var meaningful = (currentImg.className || '').split(' ').filter(function(c) {
+      return c && c !== 'interactive-only' && c !== 'print-only';
+    });
+    var selector = meaningful.length ? '.' + meaningful.join('.') : '/* .your-selector */';
+    var slideName = SLIDE_NAMES[currentIdx] || 'Slide ' + (currentIdx + 1);
+    var css =
+      '/* Slide ' + (currentIdx + 1) + ' — ' + slideName + ' */\n' +
+      selector + ' {\n' +
+      '  position: absolute; right: 0; top: 0; bottom: 0;\n' +
+      '  width: ' + s.w + '%;\n' +
+      '  height: 100%;\n' +
+      '  object-fit: cover; object-position: ' + s.c + '% center;' + xform + '\n' +
+      '  mask-image: linear-gradient(\n' +
+      '    to right,\n' +
+      '    transparent 0%,\n' +
+      '    rgba(255,255,255,0.1) ' + mid + '%,\n' +
+      '    white ' + s.f + '%\n' +
+      '  );\n' +
+      '  -webkit-mask-image: linear-gradient(\n' +
+      '    to right,\n' +
+      '    transparent 0%,\n' +
+      '    rgba(255,255,255,0.1) ' + mid + '%,\n' +
+      '    white ' + s.f + '%\n' +
+      '  );\n' +
+      '  z-index: 0;\n' +
+      '}';
+
+    var btn = document.getElementById('dt-copy');
+    function flash() { btn.textContent = 'COPIED!'; setTimeout(function() { btn.textContent = 'COPY CSS'; }, 1600); }
+
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(css).then(flash).catch(function() { fallbackCopy(css); flash(); });
+    } else {
+      fallbackCopy(css); flash();
+    }
+  };
+
+  function fallbackCopy(text) {
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    try { document.execCommand('copy'); } catch(e) {}
+    document.body.removeChild(ta);
+  }
+
+  sel.addEventListener('change', function() { loadSlide(parseInt(this.value)); });
+  loadSlide(0);
+})();
+</script>
+<!-- END DEV TOOL -->
 </body>
 </html>
