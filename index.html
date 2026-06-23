@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Healthy Cart Canada — Investor Briefing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   HEALTHY CART CANADA — INVESTOR DECK
+   White base · dark-mode ready · print-to-PDF (landscape 1280x720)
+   PRINT:  Cmd/Ctrl+P  →  Landscape · Margins: None · Background graphics: ON
+   ============================================================ */
+
+/* ---------- THEME TOKENS ---------- */
+:root, [data-theme="light"]{
+  --bg:#FFFFFF; --surface:#F7F9F6; --surface-2:#F0F5EE; --tint:#F2FAF0;
+  --text:#0D0D0D; --text-2:#4A4A4A; --text-3:#8A8A8A; --text-on-green:#FFFFFF;
+  --green:#4BAE33; --green-dark:#2D7A1F; --green-soft:#8FD37B;
+  --line:#E6E8E4; --line-strong:#CDD2C9;
+  --c1:#2D7A1F; --c2:#4BAE33; --c3:#8FD37B; --c4:#C7E8BC;
+  --shadow:0 2px 24px rgba(13,13,13,0.06);
+  --shadow-lg:0 12px 40px rgba(13,13,13,0.10);
+  --card-border:transparent;
+}
+[data-theme="dark"]{
+  --bg:#0B0E0A; --surface:#141811; --surface-2:#1B2017; --tint:#121710;
+  --text:#F4F6F2; --text-2:#B6BCB0; --text-3:#7E867A; --text-on-green:#07120A;
+  --green:#5FC447; --green-dark:#3E9A2A; --green-soft:#2A4A22;
+  --line:#262C20; --line-strong:#36402E;
+  --c1:#5FC447; --c2:#8FD37B; --c3:#3E9A2A; --c4:#244A1C;
+  --shadow:0 2px 32px rgba(0,0,0,0.5);
+  --shadow-lg:0 16px 48px rgba(0,0,0,0.6);
+  --card-border:var(--line);
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--bg);color:var(--text);
+  font-family:'Inter',system-ui,-apple-system,sans-serif;
+  -webkit-font-smoothing:antialiased;transition:background .4s ease,color .4s ease}
+
+/* ---------- STAGE ---------- */
+.stage{display:flex;flex-direction:column;align-items:center;gap:28px;padding:40px 20px 80px}
+
+.slide{
+  position:relative;width:1280px;height:720px;background:var(--bg);
+  overflow:hidden;flex:none;
+  box-shadow:var(--shadow-lg);border-radius:4px;
+  border:1px solid var(--line);
+}
+/* content safe area */
+.pad{position:absolute;inset:64px 80px;display:flex;flex-direction:column}
+
+/* ---------- TYPE ---------- */
+.kicker{font-size:13px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--green-dark);font-family:'Inter'}
+.rule{width:48px;height:4px;background:var(--green);border-radius:2px;margin:14px 0 0}
+h1.display{font-family:'Plus Jakarta Sans';font-weight:800;letter-spacing:-.03em;
+  line-height:1.02;font-size:84px;color:var(--text)}
+h1.h1{font-family:'Plus Jakarta Sans';font-weight:800;letter-spacing:-.02em;
+  line-height:1.05;font-size:52px;color:var(--text)}
+.h-accent{color:var(--green-dark)}
+[data-theme="dark"] .h-accent{color:var(--green)}
+.subhead{font-size:21px;font-weight:500;color:var(--text-2);line-height:1.45}
+.body{font-size:17px;font-weight:400;color:var(--text-2);line-height:1.6}
+.body-lg{font-size:20px;font-weight:400;color:var(--text-2);line-height:1.55}
+.label{font-size:13px;font-weight:600;letter-spacing:.10em;text-transform:uppercase;color:var(--text-3)}
+.stat-num{font-family:'Plus Jakarta Sans';font-weight:800;letter-spacing:-.02em;color:var(--green-dark);line-height:1}
+[data-theme="dark"] .stat-num{color:var(--green)}
+
+/* ---------- FOOTER ---------- */
+.foot{position:absolute;left:80px;right:80px;bottom:28px;display:flex;
+  justify-content:space-between;align-items:center;
+  font-size:12px;font-weight:500;color:var(--text-3);letter-spacing:.02em}
+.foot .brandmark{display:flex;align-items:center;gap:7px;font-weight:600}
+.foot .leaf{width:14px;height:14px;border-radius:50% 50% 50% 0;background:var(--green);transform:rotate(45deg)}
+
+/* ---------- COMPONENTS ---------- */
+.card{background:var(--surface);border:1px solid var(--card-border);border-radius:16px;
+  padding:28px 30px;box-shadow:var(--shadow)}
+.pill{display:inline-flex;align-items:center;padding:7px 15px;border-radius:999px;
+  background:var(--tint);color:var(--green-dark);font-size:13px;font-weight:600;
+  border:1px solid var(--line)}
+[data-theme="dark"] .pill{color:var(--green)}
+
+.cta-btn{display:inline-flex;align-items:center;gap:10px;padding:16px 30px;border-radius:999px;
+  background:var(--green-dark);color:var(--text-on-green);font-weight:700;font-size:17px;
+  font-family:'Plus Jakarta Sans';border:none;cursor:pointer;text-decoration:none}
+
+/* image placeholder */
+.imgph{background:var(--surface-2);border:1px solid var(--line);border-radius:18px;
+  display:flex;align-items:center;justify-content:center;color:var(--text-3);
+  font-size:13px;font-weight:500;text-align:center;padding:20px;overflow:hidden;position:relative}
+.imgph span{max-width:200px;line-height:1.5}
+.imgph img{width:100%;height:100%;object-fit:cover;display:block}
+
+/* ---------- THEME TOGGLE (interactive only) ---------- */
+.toggle{position:fixed;top:18px;right:20px;z-index:100;
+  display:flex;align-items:center;gap:8px;padding:8px 14px;border-radius:999px;
+  background:var(--surface);border:1px solid var(--line-strong);color:var(--text);
+  font-family:'Inter';font-size:13px;font-weight:600;cursor:pointer;box-shadow:var(--shadow)}
+.toggle .dot{width:14px;height:14px;border-radius:50%;background:var(--green);}
+.hint{position:fixed;top:18px;left:20px;z-index:100;font-size:12px;color:var(--text-3);
+  background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:7px 12px;max-width:330px;line-height:1.4}
+
+/* ---------- ANIMATION (interactive only) ---------- */
+@media screen{
+  .reveal{opacity:0;transform:translateY(14px);animation:rise .7s cubic-bezier(.2,.7,.2,1) forwards}
+  .d1{animation-delay:.05s}.d2{animation-delay:.13s}.d3{animation-delay:.21s}
+  .d4{animation-delay:.29s}.d5{animation-delay:.37s}.d6{animation-delay:.45s}
+  @keyframes rise{to{opacity:1;transform:none}}
+  @media (prefers-reduced-motion:reduce){.reveal{animation:none;opacity:1;transform:none}}
+}
+
+/* ---------- COVER SLIDE IMAGE ---------- */
+.slide-cover{position:relative;overflow:hidden}
+.cover-img{
+  position:absolute;right:0;top:0;bottom:0;
+  width:58%;
+  object-fit:cover;object-position:center center;
+  mask-image:linear-gradient(to right,transparent 0%,rgba(255,255,255,0.2) 18%,white 38%);
+  -webkit-mask-image:linear-gradient(to right,transparent 0%,rgba(255,255,255,0.2) 18%,white 38%);
+  z-index:0}
+[data-theme="dark"] .cover-img{
+  opacity:0.25;
+  mask-image:linear-gradient(to right,transparent 0%,rgba(0,0,0,0.1) 18%,rgba(0,0,0,0.5) 38%);
+  -webkit-mask-image:linear-gradient(to right,transparent 0%,rgba(0,0,0,0.1) 18%,rgba(0,0,0,0.5) 38%)}
+
+/* ---------- PRINT ---------- */
+@page{size:1280px 720px landscape;margin:0}
+@media print{
+  .interactive-only{display:none !important}
+  .print-only{display:block !important}
+  *,*::before,*::after{animation:none !important;transition:none !important;
+    opacity:1 !important;transform:none !important}
+  .stage{display:block;gap:0;padding:0}
+  .slide{box-shadow:none;border:none;border-radius:0;page-break-after:always;
+    width:1280px;height:720px}
+  body{background:#fff}
+}
+.print-only{display:none}
+</style>
+</head>
+<body>
+
+<!-- THEME TOGGLE + PRINT HINT (never printed) -->
+<button class="toggle interactive-only" onclick="toggleTheme()">
+  <span class="dot"></span><span id="tgl-label">Dark mode</span>
+</button>
+<div class="hint interactive-only">Print to PDF → <b>Landscape</b>, Margins <b>None</b>, Background graphics <b>ON</b>.</div>
+
+<div class="stage">
+
+  <!-- ============ SLIDE 1 — COVER ============ -->
+  <section class="slide slide-cover">
+    <img src="assets/images/slides/store.jpg" alt="" class="cover-img interactive-only" aria-hidden="true">
+    <img src="assets/images/slides/store.jpg" alt="" class="cover-img print-only" aria-hidden="true" style="opacity:0.12">
+    <div class="pad" style="position:relative;z-index:1">
+      <!-- logo lockup -->
+      <div class="reveal d1">
+        <img src="assets/images/ui/logo.png" alt="Healthy Cart Canada" style="height:42px">
+      </div>
+
+      <div style="flex:1;display:flex;flex-direction:column;justify-content:center;max-width:880px">
+        <div class="kicker reveal d2">Franchise Investment Opportunity</div>
+        <div class="rule reveal d2"></div>
+        <h1 class="display reveal d3" style="margin-top:26px">Build the future of<br><span class="h-accent">premium wellness retail</span></h1>
+        <p class="subhead reveal d4" style="margin-top:28px;max-width:640px">A premium supplement retail franchise — engineered for the modern fitness consumer.</p>
+      </div>
+    </div>
+    <div class="foot">
+      <span class="brandmark"><span class="leaf"></span>Healthy Cart Canada</span>
+      <span>Investor Briefing · 2026</span>
+    </div>
+  </section>
+
+  <!-- ============ SLIDE 2 — LEADERSHIP ============ -->
+  <section class="slide">
+    <div class="pad" style="flex-direction:row;gap:56px">
+      <!-- left: photo -->
+      <div class="imgph reveal d1" style="flex:0 0 420px;align-self:stretch">
+        <span>[ASSET] Founder portrait or flagship store photo<br>assets/images/slides/founder.jpg</span>
+        <!-- replace with <img src="assets/images/slides/founder.jpg" alt="Rohin Khanna"> -->
+      </div>
+      <!-- right: bio blocks -->
+      <div style="flex:1;display:flex;flex-direction:column;justify-content:center">
+        <div class="kicker reveal d1">Leadership</div>
+        <div class="rule reveal d1"></div>
+        <h1 class="h1 reveal d2" style="margin-top:18px;font-size:46px">Led by retail &amp;<br>wellness expertise</h1>
+
+        <div class="reveal d3" style="margin-top:32px">
+          <div style="font-family:'Plus Jakarta Sans';font-weight:700;font-size:19px;color:var(--text)">Rohin Khanna <span style="color:var(--green-dark);font-weight:600">· Founder &amp; President</span></div>
+          <p class="body" style="margin-top:6px">15+ years in retail and wellness, with early experience in high-volume nutrition retail. Founded Healthy Cart Canada in 2020.</p>
+        </div>
+        <div class="reveal d4" style="margin-top:22px">
+          <div style="font-family:'Plus Jakarta Sans';font-weight:700;font-size:19px;color:var(--text)">From e-commerce to multi-location retail</div>
+          <p class="body" style="margin-top:6px">Scaled from a direct-to-consumer and Amazon platform into a growing retail and franchise brand, with corporate and franchise locations across Ontario.</p>
+        </div>
+        <div class="reveal d5" style="margin-top:22px">
+          <div style="font-family:'Plus Jakarta Sans';font-weight:700;font-size:19px;color:var(--text)">Building the next phase</div>
+          <p class="body" style="margin-top:6px">Driving expansion toward premium retail destinations, with new locations planned across high-traffic markets.</p>
+        </div>
+      </div>
+    </div>
+    <div class="foot"><span class="brandmark"><span class="leaf"></span>Healthy Cart Canada</span><span>02 · Leadership</span></div>
+  </section>
+
+  <!-- ============ SLIDE 3 — OPPORTUNITY ============ -->
+  <section class="slide">
+    <div class="pad" style="justify-content:center;align-items:center;text-align:center">
+      <div class="kicker reveal d1">The Opportunity</div>
+      <div class="rule reveal d1" style="margin-left:auto;margin-right:auto"></div>
+      <h1 class="h1 reveal d2" style="margin-top:26px;max-width:980px;font-size:50px">Today's wellness consumer wants <span class="h-accent">more</span> than a discount shelf</h1>
+      <p class="body-lg reveal d3" style="margin-top:30px;max-width:760px">Health-conscious shoppers are looking for premium products, expert guidance, and a brand they trust. Healthy Cart delivers an elevated supplement experience — combining curated retail with performance-driven products.</p>
+      <div class="reveal d4" style="margin-top:34px;display:flex;gap:12px">
+        <span class="pill">Premium products</span>
+        <span class="pill">Expert guidance</span>
+        <span class="pill">A brand to trust</span>
+      </div>
+    </div>
+    <div class="foot"><span class="brandmark"><span class="leaf"></span>Healthy Cart Canada</span><span>03 · The Opportunity</span></div>
+  </section>
+
+  <!-- ============ SLIDE 4 — MARKET ============ -->
+  <section class="slide">
+    <div class="pad">
+      <div class="kicker reveal d1">Market</div>
+      <div class="rule reveal d1"></div>
+      <h1 class="h1 reveal d2" style="margin-top:18px;font-size:44px">A large and growing Canadian market</h1>
+
+      <div style="flex:1;display:flex;gap:48px;align-items:center;margin-top:18px">
+        <!-- left: stats -->
+        <div style="flex:0 0 440px;display:flex;flex-direction:column;gap:24px">
+          <div class="reveal d2">
+            <div class="stat-num" style="font-size:56px">~$4B</div>
+            <div class="body" style="margin-top:2px">Canadian dietary supplements market (2024)</div>
+          </div>
+          <div class="reveal d3">
+            <div class="stat-num" style="font-size:56px">~$6.9B</div>
+            <div class="body" style="margin-top:2px">Projected market size by 2030</div>
+          </div>
+          <div class="reveal d4" style="display:flex;gap:34px">
+            <div>
+              <div class="stat-num" style="font-size:42px">~9.5%</div>
+              <div class="body" style="margin-top:2px;max-width:150px">Projected annual growth (CAGR, ’25–’30)</div>
+            </div>
+            <div>
+              <div class="stat-num" style="font-size:42px;color:var(--text)">Premium</div>
+              <div class="body" style="margin-top:2px;max-width:160px">Consumer shift toward premium wellness &amp; nutrition near fitness hubs</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- right: growth chart -->
+        <div class="reveal d3" style="flex:1;align-self:stretch;display:flex;align-items:flex-end">
+          <svg viewBox="0 -20 520 380" style="width:100%;height:auto" role="img" aria-label="Market growth from ~$4B in 2024 to ~$6.9B by 2030">
+            <!-- gridlines -->
+            <g stroke="var(--line)" stroke-width="1">
+              <line x1="60" y1="40" x2="510" y2="40"/>
+              <line x1="60" y1="120" x2="510" y2="120"/>
+              <line x1="60" y1="200" x2="510" y2="200"/>
+              <line x1="60" y1="280" x2="510" y2="280"/>
+            </g>
+            <line x1="60" y1="280" x2="510" y2="280" stroke="var(--line-strong)" stroke-width="1.5"/>
+            <!-- y labels -->
+            <g fill="var(--text-3)" font-family="Inter" font-size="12">
+              <text x="50" y="44" text-anchor="end">$8B</text>
+              <text x="50" y="124" text-anchor="end">$6B</text>
+              <text x="50" y="204" text-anchor="end">$4B</text>
+              <text x="50" y="284" text-anchor="end">$0</text>
+            </g>
+            <!-- bars: 2024 ~4B (h=160), 2027 ~5.4B (h=216), 2030 ~6.9B (h=276) -->
+            <rect x="105" y="120" width="80" height="160" rx="6" fill="var(--c2)"/>
+            <rect x="245" y="64"  width="80" height="216" rx="6" fill="var(--c1)" opacity=".55"/>
+            <rect x="385" y="4"   width="80" height="276" rx="6" fill="var(--c1)"/>
+            <!-- value labels -->
+            <g font-family="Plus Jakarta Sans" font-weight="700" font-size="17" text-anchor="middle">
+              <text x="145" y="108" fill="var(--text)">$4.0B</text>
+              <text x="285" y="52"  fill="var(--text-2)">$5.4B</text>
+              <text x="425" y="-8"  fill="var(--text)">$6.9B</text>
+            </g>
+            <!-- x labels -->
+            <g fill="var(--text-3)" font-family="Inter" font-size="13" text-anchor="middle">
+              <text x="145" y="302">2024</text>
+              <text x="285" y="302">2027</text>
+              <text x="425" y="302">2030</text>
+            </g>
+          </svg>
+        </div>
+      </div>
+      <div class="body reveal d5" style="font-size:12px;color:var(--text-3)">Sources: Grand View Research; Mordor Intelligence — Canada dietary supplements / nutraceuticals.</div>
+    </div>
+    <div class="foot"><span class="brandmark"><span class="leaf"></span>Healthy Cart Canada</span><span>04 · Market</span></div>
+  </section>
+
+  <!-- ============ SLIDE 5 — WHY HEALTHY CART ============ -->
+  <section class="slide">
+    <div class="pad">
+      <div class="kicker reveal d1">The Difference</div>
+      <div class="rule reveal d1"></div>
+      <h1 class="h1 reveal d2" style="margin-top:18px;font-size:44px">Why Healthy Cart stands apart</h1>
+
+      <div style="flex:1;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:22px;margin-top:28px">
+        <div class="card reveal d2">
+          <div class="stat-num" style="font-size:24px">01</div>
+          <div style="font-family:'Plus Jakarta Sans';font-weight:700;font-size:21px;margin-top:8px;color:var(--text)">Elevated Retail Experience</div>
+          <p class="body" style="margin-top:8px">Store design that mirrors premium fitness culture and attracts discerning customers.</p>
+        </div>
+        <div class="card reveal d3">
+          <div class="stat-num" style="font-size:24px">02</div>
+          <div style="font-family:'Plus Jakarta Sans';font-weight:700;font-size:21px;margin-top:8px;color:var(--text)">Strategic Locations</div>
+          <p class="body" style="margin-top:8px">Sites positioned near high-traffic fitness centres to drive consistent foot traffic.</p>
+        </div>
+        <div class="card reveal d4">
+          <div class="stat-num" style="font-size:24px">03</div>
+          <div style="font-family:'Plus Jakarta Sans';font-weight:700;font-size:21px;margin-top:8px;color:var(--text)">Protein Shake Bar</div>
+          <p class="body" style="margin-top:8px">A signature in-store offering that encourages repeat visits and higher transaction value.</p>
+        </div>
+        <div class="card reveal d5">
+          <div class="stat-num" style="font-size:24px">04</div>
+          <div style="font-family:'Plus Jakarta Sans';font-weight:700;font-size:21px;margin-top:8px;color:var(--text)">Expert-Led Personalization</div>
+          <p class="body" style="margin-top:8px">Custom supplement guidance that builds loyalty and customer lifetime value.</p>
+        </div>
+      </div>
+    </div>
+    <div class="foot"><span class="brandmark"><span class="leaf"></span>Healthy Cart Canada</span><span>05 · The Difference</span></div>
+  </section>
+
+  <!-- ============ SLIDE 6 — POSITIONING ============ -->
+  <section class="slide">
+    <div class="pad">
+      <div class="kicker reveal d1">Positioning</div>
+      <div class="rule reveal d1"></div>
+      <h1 class="h1 reveal d2" style="margin-top:18px;font-size:40px">Built for a gap the market hasn't filled</h1>
+      <p class="body reveal d2" style="margin-top:12px;max-width:880px">Healthy Cart combines premium retail design, in-store experience, and strategic placement in a way traditional and online-only retailers don't.</p>
+
+      <!-- comparison matrix (category-based, not named brands) -->
+      <div class="reveal d3" style="flex:1;margin-top:26px;display:flex;align-items:center">
+        <div style="width:100%;border:1px solid var(--line);border-radius:14px;overflow:hidden">
+          <table style="width:100%;border-collapse:collapse;font-family:'Inter'">
+            <thead>
+              <tr style="background:var(--surface-2)">
+                <th style="text-align:left;padding:16px 22px;font-size:14px;font-weight:600;color:var(--text-2)">Capability</th>
+                <th style="padding:16px 18px;font-size:14px;font-weight:700;color:var(--green-dark);background:var(--tint)">Healthy Cart</th>
+                <th style="padding:16px 18px;font-size:14px;font-weight:600;color:var(--text-2)">Traditional Supplement Retail</th>
+                <th style="padding:16px 18px;font-size:14px;font-weight:600;color:var(--text-2)">Online-Only</th>
+              </tr>
+            </thead>
+            <tbody id="matrix"></tbody>
+          </table>
+        </div>
+      </div>
+      <p class="body reveal d5" style="font-size:13px;color:var(--text-3)">An integrated model designed for today's fitness-focused consumer.</p>
+    </div>
+    <div class="foot"><span class="brandmark"><span class="leaf"></span>Healthy Cart Canada</span><span>06 · Positioning</span></div>
+  </section>
+
+  <!-- ============ SLIDE 7 — STORE CONCEPT ============ -->
+  <section class="slide">
+    <div class="pad" style="flex-direction:row;gap:52px">
+      <div style="flex:1;display:flex;flex-direction:column;justify-content:center">
+        <div class="kicker reveal d1">The Experience</div>
+        <div class="rule reveal d1"></div>
+        <h1 class="h1 reveal d2" style="margin-top:18px;font-size:42px">A retail experience built for <span class="h-accent">modern fitness culture</span></h1>
+        <p class="body-lg reveal d3" style="margin-top:24px">Every Healthy Cart location is designed to match the energy and sophistication of today's premium fitness lifestyle. From the moment customers enter, they experience a curated environment that elevates supplement shopping from transactional to aspirational.</p>
+        <div class="reveal d4" style="margin-top:28px;display:flex;gap:12px">
+          <span class="pill">Curated layout</span>
+          <span class="pill">Shake bar</span>
+          <span class="pill">Expert staff</span>
+        </div>
+      </div>
+      <div class="imgph reveal d2" style="flex:0 0 500px;align-self:stretch">
+        <span>[ASSET] Real Healthy Cart store interior<br>assets/images/slides/store.jpg</span>
+        <!-- replace with <img src="assets/images/slides/store.jpg" alt="Healthy Cart store interior"> -->
+      </div>
+    </div>
+    <div class="foot"><span class="brandmark"><span class="leaf"></span>Healthy Cart Canada</span><span>07 · The Experience</span></div>
+  </section>
+
+  <!-- ============ SLIDE 8 — SUPPORT ============ -->
+  <section class="slide">
+    <div class="pad">
+      <div class="kicker reveal d1">Support</div>
+      <div class="rule reveal d1"></div>
+      <h1 class="h1 reveal d2" style="margin-top:18px;font-size:44px">End-to-end franchise support</h1>
+      <p class="body reveal d2" style="margin-top:12px;max-width:900px">Healthy Cart provides support from site selection through daily operations — a system designed to reduce uncertainty and support your path to opening.</p>
+
+      <!-- pillar flow -->
+      <div class="reveal d3" style="margin-top:30px;display:grid;grid-template-columns:repeat(5,1fr);gap:0;position:relative">
+        <!-- connector line -->
+        <div style="position:absolute;top:18px;left:19px;right:9%;height:2px;background:var(--green-soft);z-index:0"></div>
+        <!-- pillars -->
+        <div style="position:relative;z-index:1;padding-right:14px">
+          <div style="width:38px;height:38px;border-radius:50%;background:var(--green-dark);color:var(--text-on-green);display:flex;align-items:center;justify-content:center;font-family:'Plus Jakarta Sans';font-weight:800;font-size:16px">1</div>
+          <div style="font-family:'Plus Jakarta Sans';font-weight:700;font-size:17px;margin-top:14px;color:var(--text)">Site Selection</div>
+          <p class="body" style="margin-top:6px;font-size:14px">Strategic location analysis near high-traffic gyms.</p>
+        </div>
+        <div style="position:relative;z-index:1;padding-right:14px">
+          <div style="width:38px;height:38px;border-radius:50%;background:var(--green);color:var(--text-on-green);display:flex;align-items:center;justify-content:center;font-family:'Plus Jakarta Sans';font-weight:800;font-size:16px">2</div>
+          <div style="font-family:'Plus Jakarta Sans';font-weight:700;font-size:17px;margin-top:14px;color:var(--text)">Store Setup</div>
+          <p class="body" style="margin-top:6px;font-size:14px">Construction, interior design, shelving, and inventory.</p>
+        </div>
+        <div style="position:relative;z-index:1;padding-right:14px">
+          <div style="width:38px;height:38px;border-radius:50%;background:var(--green);color:var(--text-on-green);display:flex;align-items:center;justify-content:center;font-family:'Plus Jakarta Sans';font-weight:800;font-size:16px">3</div>
+          <div style="font-family:'Plus Jakarta Sans';font-weight:700;font-size:17px;margin-top:14px;color:var(--text)">Training</div>
+          <p class="body" style="margin-top:6px;font-size:14px">Comprehensive operational, product, and sales training.</p>
+        </div>
+        <div style="position:relative;z-index:1;padding-right:14px">
+          <div style="width:38px;height:38px;border-radius:50%;background:var(--green);color:var(--text-on-green);display:flex;align-items:center;justify-content:center;font-family:'Plus Jakarta Sans';font-weight:800;font-size:16px">4</div>
+          <div style="font-family:'Plus Jakarta Sans';font-weight:700;font-size:17px;margin-top:14px;color:var(--text)">Marketing</div>
+          <p class="body" style="margin-top:6px;font-size:14px">Grand-opening campaigns, social, and ongoing brand building.</p>
+        </div>
+        <div style="position:relative;z-index:1">
+          <div style="width:38px;height:38px;border-radius:50%;background:var(--green-soft);color:var(--text-on-green);display:flex;align-items:center;justify-content:center;font-family:'Plus Jakarta Sans';font-weight:800;font-size:16px">5</div>
+          <div style="font-family:'Plus Jakarta Sans';font-weight:700;font-size:17px;margin-top:14px;color:var(--text)">Ongoing Assistance</div>
+          <p class="body" style="margin-top:6px;font-size:14px">Coaching, SOPs, operational manuals, and troubleshooting.</p>
+        </div>
+      </div>
+
+      <!-- callouts -->
+      <div style="flex:1;display:flex;align-items:flex-end;gap:48px;margin-top:8px">
+        <div class="reveal d4" style="flex:1">
+          <div class="label">Setup Timeline</div>
+          <p class="body" style="margin-top:6px;color:var(--text)">A structured launch process from signing to opening. Timelines vary based on site selection, permitting, construction, and landlord approvals.</p>
+        </div>
+        <div class="reveal d5" style="flex:1">
+          <div class="label">Agreement Terms</div>
+          <p class="body" style="margin-top:6px;color:var(--text)">10-year initial term with renewal option. Full terms are provided in the Franchise Disclosure Document (FDD).</p>
+        </div>
+      </div>
+    </div>
+    <div class="foot"><span class="brandmark"><span class="leaf"></span>Healthy Cart Canada</span><span>08 · Support</span></div>
+  </section>
+
+  <!-- ============ SLIDE 9 — FINANCIALS / INVESTMENT MODEL ============ -->
+  <section class="slide">
+    <div class="pad">
+      <div class="kicker reveal d1">Financials</div>
+      <div class="rule reveal d1"></div>
+      <h1 class="h1 reveal d2" style="margin-top:18px;font-size:44px">The investment model</h1>
+
+      <div style="flex:1;display:flex;gap:52px;margin-top:22px">
+        <!-- left: breakdown -->
+        <div style="flex:1">
+          <div class="reveal d2" style="font-family:'Plus Jakarta Sans';font-weight:800;font-size:26px;color:var(--text)">Total Initial Investment: <span class="h-accent">$250K–$300K</span></div>
+          <div class="reveal d3" style="margin-top:18px;display:flex;flex-direction:column;gap:11px">
+            <div class="finrow"><span>Franchise fee</span><b>$45,000</b></div>
+            <div class="finrow"><span>Construction &amp; premium design</span><span class="dotfill"></span></div>
+            <div class="finrow"><span>Equipment, signage &amp; fixtures</span><span class="dotfill"></span></div>
+            <div class="finrow"><span>Initial inventory &amp; product mix</span><span class="dotfill"></span></div>
+            <div class="finrow"><span>Shake bar setup</span><span class="dotfill"></span></div>
+            <div class="finrow"><span>Training &amp; onboarding</span><span class="dotfill"></span></div>
+          </div>
+          <div class="reveal d4" style="margin-top:18px;display:flex;gap:40px">
+            <div><div class="label">Down payment</div><div style="font-family:'Plus Jakarta Sans';font-weight:700;font-size:20px;margin-top:3px;color:var(--text)">~$75,000 <span style="color:var(--text-3);font-weight:600;font-size:15px">(≈30%)</span></div></div>
+            <div><div class="label">Financing</div><div style="font-family:'Plus Jakarta Sans';font-weight:700;font-size:20px;margin-top:3px;color:var(--text)">Available</div><div class="body" style="font-size:13px">Bank &amp; private lender options</div></div>
+          </div>
+        </div>
+
+        <!-- right: investment allocation donut -->
+        <div class="reveal d3" style="flex:0 0 380px;display:flex;flex-direction:column;align-items:center;justify-content:center">
+          <div class="label" style="align-self:flex-start">Where your investment goes</div>
+          <svg viewBox="0 0 240 240" style="width:260px;height:260px;margin-top:10px" role="img" aria-label="Investment allocation breakdown">
+            <!-- donut: 4 segments. circumference for r=80 = 502.65. Stroke-dasharray segments -->
+            <g transform="rotate(-90 120 120)" fill="none" stroke-width="34">
+              <!-- Construction 38% -->
+              <circle cx="120" cy="120" r="80" stroke="var(--c1)" stroke-dasharray="190.9 311.7" stroke-dashoffset="0"/>
+              <!-- Inventory 24% -->
+              <circle cx="120" cy="120" r="80" stroke="var(--c2)" stroke-dasharray="120.6 382" stroke-dashoffset="-190.9"/>
+              <!-- Equipment/Shake bar 22% -->
+              <circle cx="120" cy="120" r="80" stroke="var(--c3)" stroke-dasharray="110.6 392" stroke-dashoffset="-311.5"/>
+              <!-- Fee/Training 16% -->
+              <circle cx="120" cy="120" r="80" stroke="var(--c4)" stroke-dasharray="80.4 422.2" stroke-dashoffset="-422.1"/>
+            </g>
+            <text x="120" y="114" text-anchor="middle" font-family="Plus Jakarta Sans" font-weight="800" font-size="26" fill="var(--text)">~$275K</text>
+            <text x="120" y="136" text-anchor="middle" font-family="Inter" font-size="12" fill="var(--text-3)">typical total</text>
+          </svg>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px 18px;margin-top:6px;font-size:12px;color:var(--text-2)">
+            <div><span class="lg" style="background:var(--c1)"></span>Construction &amp; design</div>
+            <div><span class="lg" style="background:var(--c2)"></span>Inventory</div>
+            <div><span class="lg" style="background:var(--c3)"></span>Equipment &amp; shake bar</div>
+            <div><span class="lg" style="background:var(--c4)"></span>Fee &amp; training</div>
+          </div>
+        </div>
+      </div>
+      <p class="body reveal d5" style="font-size:11.5px;color:var(--text-3);line-height:1.45;margin-top:6px">Figures are illustrative and based on a limited number of operating locations. They are not a guarantee of revenue, profit, or individual results. This document does not constitute a financial performance representation. Please refer to the FDD for complete information.</p>
+    </div>
+    <div class="foot"><span class="brandmark"><span class="leaf"></span>Healthy Cart Canada</span><span>09 · Financials</span></div>
+  </section>
+
+  <!-- ============ SLIDE 10 — THE MODEL ============ -->
+  <section class="slide">
+    <div class="pad">
+      <div class="kicker reveal d1">The Model</div>
+      <div class="rule reveal d1"></div>
+      <h1 class="h1 reveal d2" style="margin-top:18px;font-size:44px">A model built for durability</h1>
+
+      <div style="flex:1;display:flex;gap:24px;align-items:center;margin-top:14px">
+        <!-- item 1 -->
+        <div class="card reveal d2" style="flex:1;align-self:stretch;display:flex;flex-direction:column;justify-content:center">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.4 6.6H21l-5.3 4 2 6.6L12 15.4 6.3 19.2l2-6.6L3 8.6h6.6z"/></svg>
+          <div style="font-family:'Plus Jakarta Sans';font-weight:700;font-size:21px;margin-top:16px;color:var(--text)">Premium positioning</div>
+          <p class="body" style="margin-top:8px">A curated, premium product mix and in-store experience designed to support healthy margins and repeat visits.</p>
+        </div>
+        <!-- item 2 -->
+        <div class="card reveal d3" style="flex:1;align-self:stretch;display:flex;flex-direction:column;justify-content:center">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-3-6.7"/><polyline points="21 4 21 9 16 9"/></svg>
+          <div style="font-family:'Plus Jakarta Sans';font-weight:700;font-size:21px;margin-top:16px;color:var(--text)">Recurring demand</div>
+          <p class="body" style="margin-top:8px">Consumable products and personalized programs encourage repeat purchases and customer loyalty.</p>
+        </div>
+        <!-- item 3 royalty ring -->
+        <div class="card reveal d4" style="flex:1;align-self:stretch;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center">
+          <svg viewBox="0 0 140 140" style="width:130px;height:130px" role="img" aria-label="5 percent royalty fee">
+            <circle cx="70" cy="70" r="58" fill="none" stroke="var(--line)" stroke-width="12"/>
+            <circle cx="70" cy="70" r="58" fill="none" stroke="var(--green-dark)" stroke-width="12" stroke-linecap="round"
+              stroke-dasharray="18.2 346.2" transform="rotate(-90 70 70)"/>
+            <text x="70" y="78" text-anchor="middle" font-family="Plus Jakarta Sans" font-weight="800" font-size="34" fill="var(--text)">5%</text>
+          </svg>
+          <div style="font-family:'Plus Jakarta Sans';font-weight:700;font-size:21px;margin-top:14px;color:var(--text)">Royalty fee</div>
+          <p class="body" style="margin-top:8px">A competitive ongoing royalty on net sales.</p>
+        </div>
+      </div>
+      <p class="body reveal d5" style="font-size:11.5px;color:var(--text-3);line-height:1.45;margin-top:14px">This page describes the franchise model and does not represent or guarantee any level of revenue, profit, margin, or return. Individual results vary. Refer to the FDD and Franchise Agreement for binding terms.</p>
+    </div>
+    <div class="foot"><span class="brandmark"><span class="leaf"></span>Healthy Cart Canada</span><span>10 · The Model</span></div>
+  </section>
+
+  <!-- ============ SLIDE 11 — WHO BECOMES A FRANCHISEE ============ -->
+  <section class="slide">
+    <div class="pad">
+      <div class="kicker reveal d1">Is This You?</div>
+      <div class="rule reveal d1"></div>
+      <h1 class="h1 reveal d2" style="margin-top:18px;font-size:44px">Who becomes a Healthy Cart franchisee</h1>
+      <p class="body reveal d2" style="margin-top:12px;max-width:860px">Healthy Cart attracts a diverse group of motivated individuals and businesses looking to enter the growing wellness market.</p>
+
+      <div style="flex:1;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:24px;margin-top:26px">
+        <div class="reveal d2" style="display:flex;gap:18px;align-items:flex-start">
+          <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:2px"><circle cx="12" cy="5" r="2.4"/><path d="M9 21l1.5-7L7 11l1-4 4 1 3 3"/><path d="M14 21l-1-5"/></svg>
+          <div><div style="font-family:'Plus Jakarta Sans';font-weight:700;font-size:20px;color:var(--text)">Fitness Entrepreneurs</div><p class="body" style="margin-top:5px">Health and wellness enthusiasts eager to expand their ventures.</p></div>
+        </div>
+        <div class="reveal d3" style="display:flex;gap:18px;align-items:flex-start">
+          <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:2px"><path d="M6 8v8M18 8v8M4 10h4M16 10h4M8 12h8M3 11v2M21 11v2"/></svg>
+          <div><div style="font-family:'Plus Jakarta Sans';font-weight:700;font-size:20px;color:var(--text)">Gym Owners</div><p class="body" style="margin-top:5px">Studio owners seeking to diversify revenue and enhance member offerings.</p></div>
+        </div>
+        <div class="reveal d4" style="display:flex;gap:18px;align-items:flex-start">
+          <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:2px"><path d="M3 21h18M5 21V9l7-5 7 5v12M9 21v-6h6v6"/></svg>
+          <div><div style="font-family:'Plus Jakarta Sans';font-weight:700;font-size:20px;color:var(--text)">Business Investors</div><p class="body" style="margin-top:5px">Business professionals and growth-oriented investors seeking an ownership opportunity.</p></div>
+        </div>
+        <div class="reveal d5" style="display:flex;gap:18px;align-items:flex-start">
+          <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:2px"><rect x="3" y="5" width="18" height="14" rx="3"/><polygon points="10 9 15 12 10 15" fill="var(--green)" stroke="none"/></svg>
+          <div><div style="font-family:'Plus Jakarta Sans';font-weight:700;font-size:20px;color:var(--text)">Wellness Influencers</div><p class="body" style="margin-top:5px">Creators ready to convert their platform into a physical retail presence.</p></div>
+        </div>
+      </div>
+    </div>
+    <div class="foot"><span class="brandmark"><span class="leaf"></span>Healthy Cart Canada</span><span>11 · Franchisee Profile</span></div>
+  </section>
+
+  <!-- ============ SLIDE 12 — CTA ============ -->
+  <section class="slide">
+    <div class="pad" style="align-items:center;text-align:center;justify-content:flex-start;padding-top:10px">
+      <div class="reveal d1" style="margin-bottom:6px">
+        <img src="assets/images/ui/logo.png" alt="Healthy Cart Canada" style="height:42px">
+      </div>
+      <div class="kicker reveal d1">Let's Build Together</div>
+      <h1 class="h1 reveal d2" style="margin-top:14px;font-size:48px">Let's open your Healthy Cart franchise</h1>
+      <p class="body-lg reveal d3" style="margin-top:18px;max-width:720px">Join a premium Canadian supplement retail brand backed by a structured support system and built for the modern wellness consumer.</p>
+
+      <div class="reveal d4" style="margin-top:40px;display:grid;grid-template-columns:repeat(4,1fr);gap:22px;width:100%;max-width:1000px">
+        <div><div style="font-family:'Plus Jakarta Sans';font-weight:700;font-size:17px;color:var(--text)">A Growing Brand Presence</div><p class="body" style="font-size:14px;margin-top:7px">Operating and under-development locations across Ontario, with an active social community.</p></div>
+        <div><div style="font-family:'Plus Jakarta Sans';font-weight:700;font-size:17px;color:var(--text)">Prime Locations</div><p class="body" style="font-size:14px;margin-top:7px">Strategic sites near premier gyms across Ontario and expanding.</p></div>
+        <div><div style="font-family:'Plus Jakarta Sans';font-weight:700;font-size:17px;color:var(--text)">Turnkey Launch</div><p class="body" style="font-size:14px;margin-top:7px">A structured path from site selection through opening.</p></div>
+        <div><div style="font-family:'Plus Jakarta Sans';font-weight:700;font-size:17px;color:var(--text)">Training &amp; Support Provided</div><p class="body" style="font-size:14px;margin-top:7px">Comprehensive training and ongoing coaching for new operators.</p></div>
+      </div>
+
+      <div class="reveal d5" style="margin-top:42px;display:flex;align-items:center;gap:28px">
+        <a class="cta-btn" href="mailto:franchise@healthycartcanada.com">Secure your territory →</a>
+        <div style="text-align:left">
+          <div class="label">Franchise Development</div>
+          <div style="font-family:'Plus Jakarta Sans';font-weight:600;font-size:15px;color:var(--green-dark);margin-top:3px">franchise@healthycartcanada.com</div>
+          <div class="body" style="font-size:13px">healthycartcanada.com</div>
+        </div>
+      </div>
+    </div>
+    <div class="foot"><span class="brandmark"><span class="leaf"></span>Healthy Cart Canada</span><span>12 · Contact</span></div>
+  </section>
+
+</div><!-- /stage -->
+
+<style>
+.finrow{display:flex;align-items:baseline;justify-content:space-between;gap:10px;font-size:15px;color:var(--text-2);border-bottom:1px solid var(--line);padding-bottom:9px}
+.finrow b{color:var(--text);font-weight:700;font-family:'Plus Jakarta Sans'}
+.dotfill{flex:1;border-bottom:1px dotted var(--line-strong);height:1px;align-self:center;margin:0 4px;max-width:60px}
+.lg{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:middle}
+</style>
+
+<script>
+/* ---- THEME TOGGLE (interactive only; in-memory) ---- */
+function toggleTheme(){
+  const r=document.documentElement;
+  const next=r.getAttribute('data-theme')==='light'?'dark':'light';
+  r.setAttribute('data-theme',next);
+  document.getElementById('tgl-label').textContent=next==='light'?'Dark mode':'Light mode';
+}
+
+/* ---- POSITIONING MATRIX (truth lives in JS-built DOM, but renders before print since it runs on load) ---- */
+(function(){
+  const rows=[
+    ['Premium retail design',      'check','Limited','—'],
+    ['In-store shake bar',         'check','None','—'],
+    ['Strategic gym-adjacent sites','check','Limited','—'],
+    ['Personalized programs',      'check','Limited','Minimal'],
+    ['Athlete & community presence','check','Occasional','Limited'],
+  ];
+  const tb=document.getElementById('matrix');
+  const checkSVG='<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--green-dark)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
+  rows.forEach((r,i)=>{
+    const tr=document.createElement('tr');
+    tr.style.borderTop='1px solid var(--line)';
+    tr.innerHTML=
+      '<td style="padding:14px 22px;font-size:15px;font-weight:600;color:var(--text)">'+r[0]+'</td>'+
+      '<td style="padding:14px 18px;text-align:center;background:var(--tint)">'+(r[1]==='check'?checkSVG:r[1])+'</td>'+
+      '<td style="padding:14px 18px;text-align:center;font-size:14px;color:var(--text-2)">'+r[2]+'</td>'+
+      '<td style="padding:14px 18px;text-align:center;font-size:14px;color:var(--text-2)">'+r[3]+'</td>';
+    tb.appendChild(tr);
+  });
+})();
+</script>
+</body>
+</html>
