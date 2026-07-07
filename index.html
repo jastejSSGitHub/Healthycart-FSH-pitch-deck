@@ -150,16 +150,41 @@ h1.h1{font-family:'Plus Jakarta Sans';font-weight:800;letter-spacing:-.02em;
   );}
 
 /* ---------- PRINT ---------- */
-@page{size:1280px 720px landscape;margin:0}
-@media print{
-  .interactive-only{display:none !important}
-  .print-only{display:block !important}
-  *,*::before,*::after{animation:none !important;transition:none !important;
-    opacity:1 !important;transform:none !important}
-  .stage{display:block;gap:0;padding:0}
-  .slide{box-shadow:none;border:none;border-radius:0;page-break-after:always;
-    width:1280px;height:720px}
-  body{background:#fff}
+@media print {
+  @page {
+    size: 1280px 720px landscape;
+    margin: 0 !important;
+  }
+  html, body {
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #fff !important;
+  }
+  .interactive-only { display: none !important; }
+  .print-only { display: block !important; }
+  * , *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .stage {
+    display: block !important;
+    gap: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  .slide {
+    box-shadow: none !important;
+    border: none !important;
+    border-radius: 0 !important;
+    page-break-after: always !important;
+    break-after: page !important;
+    margin: 0 !important;
+    width: 1280px !important;
+    height: 720px !important;
+    overflow: hidden !important;
+  }
 }
 .print-only{display:none}
 </style>
@@ -216,11 +241,11 @@ h1.h1{font-family:'Plus Jakarta Sans';font-weight:800;letter-spacing:-.02em;
         </div>
         <div class="reveal d4" style="margin-top:22px">
           <div style="font-family:'Plus Jakarta Sans';font-weight:700;font-size:19px;color:var(--text)">From e-commerce to multi-location retail</div>
-          <p class="body" style="margin-top:6px">Scaled from a direct-to-consumer and Amazon platform into a growing retail and franchise brand, with corporate and franchise locations across Ontario.</p>
+          <p class="body" style="margin-top:6px">Scaled from a direct-to-consumer and Amazon platform into a growing retail and franchise brand, with 4 operating locations and 3 under construction across Ontario.</p>
         </div>
         <div class="reveal d5" style="margin-top:22px">
           <div style="font-family:'Plus Jakarta Sans';font-weight:700;font-size:19px;color:var(--text)">Building the next phase</div>
-          <p class="body" style="margin-top:6px">Driving expansion toward premium retail destinations, with new locations planned across high-traffic markets.</p>
+          <p class="body" style="margin-top:6px">Driving expansion toward premium retail destinations, with 3 additional locations currently under construction in high-traffic markets.</p>
         </div>
       </div>
     </div>
@@ -447,7 +472,7 @@ h1.h1{font-family:'Plus Jakarta Sans';font-weight:800;letter-spacing:-.02em;
         <div style="position:relative;z-index:1;padding-right:14px">
           <div style="width:38px;height:38px;border-radius:50%;background:var(--green);color:var(--text-on-green);display:flex;align-items:center;justify-content:center;font-family:'Plus Jakarta Sans';font-weight:800;font-size:16px">4</div>
           <div style="font-family:'Plus Jakarta Sans';font-weight:700;font-size:17px;margin-top:14px;color:var(--text)">Marketing</div>
-          <p class="body" style="margin-top:6px;font-size:14px">Grand-opening campaigns, social, and ongoing brand building.</p>
+          <p class="body" style="margin-top:6px;font-size:14px">TV and radio advertising, gym-based marketing (announcements, booth presence, Planet Fitness exposure), social media, and ongoing brand support.</p>
         </div>
         <div style="position:relative;z-index:1">
           <div style="width:38px;height:38px;border-radius:50%;background:var(--green-soft);color:var(--text-on-green);display:flex;align-items:center;justify-content:center;font-family:'Plus Jakarta Sans';font-weight:800;font-size:16px">5</div>
@@ -539,7 +564,7 @@ h1.h1{font-family:'Plus Jakarta Sans';font-weight:800;letter-spacing:-.02em;
         <div class="card reveal d2" style="flex:1;align-self:stretch;display:flex;flex-direction:column;justify-content:center">
           <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.4 6.6H21l-5.3 4 2 6.6L12 15.4 6.3 19.2l2-6.6L3 8.6h6.6z"/></svg>
           <div style="font-family:'Plus Jakarta Sans';font-weight:700;font-size:21px;margin-top:16px;color:var(--text)">Premium positioning</div>
-          <p class="body" style="margin-top:8px">A curated, premium product mix and in-store experience designed to support healthy margins and repeat visits.</p>
+          <p class="body" style="margin-top:8px">A curated, premium product mix — with flexibility for health-compliant third-party products — and an in-store experience designed to support healthy margins and repeat visits.</p>
         </div>
         <!-- item 2 -->
         <div class="card reveal d3" style="flex:1;align-self:stretch;display:flex;flex-direction:column;justify-content:center">
@@ -556,7 +581,7 @@ h1.h1{font-family:'Plus Jakarta Sans';font-weight:800;letter-spacing:-.02em;
             <text x="70" y="78" text-anchor="middle" font-family="Plus Jakarta Sans" font-weight="800" font-size="34" fill="var(--text)">5%</text>
           </svg>
           <div style="font-family:'Plus Jakarta Sans';font-weight:700;font-size:21px;margin-top:16px;color:var(--text)">Royalty fee</div>
-          <p class="body" style="margin-top:8px">A competitive ongoing royalty on net sales.</p>
+          <p class="body" style="margin-top:8px">A competitive ongoing royalty of 5% on gross sales.</p>
         </div>
       </div>
       <p class="body reveal d5" style="font-size:11.5px;color:var(--text-3);line-height:1.45;margin-top:14px">This page describes the franchise model and does not represent or guarantee any level of revenue, profit, margin, or return. Individual results vary. Refer to the FDD and Franchise Agreement for binding terms.</p>
@@ -626,7 +651,7 @@ h1.h1{font-family:'Plus Jakarta Sans';font-weight:800;letter-spacing:-.02em;
 
       <!-- 6. Four points -->
       <div class="reveal d5" style="margin-top:28px;padding-top:22px;border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(4,1fr);gap:22px;width:100%;max-width:1000px">
-        <div><div style="font-family:'Plus Jakarta Sans';font-weight:700;font-size:13px;color:var(--text)">A Growing Brand Presence</div><p class="body" style="font-size:13px;margin-top:5px">Operating and under-development locations across Ontario, with an active social community.</p></div>
+        <div><div style="font-family:'Plus Jakarta Sans';font-weight:700;font-size:13px;color:var(--text)">A Growing Brand Presence</div><p class="body" style="font-size:13px;margin-top:5px">4 operating locations and 3 under construction across Ontario, with an active social media community.</p></div>
         <div><div style="font-family:'Plus Jakarta Sans';font-weight:700;font-size:13px;color:var(--text)">Prime Locations</div><p class="body" style="font-size:13px;margin-top:5px">Strategic sites near premier gyms across Ontario and expanding.</p></div>
         <div><div style="font-family:'Plus Jakarta Sans';font-weight:700;font-size:13px;color:var(--text)">Turnkey Launch</div><p class="body" style="font-size:13px;margin-top:5px">A structured path from site selection through opening.</p></div>
         <div><div style="font-family:'Plus Jakarta Sans';font-weight:700;font-size:13px;color:var(--text)">Training &amp; Support Provided</div><p class="body" style="font-size:13px;margin-top:5px">Comprehensive training and ongoing coaching for new operators.</p></div>
@@ -675,6 +700,7 @@ function toggleTheme(){
     ['Strategic gym-adjacent sites','check','Limited','—'],
     ['Personalized programs',      'check','Limited','Minimal'],
     ['Athlete & community presence','check','Occasional','Limited'],
+    ['Approved third-party products','check','Limited','Varies'],
   ];
   const tb=document.getElementById('matrix');
   const checkSVG='<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--green-dark)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
