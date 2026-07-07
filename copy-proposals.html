@@ -1,0 +1,1053 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Healthy Cart Deck — Proposed Copy Changes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green: #4BAE33;
+    --green-dark: #2D7A1F;
+    --green-light: #E8F5E3;
+    --green-mid: #C7E8BC;
+    --bg: #FAFBF9;
+    --surface: #FFFFFF;
+    --text: #0D0D0D;
+    --text-2: #4A4A4A;
+    --text-3: #7A7A7A;
+    --line: #E2E8DE;
+    --add: #1B6B3A;
+    --edit: #2D7A1F;
+    --approved: #22c55e;
+    --approved-soft: rgba(34, 197, 94, 0.12);
+    --rejected: #ef4444;
+    --rejected-soft: rgba(239, 68, 68, 0.12);
+    --espresso: #0b0b0b;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.5;
+    padding: 32px 24px 48px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  header {
+    margin-bottom: 28px;
+    padding-bottom: 20px;
+    border-bottom: 3px solid var(--green);
+  }
+  h1 {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 800;
+    font-size: 28px;
+    letter-spacing: -0.02em;
+    color: var(--text);
+  }
+  h1 span { color: var(--green-dark); }
+  .meta {
+    margin-top: 8px;
+    font-size: 14px;
+    color: var(--text-2);
+  }
+  .meta a {
+    color: var(--green-dark);
+    font-weight: 600;
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.15s, opacity 0.15s;
+  }
+  .meta a:hover {
+    border-bottom-color: var(--green-dark);
+    opacity: 0.85;
+  }
+
+  .deck-link-wrap {
+    position: relative;
+    display: inline-block;
+  }
+  .deck-preview-popover {
+    position: absolute;
+    top: calc(100% + 12px);
+    left: 0;
+    z-index: 800;
+    width: min(340px, 88vw);
+    padding: 8px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    box-shadow: 0 16px 48px rgba(11, 11, 11, 0.16);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(8px) scale(0.98);
+    transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+    pointer-events: none;
+  }
+  .deck-link-wrap:hover .deck-preview-popover,
+  .deck-link-wrap:focus-within .deck-preview-popover {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+  }
+  .deck-preview-frame {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #fff;
+    border: 1px solid var(--line);
+  }
+  .deck-preview-frame iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1280px;
+    height: 720px;
+    border: none;
+    transform: scale(0.25);
+    transform-origin: top left;
+    pointer-events: none;
+    background: #fff;
+  }
+  .deck-preview-caption {
+    margin-top: 8px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: var(--text-3);
+    text-align: center;
+  }
+  .deck-preview-caption svg {
+    width: 12px;
+    height: 12px;
+    vertical-align: -2px;
+    margin-right: 4px;
+    opacity: 0.7;
+  }
+
+  @media (max-width: 720px) {
+    .deck-preview-popover { display: none; }
+  }
+  .badge {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+  .badge-add { background: var(--green-light); color: var(--add); }
+  .badge-edit { background: #FFF8E6; color: #9A6B00; }
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 20px 22px;
+    margin-bottom: 14px;
+    box-shadow: 0 1px 8px rgba(45, 122, 31, 0.06);
+  }
+  .card-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+  .slide-ref {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    color: var(--green-dark);
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  @media (max-width: 720px) {
+    .grid { grid-template-columns: 1fr; }
+  }
+  .col-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-3);
+    margin-bottom: 6px;
+  }
+  .before {
+    background: #F5F5F5;
+    border-left: 3px solid #CCC;
+    padding: 12px 14px;
+    border-radius: 0 8px 8px 0;
+    font-size: 14px;
+    color: var(--text-2);
+  }
+  .after {
+    background: var(--green-light);
+    border-left: 3px solid var(--green);
+    padding: 12px 14px;
+    border-radius: 0 8px 8px 0;
+    font-size: 14px;
+    color: var(--text);
+    font-weight: 500;
+  }
+  .benefit {
+    margin-top: 14px;
+    padding: 12px 14px;
+    background: linear-gradient(135deg, var(--green-light) 0%, #F7FBF5 100%);
+    border-radius: 8px;
+    font-size: 13px;
+    color: var(--text-2);
+  }
+  .benefit strong {
+    color: var(--green-dark);
+    font-weight: 600;
+  }
+  .benefit::before {
+    content: "→ For the investor: ";
+    font-weight: 600;
+    color: var(--green-dark);
+  }
+  .new-only .before {
+    font-style: italic;
+    color: var(--text-3);
+  }
+  footer {
+    margin-top: 28px;
+    padding-top: 16px;
+    border-top: 1px solid var(--line);
+    font-size: 12px;
+    color: var(--text-3);
+    text-align: center;
+  }
+  .confirm {
+    background: var(--green-dark);
+    color: #fff;
+    padding: 14px 18px;
+    border-radius: 10px;
+    margin-bottom: 24px;
+    font-size: 13px;
+  }
+  .confirm strong { font-weight: 700; }
+  body.embed { padding-top: 16px; }
+  body.embed footer { display: none; }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    margin: 0 0 18px;
+    padding: 0;
+    border: none;
+    background: none;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--green-dark);
+    text-decoration: none;
+    cursor: pointer;
+    letter-spacing: -0.01em;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .back-link:hover { opacity: 0.72; }
+  .back-link:active { opacity: 0.55; }
+  .back-link svg {
+    width: 18px;
+    height: 18px;
+    flex: none;
+    margin-left: -3px;
+  }
+
+  /* ── Review toolbar (Creative Hub–inspired) ── */
+  .review-bar {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+    padding: 12px 14px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    box-shadow: 0 1px 8px rgba(45, 122, 31, 0.05);
+  }
+  .review-bar-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .review-bar-label {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-3);
+  }
+  .review-bar-identity {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+    margin-left: auto;
+  }
+  .review-bar-sub {
+    font-size: 13px;
+    color: var(--text-2);
+  }
+  .review-bar-filters {
+    display: flex;
+    justify-content: flex-start;
+  }
+  .reviewer-badge {
+    font-size: 12px;
+    font-weight: 600;
+    padding: 6px 12px;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: var(--bg);
+    color: var(--text);
+  }
+  .reviewer-badge.is-empty { color: var(--text-3); font-weight: 500; }
+  .reviewer-change {
+    appearance: none;
+    border: none;
+    background: transparent;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--green-dark);
+    cursor: pointer;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  .filter-group {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: var(--bg);
+    flex-wrap: wrap;
+  }
+  .filter-btn {
+    appearance: none;
+    border: none;
+    background: transparent;
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-2);
+    padding: 7px 12px;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s, box-shadow 0.15s;
+    white-space: nowrap;
+  }
+  .filter-btn:hover { color: var(--text); }
+  .filter-btn.is-active {
+    background: var(--green);
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(45, 122, 31, 0.22);
+  }
+  .filter-count {
+    display: inline-block;
+    min-width: 1.1em;
+    margin-left: 4px;
+    opacity: 0.75;
+    font-size: 11px;
+  }
+
+  .proposal-card {
+    position: relative;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .proposal-card.is-filtered-out { display: none; }
+  .proposal-card.is-hovered,
+  .proposal-card.comments-open,
+  .proposal-card.has-comments {
+    border-color: rgba(45, 122, 31, 0.35);
+    box-shadow: 0 4px 20px rgba(45, 122, 31, 0.1);
+  }
+  .proposal-card.is-approved { border-left: 4px solid var(--approved); }
+  .proposal-card.is-rejected { border-left: 4px solid var(--rejected); }
+  .proposal-card.is-split { border-left: 4px solid #f59e0b; }
+
+  .review-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin: -4px 0 14px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--line);
+    opacity: 0;
+    transform: translateY(-4px);
+    pointer-events: none;
+    transition: opacity 0.18s ease, transform 0.18s ease;
+  }
+  .proposal-card.is-hovered .review-toolbar,
+  .proposal-card.comments-open .review-toolbar,
+  .proposal-card.has-comments .review-toolbar,
+  .proposal-card:focus-within .review-toolbar {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+  .review-toolbar-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    min-width: 0;
+  }
+  .review-label {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-3);
+    flex: none;
+  }
+  .consensus-strip { display: flex; flex-wrap: wrap; gap: 6px; }
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 999px;
+    border: 1px solid transparent;
+  }
+  .pill-approved { background: var(--approved-soft); color: #15803d; border-color: rgba(34, 197, 94, 0.25); }
+  .pill-rejected { background: var(--rejected-soft); color: #b91c1c; border-color: rgba(239, 68, 68, 0.25); }
+  .pill-comment { background: #f3f4f6; color: #4b5563; border-color: #e5e7eb; }
+  .pill-pending { background: #f9fafb; color: var(--text-3); border-color: var(--line); }
+
+  .review-actions { display: flex; align-items: center; gap: 6px; flex: none; }
+  .vote-btn,
+  .comment-toggle {
+    appearance: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: var(--surface);
+    color: var(--text-2);
+    cursor: pointer;
+    transition: transform 0.15s, border-color 0.15s, background 0.15s, color 0.15s, box-shadow 0.15s;
+  }
+  .vote-btn svg,
+  .comment-toggle svg {
+    width: 16px;
+    height: 16px;
+    fill: currentColor;
+  }
+  .vote-btn:hover,
+  .comment-toggle:hover {
+    transform: scale(1.05);
+    border-color: rgba(11, 11, 11, 0.18);
+  }
+  .vote-approve.is-selected {
+    background: var(--approved-soft);
+    border-color: rgba(34, 197, 94, 0.45);
+    color: #15803d;
+    box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.18);
+  }
+  .vote-reject.is-selected {
+    background: var(--rejected-soft);
+    border-color: rgba(239, 68, 68, 0.45);
+    color: #b91c1c;
+    box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.18);
+  }
+  .comment-toggle.is-active,
+  .proposal-card.comments-open .comment-toggle {
+    background: var(--espresso);
+    border-color: var(--espresso);
+    color: #fff;
+  }
+
+  .review-panel {
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px dashed var(--line);
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    pointer-events: none;
+    transition: max-height 0.25s ease, opacity 0.2s ease, margin 0.2s ease, padding 0.2s ease;
+  }
+  .proposal-card.is-hovered .review-panel,
+  .proposal-card.comments-open .review-panel,
+  .proposal-card.has-comments .review-panel {
+    max-height: 480px;
+    opacity: 1;
+    pointer-events: auto;
+    overflow: visible;
+  }
+  .review-panel-head { margin-bottom: 10px; }
+  .review-panel-title {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-3);
+  }
+  .review-panel-hint {
+    margin-top: 2px;
+    font-size: 12px;
+    color: var(--text-3);
+  }
+  .comments-list { display: grid; gap: 8px; margin-bottom: 10px; max-height: 220px; overflow-y: auto; }
+  .comments-empty {
+    font-size: 13px;
+    color: var(--text-3);
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 1px dashed var(--line);
+    background: #fafafa;
+  }
+  .comment-block {
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: var(--surface);
+    padding: 10px 12px;
+  }
+  .comment-author {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+  }
+  .comment-time {
+    font-weight: 500;
+    color: var(--text-3);
+    font-size: 11px;
+  }
+  .comment-body {
+    margin-top: 4px;
+    font-size: 14px;
+    color: var(--text-2);
+    white-space: pre-wrap;
+  }
+  .comment-compose {
+    display: grid;
+    gap: 8px;
+  }
+  .comment-compose textarea {
+    width: 100%;
+    resize: vertical;
+    min-height: 64px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 10px 12px;
+    font: inherit;
+    font-size: 14px;
+    color: var(--text);
+    background: #fff;
+  }
+  .comment-compose textarea:focus {
+    outline: none;
+    border-color: rgba(45, 122, 31, 0.45);
+    box-shadow: 0 0 0 3px rgba(75, 174, 51, 0.12);
+  }
+  .comment-submit {
+    justify-self: start;
+    appearance: none;
+    border: none;
+    border-radius: 8px;
+    padding: 9px 14px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    background: var(--espresso);
+    color: #fff;
+    cursor: pointer;
+  }
+  .comment-submit:hover { opacity: 0.92; }
+
+  .name-modal-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    display: none;
+    place-items: center;
+    padding: 20px;
+    background: rgba(11, 11, 11, 0.45);
+    backdrop-filter: blur(4px);
+  }
+  .name-modal-backdrop.is-open {
+    display: grid;
+  }
+  .name-modal-backdrop[hidden] {
+    display: none !important;
+  }
+  .name-modal {
+    width: min(100%, 380px);
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 16px 48px rgba(11, 11, 11, 0.18);
+  }
+  .name-modal-kicker {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-3);
+  }
+  .name-modal h2 {
+    margin-top: 6px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 20px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+  }
+  .name-modal p {
+    margin-top: 6px;
+    font-size: 13px;
+    color: var(--text-2);
+    line-height: 1.5;
+  }
+  .name-modal-input {
+    width: 100%;
+    margin-top: 14px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 10px 12px;
+    font: inherit;
+    font-size: 14px;
+  }
+  .name-modal-input:focus {
+    outline: none;
+    border-color: rgba(45, 122, 31, 0.45);
+    box-shadow: 0 0 0 3px rgba(75, 174, 51, 0.12);
+  }
+  .name-modal-submit {
+    margin-top: 12px;
+    width: 100%;
+    appearance: none;
+    border: none;
+    border-radius: 8px;
+    padding: 11px 14px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    background: var(--espresso);
+    color: #fff;
+    cursor: pointer;
+  }
+  .name-modal-submit:hover { opacity: 0.92; }
+  .name-modal-submit:disabled { opacity: 0.5; cursor: not-allowed; }
+  .name-modal-error {
+    margin-top: 8px;
+    font-size: 12px;
+    color: #b42318;
+    min-height: 16px;
+  }
+
+  @media (max-width: 720px) {
+    .review-toolbar { opacity: 1; transform: none; pointer-events: auto; }
+    .review-panel { max-height: none; opacity: 1; pointer-events: auto; overflow: visible; }
+    .filter-group { width: 100%; justify-content: flex-start; }
+  }
+</style>
+<script>
+(function(){
+  var embedded = window.self !== window.top
+    || new URLSearchParams(location.search).has('embed')
+    || location.hash.indexOf('embed') !== -1;
+  if (embedded) {
+    document.documentElement.classList.add('embed-mode');
+    document.body.classList.add('embed');
+  }
+
+  var back = document.getElementById('back-to-delta');
+  if (back) {
+    back.addEventListener('click', function (e) {
+      if (window.self !== window.top) {
+        e.preventDefault();
+        window.parent.location.href = window.parent.location.pathname + '?tab=delta';
+      }
+    });
+  }
+
+  var deckWrap = document.querySelector('.deck-link-wrap');
+  var deckIframe = document.getElementById('deck-preview-iframe');
+  var deckLoaded = false;
+  if (deckWrap && deckIframe) {
+    deckWrap.addEventListener('mouseenter', function () {
+      if (!deckLoaded) {
+        deckIframe.src = 'index.html';
+        deckLoaded = true;
+      }
+    });
+  }
+})();
+</script>
+</head>
+<body>
+
+<a href="review/?tab=delta" class="back-link" id="back-to-delta">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
+  Deck Delta
+</a>
+
+<header>
+  <h1>Deck copy proposals — <span>review with Preeti</span></h1>
+  <p class="meta">
+    <span class="deck-link-wrap">
+      <a href="index.html" id="deck-preview-link" target="_blank" rel="noopener noreferrer">Healthy Cart investor deck</a>
+      <span class="deck-preview-popover" id="deck-preview-popover" role="tooltip" aria-hidden="true">
+        <span class="deck-preview-frame">
+          <iframe id="deck-preview-iframe" title="Healthy Cart investor deck preview" tabindex="-1"></iframe>
+        </span>
+        <span class="deck-preview-caption">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          Click to open full deck in a new tab
+        </span>
+      </span>
+    </span>
+    · Proposed text changes · July 2026
+  </p>
+</header>
+
+<div class="confirm">
+  <strong>Confirm with Preeti before we build:</strong> Volume rebates &amp; gym/trainer affinity programs must be real and FDD-aligned. Investment numbers need FDD sign-off.
+</div>
+
+<div class="review-bar" id="review-bar">
+  <div class="review-bar-top">
+    <div class="review-bar-label">Team review</div>
+    <div class="review-bar-identity">
+      <span class="reviewer-badge is-empty" id="reviewer-badge">Set your name</span>
+      <button type="button" class="reviewer-change" id="change-reviewer">Change</button>
+    </div>
+  </div>
+  <div class="review-bar-sub">Hover a proposal to approve, reject, or comment. Changes sync live for the team.</div>
+  <div class="review-bar-filters">
+    <div class="filter-group" role="group" aria-label="Filter proposals">
+      <button type="button" class="filter-btn is-active" data-filter="all">All <span class="filter-count" data-filter-count="all">0</span></button>
+      <button type="button" class="filter-btn" data-filter="approved">Approved <span class="filter-count" data-filter-count="approved">0</span></button>
+      <button type="button" class="filter-btn" data-filter="rejected">Rejected <span class="filter-count" data-filter-count="rejected">0</span></button>
+      <button type="button" class="filter-btn" data-filter="pending">Pending <span class="filter-count" data-filter-count="pending">0</span></button>
+      <button type="button" class="filter-btn" data-filter="commented">Commented <span class="filter-count" data-filter-count="commented">0</span></button>
+    </div>
+  </div>
+</div>
+
+<!-- 1 -->
+<div class="card new-only" data-item-id="hc-copy-01">
+  <div class="card-header">
+    <div>
+      <span class="badge badge-add">New</span>
+      <div class="slide-ref">Slide 5 or 6 — Volume rebates / buying power</div>
+    </div>
+  </div>
+  <div class="grid">
+    <div>
+      <div class="col-label">Currently</div>
+      <div class="before">Not mentioned on the deck.</div>
+    </div>
+    <div>
+      <div class="col-label">Proposed</div>
+      <div class="after">Franchise-wide purchasing power helps franchisees access competitive product pricing as the network scales.</div>
+    </div>
+  </div>
+  <div class="benefit"><strong></strong>Speaks to margins and business mechanics — not just store look. Answers “how do I stay competitive on product cost?”</div>
+</div>
+
+<div class="card new-only" data-item-id="hc-copy-02">
+  <div class="card-header">
+    <div>
+      <span class="badge badge-add">New</span>
+      <div class="slide-ref">Slide 5, 6, or 8 — Affinity partnerships (gyms &amp; trainers)</div>
+    </div>
+  </div>
+  <div class="grid">
+    <div>
+      <div class="col-label">Currently</div>
+      <div class="before">Gym proximity mentioned; no formal partnership program described.</div>
+    </div>
+    <div>
+      <div class="col-label">Proposed</div>
+      <div class="after">Structured partnerships with local gyms and certified trainers — referral pathways, co-marketing, and community presence that drive qualified foot traffic.</div>
+    </div>
+  </div>
+  <div class="benefit"><strong></strong>Shows the store isn’t waiting for walk-ins — it’s plugged into the fitness ecosystem. Direct response to competitor USPs Sandeep flagged.</div>
+</div>
+
+<div class="card new-only" data-item-id="hc-copy-03">
+  <div class="card-header">
+    <div>
+      <span class="badge badge-add">New</span>
+      <div class="slide-ref">Slide 6 — Positioning matrix (2 new rows)</div>
+    </div>
+  </div>
+  <div class="grid">
+    <div>
+      <div class="col-label">Currently</div>
+      <div class="before">Matrix has 6 rows (design, shake bar, gym sites, etc.). No rebate or affinity rows.</div>
+    </div>
+    <div>
+      <div class="col-label">Proposed</div>
+      <div class="after">Add: “Volume purchasing advantages” ✓ HC · “Gym &amp; trainer affinity programs” ✓ HC</div>
+    </div>
+  </div>
+  <div class="benefit"><strong></strong>Quick visual proof that Healthy Cart matches or beats traditional/online models — without naming competitors.</div>
+</div>
+
+<div class="card" data-item-id="hc-copy-04">
+  <div class="card-header">
+    <div>
+      <span class="badge badge-edit">Edit</span>
+      <div class="slide-ref">Slide 1 — Cover subhead</div>
+    </div>
+  </div>
+  <div class="grid">
+    <div>
+      <div class="col-label">Currently</div>
+      <div class="before">A premium supplement retail franchise — engineered for the modern fitness consumer.</div>
+    </div>
+    <div>
+      <div class="col-label">Proposed</div>
+      <div class="after">Own a premium wellness retail destination — positioned where your customers already train.</div>
+    </div>
+  </div>
+  <div class="benefit"><strong></strong>Leads with ownership and location strategy upfront — stronger hook for franchise investors in the first 5 seconds.</div>
+</div>
+
+<div class="card" data-item-id="hc-copy-05">
+  <div class="card-header">
+    <div>
+      <span class="badge badge-edit">Edit</span>
+      <div class="slide-ref">Slide 2 or 12 — Traction callout</div>
+    </div>
+  </div>
+  <div class="grid">
+    <div>
+      <div class="col-label">Currently</div>
+      <div class="before">“4 operating + 3 under construction” only on Leadership slide.</div>
+    </div>
+    <div>
+      <div class="col-label">Proposed</div>
+      <div class="after">Echo on cover footer or CTA: “7 Ontario locations operating or underway.”</div>
+    </div>
+  </div>
+  <div class="benefit"><strong></strong>Social proof hits earlier — reduces “is this proven?” doubt before they reach the financials.</div>
+</div>
+
+<div class="card" data-item-id="hc-copy-06">
+  <div class="card-header">
+    <div>
+      <span class="badge badge-edit">Edit</span>
+      <div class="slide-ref">Slide 8 — Marketing pillar</div>
+    </div>
+  </div>
+  <div class="grid">
+    <div>
+      <div class="col-label">Currently</div>
+      <div class="before">Planet Fitness exposure buried in a long marketing bullet.</div>
+    </div>
+    <div>
+      <div class="col-label">Proposed</div>
+      <div class="after">Pull up as proof: “Proven gym-floor marketing — including partnerships with major fitness chains.”</div>
+    </div>
+  </div>
+  <div class="benefit"><strong></strong>Makes existing gym relationships visible — backs up the affinity partnership story with something concrete.</div>
+</div>
+
+<div class="card" data-item-id="hc-copy-07">
+  <div class="card-header">
+    <div>
+      <span class="badge badge-edit">Edit</span>
+      <div class="slide-ref">Slide 8 or 5 — Ecosystem one-liner</div>
+    </div>
+  </div>
+  <div class="grid">
+    <div>
+      <div class="col-label">Currently</div>
+      <div class="before">Support pillars listed separately; no connecting narrative.</div>
+    </div>
+    <div>
+      <div class="col-label">Proposed</div>
+      <div class="after">Site selection, trainer partnerships, and volume purchasing work together — your store is embedded in the fitness economy, not just near a gym.</div>
+    </div>
+  </div>
+  <div class="benefit"><strong></strong>Connects the dots for investors: location → partnerships → repeat visits → purchasing scale. Tells a story, not a feature list.</div>
+</div>
+
+<div class="card" data-item-id="hc-copy-08">
+  <div class="card-header">
+    <div>
+      <span class="badge badge-edit">Edit</span>
+      <div class="slide-ref">Slide 10 — Headline</div>
+    </div>
+  </div>
+  <div class="grid">
+    <div>
+      <div class="col-label">Currently</div>
+      <div class="before">A model built for durability</div>
+    </div>
+    <div>
+      <div class="col-label">Proposed</div>
+      <div class="after">Built for repeat revenue, not one-time transactions</div>
+    </div>
+  </div>
+  <div class="benefit"><strong></strong>Still FDD-safe (no ROI/margin claims) but sells the business model benefit — consumables + loyalty + partnerships.</div>
+</div>
+
+<div class="card" data-item-id="hc-copy-09">
+  <div class="card-header">
+    <div>
+      <span class="badge badge-edit">Edit</span>
+      <div class="slide-ref">Slide 9 — Investment numbers (round off)</div>
+    </div>
+  </div>
+  <div class="grid">
+    <div>
+      <div class="col-label">Currently</div>
+      <div class="before">$250K–$300K · $45,000 · ~$75,000 · donut ~$275K (mixed precision)</div>
+    </div>
+    <div>
+      <div class="col-label">Proposed</div>
+      <div class="after">~$275K total investment · $45K franchise fee · ~$75K down payment (one consistent rounded set)</div>
+    </div>
+  </div>
+  <div class="benefit"><strong></strong>Cleaner scan for busy investors — one hero number instead of a range + mismatched decimals. Per Sandeep’s note.</div>
+</div>
+
+<div class="card" data-item-id="hc-copy-10">
+  <div class="card-header">
+    <div>
+      <span class="badge badge-edit">Edit</span>
+      <div class="slide-ref">Slide 11 — Gym Owners card</div>
+    </div>
+  </div>
+  <div class="grid">
+    <div>
+      <div class="col-label">Currently</div>
+      <div class="before">Studio owners seeking to diversify revenue and enhance member offerings.</div>
+    </div>
+    <div>
+      <div class="col-label">Proposed</div>
+      <div class="after">Gym owners who want to turn member relationships into a built-in customer pipeline through affinity partnerships.</div>
+    </div>
+  </div>
+  <div class="benefit"><strong></strong>Helps gym-owner prospects self-identify — ties franchisee profile to the new partnership USP.</div>
+</div>
+
+<div class="card" data-item-id="hc-copy-11">
+  <div class="card-header">
+    <div>
+      <span class="badge badge-edit">Edit</span>
+      <div class="slide-ref">Slide 12 — CTA urgency</div>
+    </div>
+  </div>
+  <div class="grid">
+    <div>
+      <div class="col-label">Currently</div>
+      <div class="before">Join a premium Canadian supplement retail brand… (no territory urgency)</div>
+    </div>
+    <div>
+      <div class="col-label">Proposed</div>
+      <div class="after">Territories across Ontario — inquire before your market is awarded. Schedule a discovery call and review the FDD.</div>
+    </div>
+  </div>
+  <div class="benefit"><strong></strong>Creates a reason to act now without hype or unverifiable claims — standard franchise sales close.</div>
+</div>
+
+<footer>
+  Part of <a href="review/" style="color:var(--green-dark)">Deck Delta</a> · Healthy Cart investor deck review
+</footer>
+
+<div class="name-modal-backdrop" id="name-modal" hidden>
+  <form class="name-modal" id="name-modal-form" role="dialog" aria-labelledby="name-modal-title">
+    <p class="name-modal-kicker">FSH Creative Hub · Deck Delta</p>
+    <h2 id="name-modal-title">Who are you?</h2>
+    <p>Enter your name once so the team knows who approved, rejected, or commented on each proposal.</p>
+    <input class="name-modal-input" id="name-modal-input" type="text" maxlength="80" placeholder="e.g. Preeti, Sandeep…" autocomplete="name" required>
+    <p class="name-modal-error" id="name-modal-error" aria-live="polite"></p>
+    <button type="submit" class="name-modal-submit" id="name-modal-submit">Continue →</button>
+  </form>
+</div>
+
+<script>
+(function () {
+  var STORAGE_KEY = 'deck-delta-reviewer-name';
+
+  function readName() {
+    try { return localStorage.getItem(STORAGE_KEY) || ''; } catch (e) { return ''; }
+  }
+
+  function saveAndClose() {
+    var input = document.getElementById('name-modal-input');
+    var modal = document.getElementById('name-modal');
+    var err = document.getElementById('name-modal-error');
+    var name = input ? input.value.trim() : '';
+    if (name.length < 2) {
+      if (err) err.textContent = 'Please enter at least 2 characters.';
+      if (input) input.focus();
+      return;
+    }
+    try { localStorage.setItem(STORAGE_KEY, name); } catch (e) {}
+    if (modal) {
+      modal.classList.remove('is-open');
+      modal.hidden = true;
+    }
+    var badge = document.getElementById('reviewer-badge');
+    if (badge) {
+      badge.textContent = name;
+      badge.classList.remove('is-empty');
+    }
+    window.__deckDeltaReviewerName = name;
+  }
+
+  function openIfNeeded() {
+    if (readName()) return;
+    var modal = document.getElementById('name-modal');
+    if (!modal) return;
+    modal.hidden = false;
+    modal.classList.add('is-open');
+    var input = document.getElementById('name-modal-input');
+    if (input) setTimeout(function () { input.focus(); }, 50);
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    var form = document.getElementById('name-modal-form');
+    var btn = document.getElementById('name-modal-submit');
+    if (form) form.addEventListener('submit', function (e) { e.preventDefault(); saveAndClose(); });
+    if (btn) btn.addEventListener('click', function (e) { e.preventDefault(); saveAndClose(); });
+    if (!readName()) openIfNeeded();
+  });
+})();
+</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="assets/js/copy-proposals-review.js"></script>
+</body>
+</html>

@@ -2,19 +2,161 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>FSH Design · Deck Delta</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#F4F5F3;
+  --surface:#FFFFFF;
+  --text:#0D0D0D;
+  --text-2:#4A4A4A;
+  --text-3:#8A8A8A;
+  --line:#E4E6E0;
+  --green:#2D7A1F;
+  --header-h:64px;
+}
 html,body{height:100%;overflow:hidden}
-iframe{
-  position:fixed;inset:0;
-  width:100%;height:100%;
-  border:none;
+body{
+  font-family:'Inter',system-ui,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  -webkit-font-smoothing:antialiased;
+}
+.header{
+  position:fixed;top:0;left:0;right:0;z-index:1000;
+  height:var(--header-h);
+  background:rgba(244,245,243,0.98);
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--line);
+  padding:0 24px 0 28px;
+  display:flex;align-items:center;justify-content:space-between;gap:20px;
+  pointer-events:auto;
+}
+.brand{display:flex;align-items:center;gap:14px;min-width:0}
+.fsh-logo{font-family:'Plus Jakarta Sans';font-size:18px;font-weight:800;letter-spacing:-.02em;white-space:nowrap}
+.fsh-logo .fsh{color:#1A1A1A}
+.fsh-logo .design{font-weight:500;color:#6B6B6B}
+.brand-divider{width:1px;height:28px;background:var(--line);flex:none}
+.tool-block{min-width:0}
+.tool-label{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--text-3)}
+.tool-name{font-family:'Plus Jakarta Sans';font-size:15px;font-weight:700;color:var(--text);letter-spacing:-.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tabs{
+  display:flex;align-items:center;gap:4px;
+  background:var(--surface);border:1px solid var(--line);
+  border-radius:999px;padding:4px;flex:none;
+  position:relative;z-index:1001;
+}
+.tab{
+  appearance:none;border:none;background:transparent;
+  font-family:'Inter';font-size:13px;font-weight:600;
+  color:var(--text-2);padding:8px 16px;border-radius:999px;
+  cursor:pointer;white-space:nowrap;
+  transition:background .2s,color .2s,box-shadow .2s;
+  position:relative;z-index:1002;
+}
+.tab:hover{color:var(--text)}
+.tab.active{background:var(--green);color:#fff;box-shadow:0 2px 8px rgba(45,122,31,.25)}
+.header-right{display:flex;align-items:center;gap:12px;flex:none}
+.client-badge{padding:6px 14px;border-radius:999px;background:var(--surface);border:1px solid var(--line);font-size:13px;font-weight:600;color:var(--text-2);white-space:nowrap}
+#content-frame{
+  position:fixed;
+  top:var(--header-h);left:0;right:0;bottom:0;
+  width:100%;height:calc(100% - var(--header-h));
+  border:none;background:var(--bg);
+  z-index:1;
+}
+@media(max-width:820px){
+  .brand-divider,.tool-block,.client-badge{display:none}
+  .header{padding:0 12px}
+  .tabs{flex:1;justify-content:center}
+  .tab{padding:8px 12px;font-size:12px}
 }
 </style>
 </head>
 <body>
-<iframe src="../deck-review.html" title="FSH Deck Delta "></iframe>
+
+<header class="header">
+  <div class="brand">
+    <div class="fsh-logo"><span class="fsh">FSH</span><span class="design">Design</span></div>
+    <div class="brand-divider"></div>
+    <div class="tool-block">
+      <div class="tool-label">Internal Review Tool</div>
+      <div class="tool-name">Deck Delta</div>
+    </div>
+  </div>
+
+  <nav class="tabs" role="tablist" aria-label="Deck review sections">
+    <button class="tab active" role="tab" aria-selected="true" data-tab="delta" id="tab-delta" type="button">Deck Delta</button>
+    <button class="tab" role="tab" aria-selected="false" data-tab="proposals" id="tab-proposals" type="button">Text Copy Proposals</button>
+  </nav>
+
+  <div class="header-right">
+    <span class="client-badge">Healthy Cart</span>
+  </div>
+</header>
+
+<iframe id="content-frame" title="Deck review content"></iframe>
+
+<script>
+(function () {
+  var TAB_SOURCES = {
+    delta: '../deck-review.html?embed=1&batch=2026-06-17',
+    proposals: '../copy-proposals.html?embed=1'
+  };
+
+  var frame = document.getElementById('content-frame');
+  var tabs = document.querySelectorAll('.tab');
+  var activeTab = 'delta';
+
+  function setTab(name, forceReload) {
+    if (!TAB_SOURCES[name]) name = 'delta';
+
+    tabs.forEach(function (tab) {
+      var on = tab.dataset.tab === name;
+      tab.classList.toggle('active', on);
+      tab.setAttribute('aria-selected', on ? 'true' : 'false');
+    });
+
+    var nextSrc = TAB_SOURCES[name];
+
+    if (forceReload || activeTab !== name) {
+      frame.src = nextSrc;
+    }
+
+    activeTab = name;
+    frame.title = name === 'proposals'
+      ? 'Text copy proposals — team review'
+      : 'Deck Delta — change review';
+
+    var url = new URL(location.href);
+    url.searchParams.set('tab', name);
+    history.replaceState(null, '', url);
+
+    document.title = name === 'proposals'
+      ? 'FSH Design · Text Copy Proposals — Healthy Cart'
+      : 'FSH Design · Deck Delta';
+  }
+
+  tabs.forEach(function (tab) {
+    tab.addEventListener('click', function (e) {
+      e.preventDefault();
+      setTab(tab.dataset.tab, tab.dataset.tab !== activeTab);
+    });
+  });
+
+  var initial = new URLSearchParams(location.search).get('tab');
+  setTab(initial === 'proposals' ? 'proposals' : 'delta', true);
+
+  window.addEventListener('message', function (e) {
+    if (e.data && e.data.type === 'deck-delta-nav' && e.data.tab === 'proposals') {
+      setTab('proposals', true);
+    }
+  });
+})();
+</script>
 </body>
 </html>

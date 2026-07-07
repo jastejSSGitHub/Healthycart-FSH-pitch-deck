@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FSH Design · Deck Review — Healthy Cart Canada</title>
+<title>FSH Design · Deck Delta</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -36,6 +36,9 @@
   --design:#1A6B8A;
   --design-bg:#EEF7FB;
   --design-border:#9ACFE0;
+  --proposed:#2D6A9F;
+  --proposed-bg:#EEF4FA;
+  --proposed-border:#A8C8E0;
 
   --shadow:0 2px 16px rgba(0,0,0,0.07);
   --shadow-lg:0 8px 40px rgba(0,0,0,0.12);
@@ -94,20 +97,8 @@ body{
   .slide-count{font-size:12px}
 }
 
-/* ── LEGEND ── */
-.legend{
-  display:flex;align-items:center;gap:20px;flex-wrap:wrap;
-  padding:16px 32px;
-  background:var(--surface);
-  border-bottom:1px solid var(--line);
-}
-.legend-title{font-size:12px;font-weight:600;color:var(--text-3);
-  text-transform:uppercase;letter-spacing:.08em;margin-right:4px}
-.legend-item{
-  display:flex;align-items:center;gap:7px;
-  font-size:13px;font-weight:500;color:var(--text-2);cursor:default
-}
-.legend-dot{width:10px;height:10px;border-radius:3px;flex:none}
+/* hidden when loaded inside review/index.html tab shell */
+html.embed-mode .header{display:none!important}
 
 /* ── MAIN LAYOUT ── */
 .main{max-width:1320px;margin:0 auto;padding:40px 32px 80px}
@@ -201,6 +192,8 @@ body{
 .change-item.legal .change-type-bar{background:var(--legal)}
 .change-item.design{background:var(--design-bg);border-color:var(--design-border)}
 .change-item.design .change-type-bar{background:var(--design)}
+.change-item.proposed{background:var(--proposed-bg);border-color:var(--proposed-border)}
+.change-item.proposed .change-type-bar{background:var(--proposed)}
 
 .change-tag{
   display:inline-flex;align-items:center;gap:5px;
@@ -213,6 +206,7 @@ body{
 .softened .change-tag{background:var(--softened);color:#fff}
 .legal .change-tag{background:var(--legal);color:#fff}
 .design .change-tag{background:var(--design);color:#fff}
+.proposed .change-tag{background:var(--proposed);color:#fff}
 
 .change-heading{
   font-family:'Plus Jakarta Sans';font-weight:700;
@@ -254,6 +248,7 @@ body{
 .softened .citation{color:var(--softened)}
 .legal .citation{color:var(--legal)}
 .design .citation{color:var(--design)}
+.proposed .citation{color:var(--proposed)}
 .citation:hover{opacity:.8}
 .citation .tip{
   display:none;
@@ -293,6 +288,116 @@ body{
 .stat-cell.s-softened .stat-num{color:var(--softened)}
 .stat-cell.s-legal .stat-num{color:var(--legal)}
 .stat-cell.s-design .stat-num{color:var(--design)}
+.stat-cell.s-proposed .stat-num{color:var(--proposed)}
+
+/* ── BATCH DROPDOWN ── */
+.batch-picker{
+  display:flex;align-items:center;gap:14px;
+  margin-bottom:28px;
+}
+.batch-picker-label{
+  font-size:12px;font-weight:600;color:var(--text-3);
+  text-transform:uppercase;letter-spacing:.08em;flex:none;
+}
+.batch-dropdown{
+  position:relative;min-width:min(420px,100%);
+}
+.batch-dropdown-trigger{
+  width:100%;display:flex;align-items:center;gap:12px;
+  padding:11px 16px;border-radius:12px;
+  border:1px solid var(--line);background:var(--surface);
+  font-family:inherit;cursor:pointer;text-align:left;
+  box-shadow:var(--shadow);transition:border-color .15s,box-shadow .15s;
+}
+.batch-dropdown-trigger:hover{border-color:#B8C4B0}
+.batch-dropdown.open .batch-dropdown-trigger{
+  border-color:#4BAE33;box-shadow:0 0 0 3px rgba(75,174,51,.12);
+}
+.batch-dropdown-value{
+  flex:1;min-width:0;
+  font-family:'Plus Jakarta Sans';font-weight:700;font-size:14px;
+  color:var(--text);letter-spacing:-.01em;
+}
+.batch-dropdown-meta{
+  font-size:12px;font-weight:600;color:var(--text-3);flex:none;
+}
+.batch-dropdown-chevron{
+  width:18px;height:18px;color:var(--text-3);flex:none;
+  transition:transform .2s ease;
+}
+.batch-dropdown.open .batch-dropdown-chevron{transform:rotate(180deg);color:#2D7A1F}
+
+.batch-dropdown-menu{
+  display:none;position:absolute;top:calc(100% + 6px);left:0;right:0;
+  background:var(--surface);border:1px solid var(--line);
+  border-radius:12px;box-shadow:var(--shadow-lg);
+  max-height:280px;overflow-y:auto;z-index:300;
+  padding:6px;
+  scrollbar-width:thin;
+  scrollbar-color:#4BAE33 transparent;
+}
+.batch-dropdown.open .batch-dropdown-menu{display:block}
+.batch-dropdown-menu::-webkit-scrollbar{width:6px;background:transparent}
+.batch-dropdown-menu::-webkit-scrollbar-track{background:transparent}
+.batch-dropdown-menu::-webkit-scrollbar-thumb{
+  background:#4BAE33;border-radius:999px;
+}
+.batch-dropdown-menu::-webkit-scrollbar-thumb:hover{background:#2D7A1F}
+
+.batch-option{
+  width:100%;display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding:10px 12px;border:none;border-radius:8px;
+  background:transparent;font-family:inherit;text-align:left;
+  cursor:pointer;transition:background .12s;
+}
+.batch-option:hover{background:var(--bg)}
+.batch-option.active{background:#F2FAF0}
+.batch-option-left{min-width:0}
+.batch-option-date{
+  font-family:'Plus Jakarta Sans';font-weight:700;font-size:14px;
+  color:var(--text);letter-spacing:-.01em;
+}
+.batch-option-title{
+  font-size:12px;color:var(--text-2);margin-top:2px;
+}
+.batch-option-count{
+  font-size:11px;font-weight:700;color:#2D7A1F;
+  padding:3px 8px;border-radius:999px;
+  background:#F2FAF0;border:1px solid #C7E8BC;flex:none;
+}
+.batch-option-badge{
+  display:inline-flex;align-items:center;gap:4px;
+  font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+  margin-left:8px;padding:2px 8px;border-radius:999px;vertical-align:middle;
+}
+.batch-option-badge.badge-latest{
+  color:#2D7A1F;background:#F2FAF0;border:1px solid #C7E8BC;
+}
+.batch-option-badge.badge-done{
+  color:#1A5C2E;background:#EDF7EF;border:1px solid #A8DDB5;
+}
+.batch-option-badge.badge-done svg{width:11px;height:11px;flex:none}
+
+.batch-section{margin-bottom:48px}
+.batch-section.is-hidden{display:none}
+.batch-divider{
+  display:flex;align-items:center;gap:14px;
+  margin:0 0 24px;font-family:'Plus Jakarta Sans';font-weight:700;font-size:15px;color:var(--text);
+}
+.batch-divider::before,.batch-divider::after{
+  content:'';flex:1;height:1px;background:var(--line);
+}
+.batch-divider span{
+  font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--text-3);font-family:'Inter';
+}
+.batch-pending-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:5px 12px;border-radius:999px;
+  background:var(--proposed-bg);border:1px solid var(--proposed-border);
+  color:var(--proposed);font-size:11px;font-weight:700;
+  letter-spacing:.06em;text-transform:uppercase;margin-left:8px;
+}
 
 /* ── FILTER BAR ── */
 .filter-bar{
@@ -311,7 +416,6 @@ body{
   .stats-bar{grid-template-columns:repeat(3,1fr)}
   .header{padding:0 20px}
   .main{padding:28px 16px 60px}
-  .legend{padding:12px 20px}
 }
 @media(max-width:600px){
   .stats-bar{grid-template-columns:1fr 1fr}
@@ -338,7 +442,47 @@ body{
   font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
   color:rgba(255,255,255,0.7);white-space:nowrap;flex:none;
 }
+
+/* ── REVIEW CTA (sales copy batch → Text Copy Proposals) ── */
+.review-cta-banner{
+  display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;
+  margin-bottom:16px;padding:14px 18px;
+  background:linear-gradient(135deg,#E8F5E3 0%,#F7FBF5 100%);
+  border:1px solid #C7E8BC;border-radius:12px;
+  box-shadow:0 1px 8px rgba(45,122,31,0.08);
+}
+.review-cta-kicker{
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+  font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+  color:#2D7A1F;margin-bottom:4px;
+}
+.review-cta-text{
+  font-size:13px;line-height:1.5;color:var(--text-2);max-width:640px;
+}
+.review-cta-text strong{color:var(--text);font-weight:600}
+.review-cta-btn{
+  appearance:none;flex:none;border:none;cursor:pointer;
+  padding:10px 16px;border-radius:999px;
+  background:#2D7A1F;color:#fff;
+  font-family:'Inter',system-ui,sans-serif;font-size:13px;font-weight:700;
+  box-shadow:0 2px 10px rgba(45,122,31,0.28);
+  transition:transform .15s,box-shadow .15s,background .15s;
+  white-space:nowrap;
+}
+.review-cta-btn:hover{
+  background:#246819;
+  transform:translateY(-1px);
+  box-shadow:0 4px 14px rgba(45,122,31,0.32);
+}
 </style>
+<script>
+(function(){
+  var embedded = window.self !== window.top
+    || new URLSearchParams(location.search).has('embed')
+    || location.hash.indexOf('embed') !== -1;
+  if (embedded) document.documentElement.classList.add('embed-mode');
+})();
+</script>
 </head>
 <body>
 
@@ -351,35 +495,41 @@ body{
     <div class="brand-divider"></div>
     <div>
       <div class="tool-label">Internal Review Tool</div>
-      <div class="tool-name">Deck Delta — Healthy Cart Canada</div>
+      <div class="tool-name">Deck Delta</div>
     </div>
   </div>
   <div class="header-right">
-    <span class="client-badge">Healthy Cart Canada</span>
-    <span class="slide-count">12 slides · 30 changes</span>
+    <a href="review/?tab=proposals" style="font-size:13px;font-weight:600;color:var(--text-2);text-decoration:none;padding:6px 12px;border-radius:999px;border:1px solid var(--line);background:var(--surface)">Text Copy Proposals →</a>
+    <span class="client-badge">Healthy Cart</span>
+    <span class="slide-count" id="deck-summary">41 changes · 2 batches</span>
   </div>
 </header>
-
-<!-- ── LEGEND ── -->
-<div class="legend">
-  <span class="legend-title">Change types</span>
-  <span class="legend-item"><span class="legend-dot" style="background:var(--removed)"></span>Removed</span>
-  <span class="legend-item"><span class="legend-dot" style="background:var(--softened)"></span>Softened</span>
-  <span class="legend-item"><span class="legend-dot" style="background:var(--legal)"></span>Legal fix</span>
-  <span class="legend-item"><span class="legend-dot" style="background:var(--added)"></span>Added</span>
-  <span class="legend-item"><span class="legend-dot" style="background:var(--design)"></span>Design</span>
-  <span style="margin-left:auto;font-size:12px;color:var(--text-3)">Hover citations for sources</span>
-</div>
 
 <!-- ── MAIN ── -->
 <main class="main">
 
-  <!-- INTRO BANNER -->
+  <!-- BATCH DROPDOWN -->
+  <div class="batch-picker">
+    <span class="batch-picker-label">Change log</span>
+    <div class="batch-dropdown" id="batch-dropdown">
+      <button type="button" class="batch-dropdown-trigger" id="batch-trigger" aria-haspopup="listbox" aria-expanded="false">
+        <span class="batch-dropdown-value" id="batch-trigger-value">Jul 8, 2026 · Sales copy</span>
+        <span class="batch-dropdown-meta" id="batch-trigger-status"></span>
+        <span class="batch-dropdown-meta" id="batch-trigger-count">11 changes</span>
+        <svg class="batch-dropdown-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div class="batch-dropdown-menu" id="batch-menu" role="listbox"></div>
+    </div>
+  </div>
+
+  <!-- ══ BATCH 1: V1 → V2 (Jun 17, 2026) ══ -->
+  <section class="batch-section is-hidden" data-batch="2026-06-17">
+
   <div class="intro">
     <div class="intro-left">
       <div class="intro-title">V1 → V2 Change Review</div>
-      <div class="intro-sub">A complete audit of every change made to the Healthy Cart Canada investor pitch deck — what was changed, removed, or added, and the exact reason why. Citations are sourced from Preeti's Critical Concerns document, Perplexity research, Canadian franchise law, and Rohin's July 2026 client briefing.</div>
-      <div class="intro-date">Prepared by Jastej · FSH Design · Updated July 8, 2026</div>
+      <div class="intro-sub">Full audit of the original deck rebuild — legal fixes, market data corrections, design system, and claims safety. Citations from Preeti's Critical Concerns, Perplexity research, Canadian franchise law, and Rohin's client briefing.</div>
+      <div class="intro-date">Prepared by Jastej · FSH Design · June 17, 2026</div>
     </div>
     <span class="internal-badge">🔒 Internal Only</span>
   </div>
@@ -404,7 +554,7 @@ body{
   </div>
 
   <!-- ══════════════════════════════════════════
-       SLIDE CARDS
+       SLIDE CARDS — BATCH 1
   ══════════════════════════════════════════ -->
 
   <!-- SLIDE 1 -->
@@ -876,7 +1026,7 @@ body{
         </div>
       </div>
       <div class="slide-header-right">
-        <span class="change-count">3 changes · 🚨 Legal</span>
+        <span class="change-count">4 changes · 🚨 Legal</span>
         <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
       </div>
     </div>
@@ -921,6 +1071,30 @@ body{
             <span class="change-tag">Added</span>
             <div class="change-heading">Financial disclaimer added (must print)</div>
             <div class="change-reason">Added a mandatory disclaimer on the financials slide that prints in the PDF: "Figures are illustrative and based on a limited number of operating locations. They are not a guarantee of revenue, profit, or individual results. This document does not constitute a financial performance representation. Please refer to the FDD for complete information."</div>
+          </div>
+        </div>
+
+        <div class="change-item legal">
+          <div class="change-type-bar"></div>
+          <div class="change-content">
+            <span class="change-tag">Legal fix · FDD verified</span>
+            <div class="change-heading">Investment figures updated to FDD Item 6 — Jul 8 cross-check</div>
+            <div class="change-reason">Preeti confirmed on Jul 8 that deck investment numbers were wrong and directed cross-check against the franchise cheat sheet (derived from the FDD). The deck previously showed $250K–$300K total and ~$275K donut center — neither matches FDD Item 6 ($256,500–$731,800). The ~$75K down payment was also removed; FDD Item 10 states the franchisor does not offer financing.</div>
+            <div class="before-after">
+              <div class="ba-block ba-before"><div class="ba-label">Previous version</div><div class="ba-text">$250K–$300K total · $45,000 fee · ~$75,000 down (≈30%) · donut ~$275K typical</div></div>
+              <div class="ba-block ba-after"><div class="ba-label">New version</div><div class="ba-text">$256,500–$731,800 total (FDD Item 6) · $45,000 fee · FDD line-item ranges · donut $257K–$732K · third-party financing only</div></div>
+            </div>
+            <div class="citation-row">
+              <span class="citation">Franchise Cheat Sheet
+                <span class="tip">Total Investment $256,500 – $731,800; Franchise Fee $45,000; Grand Opening Marketing $1,500–$5,000. Source: FDD Items 5 &amp; 6.</span>
+              </span>
+              <span class="citation">FDD 2026 · Item 6
+                <span class="tip">Full expenditure table verified: leasehold $35K–$180K, equipment $20K–$45K, inventory $60K–$150K, working capital $50K–$150K, total $256,500–$731,800.</span>
+              </span>
+              <span class="citation">Jul 8 meeting with Preeti
+                <span class="tip">"The numbers are not right… you will see that on the FDD… use the cheat sheet for accuracy."</span>
+              </span>
+            </div>
           </div>
         </div>
 
@@ -1181,9 +1355,511 @@ body{
     </div>
   </div>
 
+  </section><!-- end batch 2026-06-17 -->
+
+  <!-- ══ BATCH 2: Sales copy proposals (Jul 8, 2026) ══ -->
+  <section class="batch-section" data-batch="2026-07-08">
+
+  <div class="review-cta-banner">
+    <div class="review-cta-copy">
+      <p class="review-cta-kicker">Approve · reject · comment</p>
+      <p class="review-cta-text">This view is the <strong>change log</strong> (read-only). To review each proposed line with the team — approve, reject, or leave a comment — open <strong>Text Copy Proposals</strong>.</p>
+    </div>
+    <button type="button" class="review-cta-btn" id="go-to-proposals-review">Open Text Copy Proposals →</button>
+  </div>
+
+  <div class="intro" style="background:#1A3A5C">
+    <div class="intro-left">
+      <div class="intro-title">Sales Copy Proposals <span class="batch-pending-badge">Pending review</span></div>
+      <div class="intro-sub">Proposed text changes to sell the deck harder — new franchisee USPs (volume rebates, gym/trainer affinity), sharper investor language, and rounded investment figures. Triggered by Sandeep's email · to review with Preeti before building into the deck.</div>
+      <div class="intro-date">Prepared by Jastej · FSH Design · July 8, 2026</div>
+    </div>
+    <span class="internal-badge">⏳ Not yet in deck</span>
+  </div>
+
+  <div class="stats-bar">
+    <div class="stat-cell s-added"><div class="stat-num">3</div><div class="stat-label">New USPs</div></div>
+    <div class="stat-cell s-proposed"><div class="stat-num">8</div><div class="stat-label">Proposed edits</div></div>
+    <div class="stat-cell s-softened"><div class="stat-num">8</div><div class="stat-label">Slides affected</div></div>
+    <div class="stat-cell s-legal"><div class="stat-num">2</div><div class="stat-label">Need FDD check</div></div>
+    <div class="stat-cell s-design"><div class="stat-num">0</div><div class="stat-label">Design fixes</div></div>
+  </div>
+
+  <div class="filter-bar">
+    <button class="filter-btn active" onclick="filterSlides('all',this)">All proposals</button>
+    <button class="filter-btn" onclick="filterSlides('added',this)">New USPs</button>
+    <button class="filter-btn" onclick="filterSlides('proposed',this)">Proposed edits</button>
+  </div>
+
+  <!-- NEW USPs -->
+  <div class="slide-card" data-tags="added">
+    <div class="slide-header" onclick="toggleSlide(this)">
+      <div class="slide-header-left">
+        <div class="slide-num">05–06</div>
+        <div class="slide-title-block">
+          <div class="slide-label">Difference &amp; Positioning</div>
+          <div class="slide-name">New franchisee USPs — volume rebates &amp; affinity partnerships</div>
+        </div>
+      </div>
+      <div class="slide-header-right">
+        <span class="change-count">3 proposals</span>
+        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+    </div>
+    <div class="slide-body">
+      <div class="change-list">
+
+        <div class="change-item added">
+          <div class="change-type-bar"></div>
+          <div class="change-content">
+            <span class="change-tag">New USP</span>
+            <div class="change-heading">Volume rebates / franchise buying power</div>
+            <div class="change-reason">Not currently on the deck. Competitors highlight volume purchasing — franchisees need to see how product costs stay competitive as the network scales.</div>
+            <div class="before-after">
+              <div class="ba-block ba-before"><div class="ba-label">Currently</div><div class="ba-text">Not mentioned on the deck.</div></div>
+              <div class="ba-block ba-after"><div class="ba-label">Proposed</div><div class="ba-text">Franchise-wide purchasing power helps franchisees access competitive product pricing as the network scales.</div></div>
+            </div>
+            <div class="citation-row">
+              <span class="citation">Sandeep · Jul 6, 2026
+                <span class="tip">Email flagged that competitors list volume rebates under their USP — need to match or exceed if Healthy Cart offers this.</span>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="change-item added">
+          <div class="change-type-bar"></div>
+          <div class="change-content">
+            <span class="change-tag">New USP</span>
+            <div class="change-heading">Affinity partnerships with gyms &amp; trainers</div>
+            <div class="change-reason">Deck mentions gym-adjacent locations but not a formal partnership program. Sandeep flagged this as a competitor USP — shows the store is plugged into the fitness ecosystem, not just near a gym.</div>
+            <div class="before-after">
+              <div class="ba-block ba-before"><div class="ba-label">Currently</div><div class="ba-text">Gym proximity mentioned; no formal partnership program described.</div></div>
+              <div class="ba-block ba-after"><div class="ba-label">Proposed</div><div class="ba-text">Structured partnerships with local gyms and certified trainers — referral pathways, co-marketing, and community presence that drive qualified foot traffic.</div></div>
+            </div>
+            <div class="citation-row">
+              <span class="citation">Sandeep · Jul 6, 2026
+                <span class="tip">"Under their USP they also have volume rebates &amp; Affinity Partnerships with gyms &amp; trainers."</span>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="change-item added">
+          <div class="change-type-bar"></div>
+          <div class="change-content">
+            <span class="change-tag">New USP</span>
+            <div class="change-heading">Positioning matrix — 2 new rows</div>
+            <div class="change-reason">Visual proof on Slide 6 that Healthy Cart matches traditional/online models on purchasing and partnerships — without naming competitors.</div>
+            <div class="before-after">
+              <div class="ba-block ba-before"><div class="ba-label">Currently</div><div class="ba-text">6 matrix rows — no rebate or affinity rows.</div></div>
+              <div class="ba-block ba-after"><div class="ba-label">Proposed</div><div class="ba-text">Add: "Volume purchasing advantages" ✓ HC · "Gym &amp; trainer affinity programs" ✓ HC</div></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 1 -->
+  <div class="slide-card" data-tags="proposed">
+    <div class="slide-header" onclick="toggleSlide(this)">
+      <div class="slide-header-left">
+        <div class="slide-num">01</div>
+        <div class="slide-title-block">
+          <div class="slide-label">Cover</div>
+          <div class="slide-name">Stronger ownership hook</div>
+        </div>
+      </div>
+      <div class="slide-header-right">
+        <span class="change-count">1 proposal</span>
+        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+    </div>
+    <div class="slide-body">
+      <div class="change-list">
+        <div class="change-item proposed">
+          <div class="change-type-bar"></div>
+          <div class="change-content">
+            <span class="change-tag">Proposed</span>
+            <div class="change-heading">Cover subhead — lead with ownership &amp; location</div>
+            <div class="change-reason">Stronger first-impression hook for franchise investors — ownership and gym-adjacent strategy in the first 5 seconds.</div>
+            <div class="before-after">
+              <div class="ba-block ba-before"><div class="ba-label">Currently</div><div class="ba-text">A premium supplement retail franchise — engineered for the modern fitness consumer.</div></div>
+              <div class="ba-block ba-after"><div class="ba-label">Proposed</div><div class="ba-text">Own a premium wellness retail destination — positioned where your customers already train.</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDES 2 & 12 -->
+  <div class="slide-card" data-tags="proposed">
+    <div class="slide-header" onclick="toggleSlide(this)">
+      <div class="slide-header-left">
+        <div class="slide-num">02·12</div>
+        <div class="slide-title-block">
+          <div class="slide-label">Leadership &amp; CTA</div>
+          <div class="slide-name">Traction callout earlier in deck</div>
+        </div>
+      </div>
+      <div class="slide-header-right">
+        <span class="change-count">1 proposal</span>
+        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+    </div>
+    <div class="slide-body">
+      <div class="change-list">
+        <div class="change-item proposed">
+          <div class="change-type-bar"></div>
+          <div class="change-content">
+            <span class="change-tag">Proposed</span>
+            <div class="change-heading">Echo store count on cover footer or CTA</div>
+            <div class="change-reason">Social proof hits before financials — "7 Ontario locations operating or underway" reduces "is this proven?" doubt.</div>
+            <div class="before-after">
+              <div class="ba-block ba-before"><div class="ba-label">Currently</div><div class="ba-text">"4 operating + 3 under construction" only on Leadership slide.</div></div>
+              <div class="ba-block ba-after"><div class="ba-label">Proposed</div><div class="ba-text">Echo on cover footer or CTA: "7 Ontario locations operating or underway."</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 8 -->
+  <div class="slide-card" data-tags="proposed added">
+    <div class="slide-header" onclick="toggleSlide(this)">
+      <div class="slide-header-left">
+        <div class="slide-num">08</div>
+        <div class="slide-title-block">
+          <div class="slide-label">Support</div>
+          <div class="slide-name">Gym marketing proof &amp; ecosystem narrative</div>
+        </div>
+      </div>
+      <div class="slide-header-right">
+        <span class="change-count">2 proposals</span>
+        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+    </div>
+    <div class="slide-body">
+      <div class="change-list">
+        <div class="change-item proposed">
+          <div class="change-type-bar"></div>
+          <div class="change-content">
+            <span class="change-tag">Proposed</span>
+            <div class="change-heading">Elevate Planet Fitness / gym marketing from buried bullet</div>
+            <div class="change-reason">Existing gym relationships are a concrete proof point — currently hidden inside a long marketing pillar description.</div>
+            <div class="before-after">
+              <div class="ba-block ba-before"><div class="ba-label">Currently</div><div class="ba-text">Planet Fitness exposure buried in marketing pillar bullet.</div></div>
+              <div class="ba-block ba-after"><div class="ba-label">Proposed</div><div class="ba-text">Proven gym-floor marketing — including partnerships with major fitness chains.</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="change-item proposed">
+          <div class="change-type-bar"></div>
+          <div class="change-content">
+            <span class="change-tag">Proposed</span>
+            <div class="change-heading">Ecosystem one-liner connecting site → partnerships → purchasing</div>
+            <div class="change-reason">Tells a story instead of a feature list — connects location, trainer partnerships, and volume purchasing into one investor narrative.</div>
+            <div class="before-after">
+              <div class="ba-block ba-before"><div class="ba-label">Currently</div><div class="ba-text">Support pillars listed separately; no connecting narrative.</div></div>
+              <div class="ba-block ba-after"><div class="ba-label">Proposed</div><div class="ba-text">Site selection, trainer partnerships, and volume purchasing work together — your store is embedded in the fitness economy, not just near a gym.</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 9 -->
+  <div class="slide-card" data-tags="proposed legal">
+    <div class="slide-header" onclick="toggleSlide(this)">
+      <div class="slide-header-left">
+        <div class="slide-num">09</div>
+        <div class="slide-title-block">
+          <div class="slide-label">Financials</div>
+          <div class="slide-name">Investment figures — FDD verified (Jul 8)</div>
+        </div>
+      </div>
+      <div class="slide-header-right">
+        <span class="change-count">1 proposal</span>
+        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+    </div>
+    <div class="slide-body">
+      <div class="change-list">
+        <div class="change-item legal">
+          <div class="change-type-bar"></div>
+          <div class="change-content">
+            <span class="change-tag">Superseded</span>
+            <div class="change-heading">Sandeep rounding proposal — not applied</div>
+            <div class="change-reason">Sandeep suggested rounding to ~$275K total / ~$75K down payment for cleaner investor scan. Preeti rejected this on Jul 8 — numbers must match FDD Item 6 and the cheat sheet, not rounded marketing figures.</div>
+            <div class="before-after">
+              <div class="ba-block ba-before"><div class="ba-label">Sandeep proposal (Jul 7)</div><div class="ba-text">~$275K total investment · $45K franchise fee · ~$75K down payment</div></div>
+              <div class="ba-block ba-after"><div class="ba-label">Applied (Jul 8)</div><div class="ba-text">$256,500–$731,800 total · $45,000 franchise fee · FDD line-item ranges · third-party financing only</div></div>
+            </div>
+            <div class="citation-row">
+              <span class="citation">Jul 8 meeting with Preeti
+                <span class="tip">"The numbers are not right… I think it's a 200 [FDD range]. You will see that on the FTD… use the cheat sheet."</span>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 10 -->
+  <div class="slide-card" data-tags="proposed">
+    <div class="slide-header" onclick="toggleSlide(this)">
+      <div class="slide-header-left">
+        <div class="slide-num">10</div>
+        <div class="slide-title-block">
+          <div class="slide-label">The Model</div>
+          <div class="slide-name">Investor-oriented headline</div>
+        </div>
+      </div>
+      <div class="slide-header-right">
+        <span class="change-count">1 proposal</span>
+        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+    </div>
+    <div class="slide-body">
+      <div class="change-list">
+        <div class="change-item proposed">
+          <div class="change-type-bar"></div>
+          <div class="change-content">
+            <span class="change-tag">Proposed</span>
+            <div class="change-heading">"A model built for durability" → repeat revenue framing</div>
+            <div class="change-reason">Still FDD-safe (no ROI/margin claims) but sells the business model — consumables, loyalty, and partnerships.</div>
+            <div class="before-after">
+              <div class="ba-block ba-before"><div class="ba-label">Currently</div><div class="ba-text">A model built for durability</div></div>
+              <div class="ba-block ba-after"><div class="ba-label">Proposed</div><div class="ba-text">Built for repeat revenue, not one-time transactions</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 11 -->
+  <div class="slide-card" data-tags="proposed">
+    <div class="slide-header" onclick="toggleSlide(this)">
+      <div class="slide-header-left">
+        <div class="slide-num">11</div>
+        <div class="slide-title-block">
+          <div class="slide-label">Franchisee Profile</div>
+          <div class="slide-name">Gym owners card — tie to affinity USP</div>
+        </div>
+      </div>
+      <div class="slide-header-right">
+        <span class="change-count">1 proposal</span>
+        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+    </div>
+    <div class="slide-body">
+      <div class="change-list">
+        <div class="change-item proposed">
+          <div class="change-type-bar"></div>
+          <div class="change-content">
+            <span class="change-tag">Proposed</span>
+            <div class="change-heading">Gym Owners card — built-in customer pipeline language</div>
+            <div class="change-reason">Helps gym-owner prospects self-identify and connects franchisee profile to the new affinity partnership USP.</div>
+            <div class="before-after">
+              <div class="ba-block ba-before"><div class="ba-label">Currently</div><div class="ba-text">Studio owners seeking to diversify revenue and enhance member offerings.</div></div>
+              <div class="ba-block ba-after"><div class="ba-label">Proposed</div><div class="ba-text">Gym owners who want to turn member relationships into a built-in customer pipeline through affinity partnerships.</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 12 CTA -->
+  <div class="slide-card" data-tags="proposed">
+    <div class="slide-header" onclick="toggleSlide(this)">
+      <div class="slide-header-left">
+        <div class="slide-num">12</div>
+        <div class="slide-title-block">
+          <div class="slide-label">Contact / CTA</div>
+          <div class="slide-name">Territory urgency close</div>
+        </div>
+      </div>
+      <div class="slide-header-right">
+        <span class="change-count">1 proposal</span>
+        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+    </div>
+    <div class="slide-body">
+      <div class="change-list">
+        <div class="change-item proposed">
+          <div class="change-type-bar"></div>
+          <div class="change-content">
+            <span class="change-tag">Proposed</span>
+            <div class="change-heading">Add territory urgency without hype</div>
+            <div class="change-reason">Standard franchise close — reason to act now without unverifiable claims.</div>
+            <div class="before-after">
+              <div class="ba-block ba-before"><div class="ba-label">Currently</div><div class="ba-text">Join a premium Canadian supplement retail brand… (no territory urgency)</div></div>
+              <div class="ba-block ba-after"><div class="ba-label">Proposed</div><div class="ba-text">Territories across Ontario — inquire before your market is awarded. Schedule a discovery call and review the FDD.</div></div>
+            </div>
+            <div class="citation-row">
+              <span class="citation">Sandeep · Jul 7, 2026
+                <span class="tip">"Please think through on how we could sell this via deck better."</span>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  </section><!-- end batch 2026-07-08 -->
+
 </main>
 
 <script>
+/* Newest first — add future batches to the top of this list */
+const BATCHES = [
+  { id: '2026-07-08', date: 'Jul 8, 2026',  title: 'Sales copy proposals', count: 11, latest: true },
+  { id: '2026-06-17', date: 'Jun 17, 2026', title: 'V1 → V2 rebuild',      count: 30, done: true },
+  { id: 'all',        date: 'All dates',    title: 'Complete change history', count: 41 },
+];
+
+const BATCH_LABELS = {
+  '2026-07-08': 'Jul 8, 2026 · Sales copy proposals',
+  '2026-06-17': 'Jun 17, 2026 · V1 → V2 rebuild',
+  'all': 'All dates · Complete history'
+};
+
+let activeBatch = BATCHES[0].id;
+let activeTypeFilter = 'all';
+
+function getBatchMeta(id) {
+  return BATCHES.find(b => b.id === id) || BATCHES[0];
+}
+
+const CHECK_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
+
+function batchStatusBadge(b) {
+  if (b.latest) return '<span class="batch-option-badge badge-latest">Latest</span>';
+  if (b.done) return '<span class="batch-option-badge badge-done">' + CHECK_ICON + ' Done</span>';
+  return '';
+}
+
+function buildBatchDropdown() {
+  const menu = document.getElementById('batch-menu');
+  menu.innerHTML = BATCHES.map(b => `
+    <button type="button" class="batch-option${b.id === activeBatch ? ' active' : ''}" role="option" data-batch="${b.id}" aria-selected="${b.id === activeBatch}">
+      <span class="batch-option-left">
+        <div class="batch-option-date">${b.date}${batchStatusBadge(b)}</div>
+        <div class="batch-option-title">${b.title}</div>
+      </span>
+      <span class="batch-option-count">${b.count}</span>
+    </button>
+  `).join('');
+
+  menu.querySelectorAll('.batch-option').forEach(opt => {
+    opt.addEventListener('click', () => {
+      switchBatch(opt.dataset.batch);
+      closeBatchDropdown();
+    });
+  });
+}
+
+function updateBatchTrigger() {
+  const meta = getBatchMeta(activeBatch);
+  document.getElementById('batch-trigger-value').textContent =
+    activeBatch === '2026-07-08' ? 'Jul 8, 2026 · Sales copy' :
+    activeBatch === '2026-06-17' ? 'Jun 17, 2026 · V1 → V2 rebuild' :
+    'All dates · Complete history';
+  document.getElementById('batch-trigger-count').textContent = meta.count + ' changes';
+  const statusEl = document.getElementById('batch-trigger-status');
+  if (meta.latest) {
+    statusEl.innerHTML = '<span class="batch-option-badge badge-latest">Latest</span>';
+  } else if (meta.done) {
+    statusEl.innerHTML = '<span class="batch-option-badge badge-done">' + CHECK_ICON + ' Done</span>';
+  } else {
+    statusEl.innerHTML = '';
+  }
+  document.querySelectorAll('.batch-option').forEach(opt => {
+    const on = opt.dataset.batch === activeBatch;
+    opt.classList.toggle('active', on);
+    opt.setAttribute('aria-selected', on ? 'true' : 'false');
+  });
+}
+
+function openBatchDropdown() {
+  document.getElementById('batch-dropdown').classList.add('open');
+  document.getElementById('batch-trigger').setAttribute('aria-expanded', 'true');
+}
+function closeBatchDropdown() {
+  document.getElementById('batch-dropdown').classList.remove('open');
+  document.getElementById('batch-trigger').setAttribute('aria-expanded', 'false');
+}
+
+function getVisibleSections() {
+  if (activeBatch === 'all') {
+    return document.querySelectorAll('.batch-section');
+  }
+  return document.querySelectorAll('.batch-section[data-batch="' + activeBatch + '"]');
+}
+
+function switchBatch(batchId) {
+  activeBatch = batchId;
+
+  document.querySelectorAll('.batch-section').forEach(section => {
+    const id = section.getAttribute('data-batch');
+    const show = batchId === 'all' || id === batchId;
+    section.classList.toggle('is-hidden', !show);
+  });
+
+  document.querySelectorAll('.batch-divider').forEach(d => d.remove());
+  if (batchId === 'all') {
+    const sections = document.querySelectorAll('.batch-section');
+    sections.forEach((section, i) => {
+      if (i === 0) return;
+      const divider = document.createElement('div');
+      divider.className = 'batch-divider';
+      const id = section.getAttribute('data-batch');
+      divider.innerHTML = '<span>' + (BATCH_LABELS[id] || id) + '</span>';
+      section.parentNode.insertBefore(divider, section);
+    });
+  }
+
+  updateBatchTrigger();
+
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  getVisibleSections().forEach(section => {
+    const first = section.querySelector('.filter-btn');
+    if (first) first.classList.add('active');
+  });
+  activeTypeFilter = 'all';
+  applySlideFilters();
+
+  const url = new URL(location.href);
+  if (batchId === BATCHES[0].id) url.searchParams.delete('batch');
+  else if (batchId === 'all') url.searchParams.set('batch', 'all');
+  else url.searchParams.set('batch', batchId);
+  history.replaceState(null, '', url);
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function applySlideFilters() {
+  getVisibleSections().forEach(section => {
+    section.querySelectorAll('.slide-card').forEach(card => {
+      if (activeTypeFilter === 'all') {
+        card.style.display = '';
+      } else {
+        const tags = card.getAttribute('data-tags') || '';
+        card.style.display = tags.includes(activeTypeFilter) ? '' : 'none';
+      }
+    });
+  });
+}
+
 function toggleSlide(header) {
   const card = header.closest('.slide-card');
   const isOpen = card.classList.contains('open');
@@ -1199,16 +1875,10 @@ function toggleSlide(header) {
 }
 
 function filterSlides(type, btn) {
+  activeTypeFilter = type;
   document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
-  document.querySelectorAll('.slide-card').forEach(card => {
-    if (type === 'all') {
-      card.style.display = '';
-    } else {
-      const tags = card.getAttribute('data-tags') || '';
-      card.style.display = tags.includes(type) ? '' : 'none';
-    }
-  });
+  applySlideFilters();
 }
 
 // stagger card animations
@@ -1239,6 +1909,40 @@ document.querySelectorAll('.citation').forEach(cit => {
     }, 180);
   });
 });
+
+(function initBatchFromUrl() {
+  buildBatchDropdown();
+  document.getElementById('batch-trigger').addEventListener('click', () => {
+    const dd = document.getElementById('batch-dropdown');
+    dd.classList.contains('open') ? closeBatchDropdown() : openBatchDropdown();
+  });
+  document.addEventListener('click', e => {
+    if (!document.getElementById('batch-dropdown').contains(e.target)) closeBatchDropdown();
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeBatchDropdown();
+  });
+
+  const batch = new URLSearchParams(location.search).get('batch');
+  if (batch && BATCHES.some(b => b.id === batch)) {
+    switchBatch(batch);
+  } else {
+    switchBatch(BATCHES[0].id);
+  }
+})();
+
+(function initProposalsReviewCta() {
+  var btn = document.getElementById('go-to-proposals-review');
+  if (!btn) return;
+  btn.addEventListener('click', function (e) {
+    e.preventDefault();
+    if (window.self !== window.top) {
+      window.parent.postMessage({ type: 'deck-delta-nav', tab: 'proposals' }, '*');
+      return;
+    }
+    window.location.href = 'review/?tab=proposals';
+  });
+})();
 </script>
 </body>
 </html>
