@@ -131,6 +131,17 @@ html.embed-mode .header{display:none!important}
   display:flex;align-items:center;justify-content:center;
   font-family:'Plus Jakarta Sans';font-weight:800;font-size:14px;flex:none
 }
+.slide-num.slide-num-range{
+  width:42px;height:42px;padding:5px 4px;
+  flex-direction:column;justify-content:center;gap:0;
+  font-size:11px;line-height:1.05;letter-spacing:-.02em;
+}
+.slide-num.slide-num-range span{
+  display:block;width:100%;text-align:center;
+}
+.slide-num.slide-num-range .num-sep{
+  font-size:8px;font-weight:700;opacity:.55;line-height:1;margin:1px 0;
+}
 .slide-title-block{}
 .slide-label{font-size:12px;font-weight:600;color:var(--text-3);
   text-transform:uppercase;letter-spacing:.08em}
@@ -443,37 +454,44 @@ html.embed-mode .header{display:none!important}
   color:rgba(255,255,255,0.7);white-space:nowrap;flex:none;
 }
 
-/* ── REVIEW CTA (sales copy batch → Text Copy Proposals) ── */
-.review-cta-banner{
-  display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;
-  margin-bottom:16px;padding:14px 18px;
-  background:linear-gradient(135deg,#E8F5E3 0%,#F7FBF5 100%);
-  border:1px solid #C7E8BC;border-radius:12px;
-  box-shadow:0 1px 8px rgba(45,122,31,0.08);
+/* ── Sales copy batch intro (merged changelog + review CTA) ── */
+.intro-proposals{
+  background:#1A3A5C;
+  flex-direction:column;
+  align-items:stretch;
 }
-.review-cta-kicker{
-  font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
-  font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
-  color:#2D7A1F;margin-bottom:4px;
+.intro-proposals-body{width:100%}
+.intro-review-hint{
+  margin-top:14px;padding:11px 14px;
+  font-size:13px;line-height:1.55;color:rgba(255,255,255,0.82);
+  background:rgba(255,255,255,0.07);border-radius:8px;
+  border-left:3px solid #4BAE33;
 }
-.review-cta-text{
-  font-size:13px;line-height:1.5;color:var(--text-2);max-width:640px;
+.intro-proposals-actions{
+  display:flex;flex-direction:column;align-items:flex-start;gap:10px;
+  margin-top:18px;
 }
-.review-cta-text strong{color:var(--text);font-weight:600}
 .review-cta-btn{
-  appearance:none;flex:none;border:none;cursor:pointer;
-  padding:10px 16px;border-radius:999px;
-  background:#2D7A1F;color:#fff;
+  appearance:none;border:none;cursor:pointer;
+  padding:11px 18px;border-radius:999px;
+  background:#4BAE33;color:#fff;
   font-family:'Inter',system-ui,sans-serif;font-size:13px;font-weight:700;
-  box-shadow:0 2px 10px rgba(45,122,31,0.28);
+  box-shadow:0 2px 12px rgba(0,0,0,0.22);
   transition:transform .15s,box-shadow .15s,background .15s;
   white-space:nowrap;
 }
 .review-cta-btn:hover{
-  background:#246819;
+  background:#3d9a2b;
   transform:translateY(-1px);
-  box-shadow:0 4px 14px rgba(45,122,31,0.32);
+  box-shadow:0 4px 16px rgba(0,0,0,0.28);
 }
+.intro-deck-status{
+  font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+  color:rgba(255,255,255,0.42);
+  margin:0;
+}
+.intro-proposals .intro-sub{max-width:720px;opacity:.72}
+.intro-proposals .intro-date{margin-top:16px}
 </style>
 <script>
 (function(){
@@ -501,7 +519,7 @@ html.embed-mode .header{display:none!important}
   <div class="header-right">
     <a href="review/?tab=proposals" style="font-size:13px;font-weight:600;color:var(--text-2);text-decoration:none;padding:6px 12px;border-radius:999px;border:1px solid var(--line);background:var(--surface)">Text Copy Proposals →</a>
     <span class="client-badge">Healthy Cart</span>
-    <span class="slide-count" id="deck-summary">41 changes · 2 batches</span>
+    <span class="slide-count" id="deck-summary">34 changes · 2 batches</span>
   </div>
 </header>
 
@@ -513,9 +531,9 @@ html.embed-mode .header{display:none!important}
     <span class="batch-picker-label">Change log</span>
     <div class="batch-dropdown" id="batch-dropdown">
       <button type="button" class="batch-dropdown-trigger" id="batch-trigger" aria-haspopup="listbox" aria-expanded="false">
-        <span class="batch-dropdown-value" id="batch-trigger-value">Jul 8, 2026 · Sales copy</span>
+        <span class="batch-dropdown-value" id="batch-trigger-value">Jul 8, 2026 · Cheat sheet numbers</span>
         <span class="batch-dropdown-meta" id="batch-trigger-status"></span>
-        <span class="batch-dropdown-meta" id="batch-trigger-count">11 changes</span>
+        <span class="batch-dropdown-meta" id="batch-trigger-count">4 changes</span>
         <svg class="batch-dropdown-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
       </button>
       <div class="batch-dropdown-menu" id="batch-menu" role="listbox"></div>
@@ -1026,7 +1044,7 @@ html.embed-mode .header{display:none!important}
         </div>
       </div>
       <div class="slide-header-right">
-        <span class="change-count">4 changes · 🚨 Legal</span>
+        <span class="change-count">3 changes · 🚨 Legal</span>
         <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
       </div>
     </div>
@@ -1069,32 +1087,8 @@ html.embed-mode .header{display:none!important}
           <div class="change-type-bar"></div>
           <div class="change-content">
             <span class="change-tag">Added</span>
-            <div class="change-heading">Financial disclaimer updated (must print)</div>
-            <div class="change-reason">Disclaimer now cites cheat-sheet / FDD Item 6 cross-check (Jul 8): "Investment ranges per FDD Item 6 (cross-checked against the franchise cheat sheet, Jul 2026). Donut segments are illustrative midpoint shares only. Not a guarantee of revenue, profit, or individual results. This document does not constitute a financial performance representation."</div>
-          </div>
-        </div>
-
-        <div class="change-item legal">
-          <div class="change-type-bar"></div>
-          <div class="change-content">
-            <span class="change-tag">Legal fix · FDD verified</span>
-            <div class="change-heading">Investment figures updated per cheat sheet — Jul 8 cross-check</div>
-            <div class="change-reason">Preeti confirmed on Jul 8 that deck investment numbers were wrong and directed cross-check against the franchise cheat sheet. All figures below verified against Healthy Cart-Cheat Sheet.md (Section B) — each cites FDD Item 6. Applied to index.html slide 9.</div>
-            <div class="before-after">
-              <div class="ba-block ba-before"><div class="ba-label">Previous version</div><div class="ba-text">Total: $250K–$300K · Fee: $45,000 · Down: ~$75,000 (≈30%) · Donut: ~$275K typical · Line items: vague labels only (construction, equipment, inventory, shake bar, training)</div></div>
-              <div class="ba-block ba-after"><div class="ba-label">New version (cheat sheet)</div><div class="ba-text">Total: $256,500–$731,800 · Fee: $45,000 · Leasehold: $35,000–$180,000 · Equipment: $20,000–$45,000 · Inventory: $60,000–$150,000 · Working capital: $50,000–$150,000 · Grand opening: $1,500–$5,000 · Donut: $257K–$732K (FDD Item 6) · Financing: third-party only (FDD Item 10)</div></div>
-            </div>
-            <div class="citation-row">
-              <span class="citation">Franchise Cheat Sheet
-                <span class="tip">Total Investment $256,500 – $731,800; Franchise Fee $45,000; Grand Opening Marketing $1,500–$5,000. Source: FDD Items 5 &amp; 6.</span>
-              </span>
-              <span class="citation">FDD 2026 · Item 6
-                <span class="tip">Full expenditure table verified: leasehold $35K–$180K, equipment $20K–$45K, inventory $60K–$150K, working capital $50K–$150K, total $256,500–$731,800.</span>
-              </span>
-              <span class="citation">Jul 8 meeting with Preeti
-                <span class="tip">"The numbers are not right… you will see that on the FDD… use the cheat sheet for accuracy."</span>
-              </span>
-            </div>
+            <div class="change-heading">Financial disclaimer added (must print)</div>
+            <div class="change-reason">Added a mandatory disclaimer on the financials slide that prints in the PDF: "Figures are illustrative and based on a limited number of operating locations. They are not a guarantee of revenue, profit, or individual results. This document does not constitute a financial performance representation. Please refer to the FDD for complete information."</div>
           </div>
         </div>
 
@@ -1175,21 +1169,15 @@ html.embed-mode .header{display:none!important}
           <div class="change-type-bar"></div>
           <div class="change-content">
             <span class="change-tag">Legal fix</span>
-            <div class="change-heading">Royalty basis corrected + ongoing fees added per cheat sheet</div>
-            <div class="change-reason">The deck incorrectly stated royalty was on net sales. Jul 8 cheat-sheet cross-check added full ongoing fee disclosure: 5% royalty on gross sales, plus 3% brand development fund and up to 1% local advertising (cheat sheet Section C / FDD Item 7). Applied to index.html slide 10.</div>
+            <div class="change-heading">Royalty basis corrected — "net sales" → "gross sales"</div>
+            <div class="change-reason">The deck incorrectly stated royalty was on net sales. Per Rohin and the FDD, the ongoing royalty is 5% of gross sales. Misstating the royalty basis in franchise solicitation materials creates a direct contradiction with the binding Franchise Agreement.</div>
             <div class="before-after">
               <div class="ba-block ba-before"><div class="ba-label">Previous version</div><div class="ba-text">"A competitive ongoing royalty on net sales."</div></div>
-              <div class="ba-block ba-after"><div class="ba-label">New version</div><div class="ba-text">"5% royalty on gross sales, plus a 3% brand development fund and up to 1% local advertising (FDD Item 7)."</div></div>
+              <div class="ba-block ba-after"><div class="ba-label">New version</div><div class="ba-text">"A competitive ongoing royalty of 5% on gross sales."</div></div>
             </div>
             <div class="citation-row">
               <span class="citation">Rohin briefing · July 2026
                 <span class="tip">Client confirmed royalty is 5% of gross sales, not net sales.</span>
-              </span>
-              <span class="citation">Franchise Cheat Sheet · FDD Item 7
-                <span class="tip">Brand Development Fund 3% of Gross Revenue; Local Marketing up to 1% of Gross Revenue.</span>
-              </span>
-              <span class="citation">Jul 8 meeting with Preeti
-                <span class="tip">Royalties confirmed as 5% of gross sales.</span>
               </span>
             </div>
           </div>
@@ -1363,234 +1351,113 @@ html.embed-mode .header{display:none!important}
 
   </section><!-- end batch 2026-06-17 -->
 
-  <!-- ══ BATCH 2: Sales copy proposals (Jul 8, 2026) ══ -->
+  <!-- ══ BATCH 2: Jul 8 applied deck changes (2026) ══ -->
   <section class="batch-section" data-batch="2026-07-08">
 
-  <div class="review-cta-banner">
-    <div class="review-cta-copy">
-      <p class="review-cta-kicker">Approve · reject · comment</p>
-      <p class="review-cta-text">This view is the <strong>change log</strong> (read-only). To review each proposed line with the team — approve, reject, or leave a comment — open <strong>Text Copy Proposals</strong>.</p>
-    </div>
-    <button type="button" class="review-cta-btn" id="go-to-proposals-review">Open Text Copy Proposals →</button>
-  </div>
-
-  <div class="intro" style="background:#1A3A5C">
+  <div class="intro">
     <div class="intro-left">
-      <div class="intro-title">Sales Copy Proposals <span class="batch-pending-badge">Pending review</span></div>
-      <div class="intro-sub">Proposed text changes to sell the deck harder — new franchisee USPs (volume rebates, gym/trainer affinity), sharper investor language. Investment figures from Sandeep's rounding proposal were superseded Jul 8 — cheat-sheet numbers are now applied in the main deck (see Batch 1 · Slide 9).</div>
+      <div class="intro-title">Jul 8 deck updates <span class="batch-option-badge badge-done" style="display:inline-flex;vertical-align:middle;margin-left:8px">Applied to deck</span></div>
+      <div class="intro-sub">Changes made to the main investor deck after Preeti's Jul 8 review — investment figures cross-checked against the franchise cheat sheet (FDD Item 6). Pending copy ideas (volume rebates, gym USPs, etc.) live in <a href="review/?tab=proposals" target="_parent" style="color:#5FC447;font-weight:600">Text Copy Proposals</a>.</div>
       <div class="intro-date">Prepared by Jastej · FSH Design · July 8, 2026</div>
     </div>
-    <span class="internal-badge">⏳ Not yet in deck</span>
+    <span class="internal-badge">🔒 Internal Only</span>
   </div>
 
   <div class="stats-bar">
-    <div class="stat-cell s-added"><div class="stat-num">3</div><div class="stat-label">New USPs</div></div>
-    <div class="stat-cell s-proposed"><div class="stat-num">8</div><div class="stat-label">Proposed edits</div></div>
-    <div class="stat-cell s-softened"><div class="stat-num">8</div><div class="stat-label">Slides affected</div></div>
-    <div class="stat-cell s-legal"><div class="stat-num">2</div><div class="stat-label">Need FDD check</div></div>
-    <div class="stat-cell s-design"><div class="stat-num">0</div><div class="stat-label">Design fixes</div></div>
+    <div class="stat-cell s-legal"><div class="stat-num">4</div><div class="stat-label">Changes applied</div></div>
+    <div class="stat-cell s-added"><div class="stat-num">2</div><div class="stat-label">Slides updated</div></div>
+    <div class="stat-cell s-softened"><div class="stat-num">1</div><div class="stat-label">Disclaimer revised</div></div>
+    <div class="stat-cell s-removed"><div class="stat-num">1</div><div class="stat-label">Removed (unsupported)</div></div>
+    <div class="stat-cell s-design"><div class="stat-num">0</div><div class="stat-label">Pending copy</div></div>
   </div>
 
   <div class="filter-bar">
-    <button class="filter-btn active" onclick="filterSlides('all',this)">All proposals</button>
-    <button class="filter-btn" onclick="filterSlides('added',this)">New USPs</button>
-    <button class="filter-btn" onclick="filterSlides('proposed',this)">Proposed edits</button>
-  </div>
-
-  <!-- NEW USPs -->
-  <div class="slide-card" data-tags="added">
-    <div class="slide-header" onclick="toggleSlide(this)">
-      <div class="slide-header-left">
-        <div class="slide-num">05–06</div>
-        <div class="slide-title-block">
-          <div class="slide-label">Difference &amp; Positioning</div>
-          <div class="slide-name">New franchisee USPs — volume rebates &amp; affinity partnerships</div>
-        </div>
-      </div>
-      <div class="slide-header-right">
-        <span class="change-count">3 proposals</span>
-        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
-    </div>
-    <div class="slide-body">
-      <div class="change-list">
-
-        <div class="change-item added">
-          <div class="change-type-bar"></div>
-          <div class="change-content">
-            <span class="change-tag">New USP</span>
-            <div class="change-heading">Volume rebates / franchise buying power</div>
-            <div class="change-reason">Not currently on the deck. Competitors highlight volume purchasing — franchisees need to see how product costs stay competitive as the network scales.</div>
-            <div class="before-after">
-              <div class="ba-block ba-before"><div class="ba-label">Currently</div><div class="ba-text">Not mentioned on the deck.</div></div>
-              <div class="ba-block ba-after"><div class="ba-label">Proposed</div><div class="ba-text">Franchise-wide purchasing power helps franchisees access competitive product pricing as the network scales.</div></div>
-            </div>
-            <div class="citation-row">
-              <span class="citation">Sandeep · Jul 6, 2026
-                <span class="tip">Email flagged that competitors list volume rebates under their USP — need to match or exceed if Healthy Cart offers this.</span>
-              </span>
-            </div>
-          </div>
-        </div>
-
-        <div class="change-item added">
-          <div class="change-type-bar"></div>
-          <div class="change-content">
-            <span class="change-tag">New USP</span>
-            <div class="change-heading">Affinity partnerships with gyms &amp; trainers</div>
-            <div class="change-reason">Deck mentions gym-adjacent locations but not a formal partnership program. Sandeep flagged this as a competitor USP — shows the store is plugged into the fitness ecosystem, not just near a gym.</div>
-            <div class="before-after">
-              <div class="ba-block ba-before"><div class="ba-label">Currently</div><div class="ba-text">Gym proximity mentioned; no formal partnership program described.</div></div>
-              <div class="ba-block ba-after"><div class="ba-label">Proposed</div><div class="ba-text">Structured partnerships with local gyms and certified trainers — referral pathways, co-marketing, and community presence that drive qualified foot traffic.</div></div>
-            </div>
-            <div class="citation-row">
-              <span class="citation">Sandeep · Jul 6, 2026
-                <span class="tip">"Under their USP they also have volume rebates &amp; Affinity Partnerships with gyms &amp; trainers."</span>
-              </span>
-            </div>
-          </div>
-        </div>
-
-        <div class="change-item added">
-          <div class="change-type-bar"></div>
-          <div class="change-content">
-            <span class="change-tag">New USP</span>
-            <div class="change-heading">Positioning matrix — 2 new rows</div>
-            <div class="change-reason">Visual proof on Slide 6 that Healthy Cart matches traditional/online models on purchasing and partnerships — without naming competitors.</div>
-            <div class="before-after">
-              <div class="ba-block ba-before"><div class="ba-label">Currently</div><div class="ba-text">6 matrix rows — no rebate or affinity rows.</div></div>
-              <div class="ba-block ba-after"><div class="ba-label">Proposed</div><div class="ba-text">Add: "Volume purchasing advantages" ✓ HC · "Gym &amp; trainer affinity programs" ✓ HC</div></div>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </div>
-
-  <!-- SLIDE 1 -->
-  <div class="slide-card" data-tags="proposed">
-    <div class="slide-header" onclick="toggleSlide(this)">
-      <div class="slide-header-left">
-        <div class="slide-num">01</div>
-        <div class="slide-title-block">
-          <div class="slide-label">Cover</div>
-          <div class="slide-name">Stronger ownership hook</div>
-        </div>
-      </div>
-      <div class="slide-header-right">
-        <span class="change-count">1 proposal</span>
-        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
-    </div>
-    <div class="slide-body">
-      <div class="change-list">
-        <div class="change-item proposed">
-          <div class="change-type-bar"></div>
-          <div class="change-content">
-            <span class="change-tag">Proposed</span>
-            <div class="change-heading">Cover subhead — lead with ownership &amp; location</div>
-            <div class="change-reason">Stronger first-impression hook for franchise investors — ownership and gym-adjacent strategy in the first 5 seconds.</div>
-            <div class="before-after">
-              <div class="ba-block ba-before"><div class="ba-label">Currently</div><div class="ba-text">A premium supplement retail franchise — engineered for the modern fitness consumer.</div></div>
-              <div class="ba-block ba-after"><div class="ba-label">Proposed</div><div class="ba-text">Own a premium wellness retail destination — positioned where your customers already train.</div></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- SLIDES 2 & 12 -->
-  <div class="slide-card" data-tags="proposed">
-    <div class="slide-header" onclick="toggleSlide(this)">
-      <div class="slide-header-left">
-        <div class="slide-num">02·12</div>
-        <div class="slide-title-block">
-          <div class="slide-label">Leadership &amp; CTA</div>
-          <div class="slide-name">Traction callout earlier in deck</div>
-        </div>
-      </div>
-      <div class="slide-header-right">
-        <span class="change-count">1 proposal</span>
-        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
-    </div>
-    <div class="slide-body">
-      <div class="change-list">
-        <div class="change-item proposed">
-          <div class="change-type-bar"></div>
-          <div class="change-content">
-            <span class="change-tag">Proposed</span>
-            <div class="change-heading">Echo store count on cover footer or CTA</div>
-            <div class="change-reason">Social proof hits before financials — "7 Ontario locations operating or underway" reduces "is this proven?" doubt.</div>
-            <div class="before-after">
-              <div class="ba-block ba-before"><div class="ba-label">Currently</div><div class="ba-text">"4 operating + 3 under construction" only on Leadership slide.</div></div>
-              <div class="ba-block ba-after"><div class="ba-label">Proposed</div><div class="ba-text">Echo on cover footer or CTA: "7 Ontario locations operating or underway."</div></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- SLIDE 8 -->
-  <div class="slide-card" data-tags="proposed added">
-    <div class="slide-header" onclick="toggleSlide(this)">
-      <div class="slide-header-left">
-        <div class="slide-num">08</div>
-        <div class="slide-title-block">
-          <div class="slide-label">Support</div>
-          <div class="slide-name">Gym marketing proof &amp; ecosystem narrative</div>
-        </div>
-      </div>
-      <div class="slide-header-right">
-        <span class="change-count">2 proposals</span>
-        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
-    </div>
-    <div class="slide-body">
-      <div class="change-list">
-        <div class="change-item proposed">
-          <div class="change-type-bar"></div>
-          <div class="change-content">
-            <span class="change-tag">Proposed</span>
-            <div class="change-heading">Elevate Planet Fitness / gym marketing from buried bullet</div>
-            <div class="change-reason">Existing gym relationships are a concrete proof point — currently hidden inside a long marketing pillar description.</div>
-            <div class="before-after">
-              <div class="ba-block ba-before"><div class="ba-label">Currently</div><div class="ba-text">Planet Fitness exposure buried in marketing pillar bullet.</div></div>
-              <div class="ba-block ba-after"><div class="ba-label">Proposed</div><div class="ba-text">Proven gym-floor marketing — including partnerships with major fitness chains.</div></div>
-            </div>
-          </div>
-        </div>
-        <div class="change-item proposed">
-          <div class="change-type-bar"></div>
-          <div class="change-content">
-            <span class="change-tag">Proposed</span>
-            <div class="change-heading">Ecosystem one-liner connecting site → partnerships → purchasing</div>
-            <div class="change-reason">Tells a story instead of a feature list — connects location, trainer partnerships, and volume purchasing into one investor narrative.</div>
-            <div class="before-after">
-              <div class="ba-block ba-before"><div class="ba-label">Currently</div><div class="ba-text">Support pillars listed separately; no connecting narrative.</div></div>
-              <div class="ba-block ba-after"><div class="ba-label">Proposed</div><div class="ba-text">Site selection, trainer partnerships, and volume purchasing work together — your store is embedded in the fitness economy, not just near a gym.</div></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <button class="filter-btn active" onclick="filterSlides('all',this)">All changes</button>
+    <button class="filter-btn" onclick="filterSlides('slide-09',this)">Slide 09</button>
+    <button class="filter-btn" onclick="filterSlides('slide-10',this)">Slide 10</button>
   </div>
 
   <!-- SLIDE 9 -->
-  <div class="slide-card" data-tags="legal">
+  <div class="slide-card open" data-tags="legal added slide-09">
     <div class="slide-header" onclick="toggleSlide(this)">
       <div class="slide-header-left">
         <div class="slide-num">09</div>
         <div class="slide-title-block">
           <div class="slide-label">Financials</div>
-          <div class="slide-name">Cheat-sheet numbers applied (Jul 8)</div>
+          <div class="slide-name">Investment figures — cheat sheet applied</div>
         </div>
       </div>
       <div class="slide-header-right">
-        <span class="change-count">1 applied · superseded proposal</span>
+        <span class="change-count">3 changes · Applied</span>
+        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+    </div>
+    <div class="slide-body">
+      <div class="change-list">
+
+        <div class="change-item legal">
+          <div class="change-type-bar"></div>
+          <div class="change-content">
+            <span class="change-tag">Applied · Legal</span>
+            <div class="change-heading">Investment figures updated per cheat sheet</div>
+            <div class="change-reason">Preeti confirmed on Jul 8 that deck investment numbers were wrong. All figures verified against Healthy Cart-Cheat Sheet.md (Section B) and applied to index.html slide 9.</div>
+            <div class="before-after">
+              <div class="ba-block ba-before"><div class="ba-label">Previous version</div><div class="ba-text">Total: $250K–$300K · Fee: $45,000 · Down: ~$75,000 (≈30%) · Donut: ~$275K typical · Line items: vague labels only</div></div>
+              <div class="ba-block ba-after"><div class="ba-label">Applied (cheat sheet)</div><div class="ba-text">Total: $256,500–$731,800 · Fee: $45,000 · Leasehold: $35,000–$180,000 · Equipment: $20,000–$45,000 · Inventory: $60,000–$150,000 · Working capital: $50,000–$150,000 · Grand opening: $1,500–$5,000 · Donut: $257K–$732K · Financing: third-party only</div></div>
+            </div>
+            <div class="citation-row">
+              <span class="citation">Franchise Cheat Sheet
+                <span class="tip">Total Investment $256,500 – $731,800; Franchise Fee $45,000. Source: FDD Item 6.</span>
+              </span>
+              <span class="citation">Jul 8 meeting with Preeti
+                <span class="tip">"The numbers are not right… use the cheat sheet for accuracy."</span>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="change-item added">
+          <div class="change-type-bar"></div>
+          <div class="change-content">
+            <span class="change-tag">Applied</span>
+            <div class="change-heading">Financial disclaimer revised</div>
+            <div class="change-reason">Disclaimer now cites FDD Item 6 and cheat-sheet cross-check instead of referencing operating-location illustrations only.</div>
+            <div class="before-after">
+              <div class="ba-block ba-before"><div class="ba-label">Previous version</div><div class="ba-text">"Figures are illustrative and based on a limited number of operating locations…"</div></div>
+              <div class="ba-block ba-after"><div class="ba-label">Applied</div><div class="ba-text">"Investment ranges per FDD Item 6 (cross-checked against the franchise cheat sheet, Jul 2026). Donut segments are illustrative midpoint shares only…"</div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="change-item softened">
+          <div class="change-type-bar"></div>
+          <div class="change-content">
+            <span class="change-tag">Removed</span>
+            <div class="change-heading">~$75K down payment removed</div>
+            <div class="change-reason">Down payment figure was not in the cheat sheet or FDD. Replaced with third-party financing note per FDD Item 10 (franchisor does not offer financing). Sandeep's ~$275K rounding proposal was also rejected on this call.</div>
+            <div class="before-after">
+              <div class="ba-block ba-before"><div class="ba-label">Removed</div><div class="ba-text">Down payment: ~$75,000 (≈30%)</div></div>
+              <div class="ba-block ba-after"><div class="ba-label">Applied</div><div class="ba-text">Financing: Third-party options — franchisor does not offer financing (FDD Item 10)</div></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 10 -->
+  <div class="slide-card" data-tags="legal added slide-10">
+    <div class="slide-header" onclick="toggleSlide(this)">
+      <div class="slide-header-left">
+        <div class="slide-num">10</div>
+        <div class="slide-title-block">
+          <div class="slide-label">The Model</div>
+          <div class="slide-name">Ongoing fees — cheat sheet applied</div>
+        </div>
+      </div>
+      <div class="slide-header-right">
+        <span class="change-count">1 change · Applied</span>
         <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
       </div>
     </div>
@@ -1599,120 +1466,19 @@ html.embed-mode .header{display:none!important}
         <div class="change-item legal">
           <div class="change-type-bar"></div>
           <div class="change-content">
-            <span class="change-tag">Applied · Jul 8</span>
-            <div class="change-heading">Cheat-sheet investment figures built into main deck</div>
-            <div class="change-reason">Sandeep's ~$275K / ~$75K rounding proposal was rejected on Jul 8. Cheat-sheet figures ($256,500–$731,800 total and line-item ranges) are now live in index.html. See Batch 1 · Slide 9 for full before/after.</div>
+            <span class="change-tag">Applied · Legal</span>
+            <div class="change-heading">Full ongoing fee disclosure added</div>
+            <div class="change-reason">Jul 8 cheat-sheet cross-check expanded the royalty card to include brand development fund and local advertising per cheat sheet Section C / FDD Item 7.</div>
             <div class="before-after">
-              <div class="ba-block ba-before"><div class="ba-label">Sandeep proposal (Jul 7)</div><div class="ba-text">~$275K total investment · $45K franchise fee · ~$75K down payment</div></div>
-              <div class="ba-block ba-after"><div class="ba-label">Applied (Jul 8)</div><div class="ba-text">$256,500–$731,800 total · $45,000 franchise fee · FDD line-item ranges · third-party financing only</div></div>
+              <div class="ba-block ba-before"><div class="ba-label">Previous version</div><div class="ba-text">"A competitive ongoing royalty of 5% on gross sales."</div></div>
+              <div class="ba-block ba-after"><div class="ba-label">Applied (cheat sheet)</div><div class="ba-text">"5% royalty on gross sales, plus a 3% brand development fund and up to 1% local advertising (FDD Item 7)."</div></div>
             </div>
             <div class="citation-row">
-              <span class="citation">Jul 8 meeting with Preeti
-                <span class="tip">"The numbers are not right… I think it's a 200 [FDD range]. You will see that on the FTD… use the cheat sheet."</span>
+              <span class="citation">Franchise Cheat Sheet · Section C
+                <span class="tip">Royalty 5% · Brand Fund 3% · Local Marketing up to 1% — all on gross revenue.</span>
               </span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- SLIDE 10 -->
-  <div class="slide-card" data-tags="proposed">
-    <div class="slide-header" onclick="toggleSlide(this)">
-      <div class="slide-header-left">
-        <div class="slide-num">10</div>
-        <div class="slide-title-block">
-          <div class="slide-label">The Model</div>
-          <div class="slide-name">Investor-oriented headline</div>
-        </div>
-      </div>
-      <div class="slide-header-right">
-        <span class="change-count">1 proposal</span>
-        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
-    </div>
-    <div class="slide-body">
-      <div class="change-list">
-        <div class="change-item proposed">
-          <div class="change-type-bar"></div>
-          <div class="change-content">
-            <span class="change-tag">Proposed</span>
-            <div class="change-heading">"A model built for durability" → repeat revenue framing</div>
-            <div class="change-reason">Still FDD-safe (no ROI/margin claims) but sells the business model — consumables, loyalty, and partnerships.</div>
-            <div class="before-after">
-              <div class="ba-block ba-before"><div class="ba-label">Currently</div><div class="ba-text">A model built for durability</div></div>
-              <div class="ba-block ba-after"><div class="ba-label">Proposed</div><div class="ba-text">Built for repeat revenue, not one-time transactions</div></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- SLIDE 11 -->
-  <div class="slide-card" data-tags="proposed">
-    <div class="slide-header" onclick="toggleSlide(this)">
-      <div class="slide-header-left">
-        <div class="slide-num">11</div>
-        <div class="slide-title-block">
-          <div class="slide-label">Franchisee Profile</div>
-          <div class="slide-name">Gym owners card — tie to affinity USP</div>
-        </div>
-      </div>
-      <div class="slide-header-right">
-        <span class="change-count">1 proposal</span>
-        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
-    </div>
-    <div class="slide-body">
-      <div class="change-list">
-        <div class="change-item proposed">
-          <div class="change-type-bar"></div>
-          <div class="change-content">
-            <span class="change-tag">Proposed</span>
-            <div class="change-heading">Gym Owners card — built-in customer pipeline language</div>
-            <div class="change-reason">Helps gym-owner prospects self-identify and connects franchisee profile to the new affinity partnership USP.</div>
-            <div class="before-after">
-              <div class="ba-block ba-before"><div class="ba-label">Currently</div><div class="ba-text">Studio owners seeking to diversify revenue and enhance member offerings.</div></div>
-              <div class="ba-block ba-after"><div class="ba-label">Proposed</div><div class="ba-text">Gym owners who want to turn member relationships into a built-in customer pipeline through affinity partnerships.</div></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- SLIDE 12 CTA -->
-  <div class="slide-card" data-tags="proposed">
-    <div class="slide-header" onclick="toggleSlide(this)">
-      <div class="slide-header-left">
-        <div class="slide-num">12</div>
-        <div class="slide-title-block">
-          <div class="slide-label">Contact / CTA</div>
-          <div class="slide-name">Territory urgency close</div>
-        </div>
-      </div>
-      <div class="slide-header-right">
-        <span class="change-count">1 proposal</span>
-        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
-    </div>
-    <div class="slide-body">
-      <div class="change-list">
-        <div class="change-item proposed">
-          <div class="change-type-bar"></div>
-          <div class="change-content">
-            <span class="change-tag">Proposed</span>
-            <div class="change-heading">Add territory urgency without hype</div>
-            <div class="change-reason">Standard franchise close — reason to act now without unverifiable claims.</div>
-            <div class="before-after">
-              <div class="ba-block ba-before"><div class="ba-label">Currently</div><div class="ba-text">Join a premium Canadian supplement retail brand… (no territory urgency)</div></div>
-              <div class="ba-block ba-after"><div class="ba-label">Proposed</div><div class="ba-text">Territories across Ontario — inquire before your market is awarded. Schedule a discovery call and review the FDD.</div></div>
-            </div>
-            <div class="citation-row">
-              <span class="citation">Sandeep · Jul 7, 2026
-                <span class="tip">"Please think through on how we could sell this via deck better."</span>
+              <span class="citation">Jul 8 meeting with Preeti
+                <span class="tip">Royalties confirmed as 5% of gross sales, not net.</span>
               </span>
             </div>
           </div>
@@ -1728,13 +1494,13 @@ html.embed-mode .header{display:none!important}
 <script>
 /* Newest first — add future batches to the top of this list */
 const BATCHES = [
-  { id: '2026-07-08', date: 'Jul 8, 2026',  title: 'Sales copy proposals', count: 11, latest: true },
-  { id: '2026-06-17', date: 'Jun 17, 2026', title: 'V1 → V2 rebuild',      count: 30, done: true },
-  { id: 'all',        date: 'All dates',    title: 'Complete change history', count: 41 },
+  { id: '2026-07-08', date: 'Jul 8, 2026',  title: 'Cheat sheet & FDD numbers', count: 4, latest: true, done: true },
+  { id: '2026-06-17', date: 'Jun 17, 2026', title: 'V1 → V2 rebuild',          count: 30, done: true },
+  { id: 'all',        date: 'All dates',    title: 'Complete change history',   count: 34 },
 ];
 
 const BATCH_LABELS = {
-  '2026-07-08': 'Jul 8, 2026 · Sales copy proposals',
+  '2026-07-08': 'Jul 8, 2026 · Cheat sheet numbers',
   '2026-06-17': 'Jun 17, 2026 · V1 → V2 rebuild',
   'all': 'All dates · Complete history'
 };
@@ -1777,9 +1543,7 @@ function buildBatchDropdown() {
 function updateBatchTrigger() {
   const meta = getBatchMeta(activeBatch);
   document.getElementById('batch-trigger-value').textContent =
-    activeBatch === '2026-07-08' ? 'Jul 8, 2026 · Sales copy' :
-    activeBatch === '2026-06-17' ? 'Jun 17, 2026 · V1 → V2 rebuild' :
-    'All dates · Complete history';
+    BATCH_LABELS[activeBatch] || BATCH_LABELS['2026-07-08'];
   document.getElementById('batch-trigger-count').textContent = meta.count + ' changes';
   const statusEl = document.getElementById('batch-trigger-status');
   if (meta.latest) {
@@ -1935,19 +1699,6 @@ document.querySelectorAll('.citation').forEach(cit => {
   } else {
     switchBatch(BATCHES[0].id);
   }
-})();
-
-(function initProposalsReviewCta() {
-  var btn = document.getElementById('go-to-proposals-review');
-  if (!btn) return;
-  btn.addEventListener('click', function (e) {
-    e.preventDefault();
-    if (window.self !== window.top) {
-      window.parent.postMessage({ type: 'deck-delta-nav', tab: 'proposals' }, '*');
-      return;
-    }
-    window.location.href = 'review/?tab=proposals';
-  });
 })();
 </script>
 </body>
