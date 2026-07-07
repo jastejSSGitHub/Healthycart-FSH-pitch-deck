@@ -102,15 +102,12 @@
     background: #fff;
     border: 1px solid var(--line);
   }
-  .deck-preview-frame iframe {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 1280px;
-    height: 720px;
-    border: none;
-    transform: scale(0.25);
-    transform-origin: top left;
+  .deck-preview-frame img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
     pointer-events: none;
     background: #fff;
   }
@@ -390,18 +387,6 @@
     margin: -4px 0 14px;
     padding-bottom: 12px;
     border-bottom: 1px solid var(--line);
-    opacity: 0;
-    transform: translateY(-4px);
-    pointer-events: none;
-    transition: opacity 0.18s ease, transform 0.18s ease;
-  }
-  .proposal-card.is-hovered .review-toolbar,
-  .proposal-card.comments-open .review-toolbar,
-  .proposal-card.has-comments .review-toolbar,
-  .proposal-card:focus-within .review-toolbar {
-    opacity: 1;
-    transform: translateY(0);
-    pointer-events: auto;
   }
   .review-toolbar-left {
     display: flex;
@@ -433,6 +418,7 @@
   }
   .pill-approved { background: var(--approved-soft); color: #15803d; border-color: rgba(34, 197, 94, 0.25); }
   .pill-rejected { background: var(--rejected-soft); color: #b91c1c; border-color: rgba(239, 68, 68, 0.25); }
+  .pill-split { background: #fffbeb; color: #b45309; border-color: rgba(245, 158, 11, 0.35); }
   .pill-comment { background: #f3f4f6; color: #4b5563; border-color: #e5e7eb; }
   .pill-pending { background: #f9fafb; color: var(--text-3); border-color: var(--line); }
 
@@ -446,23 +432,38 @@
     width: 34px;
     height: 34px;
     border-radius: 999px;
-    border: 1px solid var(--line);
-    background: var(--surface);
-    color: var(--text-2);
+    border: 1px solid #e6e6e6;
+    background: #fafafa;
+    color: #c4c4c4;
     cursor: pointer;
     transition: transform 0.15s, border-color 0.15s, background 0.15s, color 0.15s, box-shadow 0.15s;
   }
   .vote-btn svg,
   .comment-toggle svg {
-    width: 16px;
-    height: 16px;
+    width: 15px;
+    height: 15px;
     fill: currentColor;
+    opacity: 0.7;
   }
-  .vote-btn:hover,
+  .vote-btn.is-selected svg { opacity: 1; }
+  .vote-approve:hover:not(.is-selected) {
+    transform: scale(1.05);
+    border-color: rgba(34, 197, 94, 0.22);
+    background: #f8fcf8;
+    color: #8fb896;
+  }
+  .vote-reject:hover:not(.is-selected) {
+    transform: scale(1.05);
+    border-color: rgba(239, 68, 68, 0.2);
+    background: #fffafa;
+    color: #d4a0a0;
+  }
   .comment-toggle:hover {
     transform: scale(1.05);
     border-color: rgba(11, 11, 11, 0.18);
+    color: var(--text-2);
   }
+  .comment-toggle:hover svg { opacity: 0.9; }
   .vote-approve.is-selected {
     background: var(--approved-soft);
     border-color: rgba(34, 197, 94, 0.45);
@@ -528,6 +529,17 @@
     border-radius: 8px;
     background: var(--surface);
     padding: 10px 12px;
+    position: relative;
+  }
+  .comment-block.is-confirming {
+    border-color: rgba(239, 68, 68, 0.35);
+    background: #fffafa;
+  }
+  .comment-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 8px;
   }
   .comment-author {
     font-size: 12px;
@@ -537,6 +549,91 @@
     align-items: center;
     justify-content: space-between;
     gap: 8px;
+    flex: 1;
+    min-width: 0;
+  }
+  .comment-actions {
+    flex: none;
+    opacity: 0;
+    transition: opacity 0.15s ease;
+  }
+  .comment-block:hover .comment-actions,
+  .comment-block:focus-within .comment-actions,
+  .comment-block.is-confirming .comment-actions {
+    opacity: 1;
+  }
+  .comment-delete-btn {
+    appearance: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    border: 1px solid transparent;
+    border-radius: 6px;
+    background: transparent;
+    color: var(--text-3);
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s, border-color 0.15s;
+  }
+  .comment-delete-btn:hover {
+    background: rgba(239, 68, 68, 0.08);
+    border-color: rgba(239, 68, 68, 0.2);
+    color: #b91c1c;
+  }
+  .comment-delete-btn svg {
+    width: 14px;
+    height: 14px;
+    fill: currentColor;
+  }
+  .comment-delete-confirm {
+    display: none;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px dashed rgba(239, 68, 68, 0.2);
+  }
+  .comment-block.is-confirming .comment-delete-confirm {
+    display: block;
+  }
+  .comment-block.is-confirming .comment-body {
+    opacity: 0.55;
+  }
+  .comment-delete-confirm p {
+    font-size: 12px;
+    color: var(--text-2);
+    margin-bottom: 8px;
+  }
+  .comment-delete-confirm-actions {
+    display: flex;
+    gap: 8px;
+  }
+  .comment-delete-cancel,
+  .comment-delete-confirm-btn {
+    appearance: none;
+    border-radius: 6px;
+    padding: 6px 10px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+  .comment-delete-cancel {
+    border: 1px solid var(--line);
+    background: var(--surface);
+    color: var(--text-2);
+  }
+  .comment-delete-confirm-btn {
+    border: 1px solid rgba(239, 68, 68, 0.35);
+    background: rgba(239, 68, 68, 0.1);
+    color: #b91c1c;
+  }
+  .comment-delete-confirm-btn:hover {
+    background: rgba(239, 68, 68, 0.16);
+  }
+  @media (hover: none) {
+    .comment-actions { opacity: 0.85; }
   }
   .comment-time {
     font-weight: 500;
@@ -671,6 +768,152 @@
     min-height: 16px;
   }
 
+  /* ── Vote toast + confetti ── */
+  .vote-toast-host {
+    position: fixed;
+    bottom: max(20px, env(safe-area-inset-bottom));
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1100;
+    pointer-events: none;
+    width: min(92vw, 380px);
+  }
+  .vote-toast {
+    pointer-events: auto;
+    position: relative;
+    overflow: visible;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 14px 15px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(11, 11, 11, 0.14);
+    opacity: 0;
+    transform: translateY(12px) scale(0.98);
+    transition: opacity 0.22s ease, transform 0.22s ease;
+  }
+  .vote-toast.is-visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  .vote-toast.is-leaving {
+    opacity: 0;
+    transform: translateY(8px) scale(0.98);
+  }
+  .vote-toast-icon {
+    flex: none;
+    width: 28px;
+    height: 28px;
+    border-radius: 999px;
+    display: grid;
+    place-items: center;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1;
+  }
+  .vote-toast--approved .vote-toast-icon {
+    background: rgba(34, 197, 94, 0.14);
+    color: #15803d;
+  }
+  .vote-toast--rejected .vote-toast-icon {
+    background: rgba(239, 68, 68, 0.12);
+    color: #b91c1c;
+  }
+  .vote-toast--cleared .vote-toast-icon {
+    background: #f3f4f6;
+    color: #6b7280;
+  }
+  .vote-toast-body { flex: 1; min-width: 0; }
+  .vote-toast-text {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+    line-height: 1.35;
+  }
+  .vote-toast-sub {
+    margin-top: 2px;
+    font-size: 11px;
+    color: var(--text-3);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .vote-toast-undo {
+    appearance: none;
+    flex: none;
+    border: none;
+    background: transparent;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--green-dark);
+    cursor: pointer;
+    padding: 6px 8px;
+    border-radius: 6px;
+    transition: background 0.15s;
+  }
+  .vote-toast-undo:hover { background: var(--green-light); }
+  .vote-toast-timer {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 3px;
+    background: rgba(11, 11, 11, 0.06);
+    border-radius: 0 0 12px 12px;
+    overflow: hidden;
+  }
+  .vote-toast-timer-fill {
+    height: 100%;
+    width: 100%;
+    transform-origin: left center;
+    transform: scaleX(1);
+  }
+  .vote-toast--approved .vote-toast-timer-fill { background: #22c55e; }
+  .vote-toast--rejected .vote-toast-timer-fill { background: #ef4444; }
+  .vote-toast--cleared .vote-toast-timer-fill { background: #9ca3af; }
+  .vote-toast-timer-fill.is-running {
+    animation: vote-toast-timer 5s linear forwards;
+  }
+  @keyframes vote-toast-timer {
+    from { transform: scaleX(1); }
+    to { transform: scaleX(0); }
+  }
+
+  .confetti-burst {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    width: 0;
+    height: 0;
+    z-index: 5;
+    pointer-events: none;
+  }
+  .confetti-bit {
+    position: absolute;
+    width: 5px;
+    height: 5px;
+    border-radius: 1px;
+    opacity: 0;
+    animation: confetti-bit 0.85s ease-out forwards;
+  }
+  .confetti-bit--approved { background: #22c55e; }
+  .confetti-bit--rejected { background: #ef4444; }
+  @keyframes confetti-bit {
+    0% { opacity: 1; transform: translate(0, 0) rotate(0deg) scale(1); }
+    100% { opacity: 0; transform: translate(var(--dx), var(--dy)) rotate(var(--rot)) scale(0.35); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .vote-toast { transition: none; }
+    .vote-toast-timer-fill.is-running { animation: none; transform: scaleX(0); }
+    .confetti-bit { display: none; }
+  }
+
   @media (max-width: 720px) {
     .review-toolbar { opacity: 1; transform: none; pointer-events: auto; }
     .review-panel { max-height: none; opacity: 1; pointer-events: auto; overflow: visible; }
@@ -697,17 +940,6 @@
     });
   }
 
-  var deckWrap = document.querySelector('.deck-link-wrap');
-  var deckIframe = document.getElementById('deck-preview-iframe');
-  var deckLoaded = false;
-  if (deckWrap && deckIframe) {
-    deckWrap.addEventListener('mouseenter', function () {
-      if (!deckLoaded) {
-        deckIframe.src = 'index.html';
-        deckLoaded = true;
-      }
-    });
-  }
 })();
 </script>
 </head>
@@ -725,7 +957,7 @@
       <a href="index.html" id="deck-preview-link" target="_blank" rel="noopener noreferrer">Healthy Cart investor deck</a>
       <span class="deck-preview-popover" id="deck-preview-popover" role="tooltip" aria-hidden="true">
         <span class="deck-preview-frame">
-          <iframe id="deck-preview-iframe" title="Healthy Cart investor deck preview" tabindex="-1"></iframe>
+          <img src="assets/images/healthy-cart-deck-thumb.png" alt="Healthy Cart investor deck — cover slide preview" width="640" height="360" loading="lazy" decoding="async">
         </span>
         <span class="deck-preview-caption">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
@@ -749,7 +981,7 @@
       <button type="button" class="reviewer-change" id="change-reviewer">Change</button>
     </div>
   </div>
-  <div class="review-bar-sub">Hover a proposal to approve, reject, or comment. Changes sync live for the team.</div>
+  <div class="review-bar-sub">Click ✓ to approve or ✗ to reject — click the same button again to clear your feedback. Changes sync live for the team.</div>
   <div class="review-bar-filters">
     <div class="filter-group" role="group" aria-label="Filter proposals">
       <button type="button" class="filter-btn is-active" data-filter="all">All <span class="filter-count" data-filter-count="all">0</span></button>

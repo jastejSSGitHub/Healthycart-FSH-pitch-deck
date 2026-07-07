@@ -28,7 +28,194 @@
     reviewerId: null,
     reviewerName: null,
     pendingAction: null,
+    toastTimeout: null,
+    activeUndo: null,
+    toastEl: null,
   };
+
+  var TOAST_MS = 5000;
+
+  function prefersReducedMotion() {
+    return window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  }
+
+  function getItemLabel(itemId) {
+    var card = document.querySelector('[data-item-id="' + itemId + '"]');
+    var ref = card && card.querySelector('.slide-ref');
+    return ref ? ref.textContent.trim() : 'This proposal';
+  }
+
+  function ensureToastHost() {
+    var host = $('#vote-toast-host');
+    if (!host) {
+      host = document.createElement('div');
+      host.id = 'vote-toast-host';
+      host.className = 'vote-toast-host';
+      host.setAttribute('aria-live', 'polite');
+      document.body.appendChild(host);
+    }
+    return host;
+  }
+
+  function burstConfetti(kind, anchorEl) {
+    if (prefersReducedMotion() || !anchorEl) return;
+    var burst = document.createElement('div');
+    burst.className = 'confetti-burst';
+    anchorEl.appendChild(burst);
+    var colors = kind === 'approved'
+      ? ['#22c55e', '#4BAE33', '#86efac', '#bbf7d0']
+      : ['#ef4444', '#f87171', '#fca5a5', '#fecaca'];
+    for (var i = 0; i < 12; i++) {
+      var bit = document.createElement('span');
+      bit.className = 'confetti-bit confetti-bit--' + kind;
+      var angle = (Math.PI * 2 * i) / 12 + (Math.random() - 0.5) * 0.5;
+      var distX = 14 + Math.random() * 36;
+      var distY = 20 + Math.random() * 36;
+      bit.style.setProperty('--dx', Math.round(Math.cos(angle) * distX) + 'px');
+      bit.style.setProperty('--dy', Math.round(-distY) + 'px');
+      bit.style.setProperty('--rot', Math.round((Math.random() - 0.5) * 200) + 'deg');
+      bit.style.background = colors[i % colors.length];
+      bit.style.animationDelay = (i * 0.015) + 's';
+      burst.appendChild(bit);
+    }
+    window.setTimeout(function () {
+      if (burst.parentNode) burst.parentNode.removeChild(burst);
+    }, 900);
+  }
+
+  function clearVoteToast() {
+    if (state.toastTimeout) {
+      window.clearTimeout(state.toastTimeout);
+      state.toastTimeout = null;
+    }
+    state.activeUndo = null;
+    if (state.toastEl) {
+      state.toastEl.classList.remove('is-visible');
+      state.toastEl.classList.add('is-leaving');
+      var el = state.toastEl;
+      window.setTimeout(function () {
+        if (el.parentNode) el.parentNode.removeChild(el);
+      }, 220);
+      state.toastEl = null;
+    }
+  }
+
+  function showVoteToast(itemId, status, previousStatus) {
+    clearVoteToast();
+    if (!status) {
+      var host = ensureToastHost();
+      var label = getItemLabel(itemId);
+      var toast = document.createElement('div');
+      toast.className = 'vote-toast vote-toast--cleared';
+      toast.innerHTML =
+        '<span class="vote-toast-icon" aria-hidden="true">↺</span>' +
+        '<div class="vote-toast-body">' +
+        '  <p class="vote-toast-text">Feedback cleared</p>' +
+        '  <p class="vote-toast-sub">' + escapeHtml(label) + '</p>' +
+        '</div>' +
+        '<div class="vote-toast-timer" aria-hidden="true"><div class="vote-toast-timer-fill"></div></div>';
+      host.appendChild(toast);
+      state.toastEl = toast;
+      var timerFill = toast.querySelector('.vote-toast-timer-fill');
+      window.requestAnimationFrame(function () {
+        toast.classList.add('is-visible');
+        if (timerFill) timerFill.classList.add('is-running');
+      });
+      state.toastTimeout = window.setTimeout(clearVoteToast, TOAST_MS);
+      return;
+    }
+
+    var host = ensureToastHost();
+    var label = getItemLabel(itemId);
+    var isApproved = status === 'approved';
+    var toast = document.createElement('div');
+    toast.className = 'vote-toast vote-toast--' + status;
+    toast.innerHTML =
+      '<span class="vote-toast-icon" aria-hidden="true">' + (isApproved ? '✓' : '✗') + '</span>' +
+      '<div class="vote-toast-body">' +
+      '  <p class="vote-toast-text">' + (isApproved ? 'Approved' : 'Rejected') + '</p>' +
+      '  <p class="vote-toast-sub">' + escapeHtml(label) + '</p>' +
+      '</div>' +
+      '<button type="button" class="vote-toast-undo">Undo</button>' +
+      '<div class="vote-toast-timer" aria-hidden="true"><div class="vote-toast-timer-fill"></div></div>';
+
+    host.appendChild(toast);
+    state.toastEl = toast;
+    state.activeUndo = { itemId: itemId, previousStatus: previousStatus, newStatus: status };
+
+    var timerFill = toast.querySelector('.vote-toast-timer-fill');
+    window.requestAnimationFrame(function () {
+      toast.classList.add('is-visible');
+      if (timerFill) timerFill.classList.add('is-running');
+      burstConfetti(status, toast);
+    });
+
+    toast.querySelector('.vote-toast-undo').addEventListener('click', function () {
+      if (state.activeUndo) undoVote(state.activeUndo);
+      clearVoteToast();
+    });
+
+    state.toastTimeout = window.setTimeout(clearVoteToast, TOAST_MS);
+  }
+
+  function undoVote(undo) {
+    var client = getSupabase();
+    if (!client) return;
+
+    if (!undo.previousStatus) {
+      client
+        .from('deck_review_decisions')
+        .delete()
+        .eq('item_id', undo.itemId)
+        .eq('reviewer_id', state.reviewerId)
+        .then(function () {
+          state.decisions = state.decisions.filter(function (d) {
+            return !(d.item_id === undo.itemId && d.reviewer_id === state.reviewerId);
+          });
+          renderAllCards();
+        });
+      return;
+    }
+
+    client
+      .from('deck_review_decisions')
+      .upsert(
+        {
+          item_id: undo.itemId,
+          reviewer_id: state.reviewerId,
+          reviewer_name: state.reviewerName,
+          status: undo.previousStatus,
+        },
+        { onConflict: 'item_id,reviewer_id' }
+      )
+      .then(function (res) {
+        if (res.error) {
+          console.error(res.error);
+          return;
+        }
+        loadData().then(renderAllCards);
+      });
+  }
+
+  function applyDecisionLocally(itemId, status) {
+    var idx = state.decisions.findIndex(function (d) {
+      return d.item_id === itemId && d.reviewer_id === state.reviewerId;
+    });
+    if (status) {
+      var row = {
+        item_id: itemId,
+        reviewer_id: state.reviewerId,
+        reviewer_name: state.reviewerName,
+        status: status,
+        updated_at: new Date().toISOString(),
+      };
+      if (idx >= 0) state.decisions[idx] = Object.assign({}, state.decisions[idx], row);
+      else state.decisions.push(row);
+    } else if (idx >= 0) {
+      state.decisions.splice(idx, 1);
+    }
+    renderAllCards();
+  }
 
   function $(sel, root) {
     return (root || document).querySelector(sel);
@@ -274,6 +461,39 @@
       }
     });
 
+    var commentsList = panel.querySelector('[data-comments]');
+    if (commentsList && !commentsList.dataset.boundDelete) {
+      commentsList.dataset.boundDelete = '1';
+      commentsList.addEventListener('click', function (e) {
+        var deleteBtn = e.target.closest('[data-delete-comment]');
+        if (deleteBtn) {
+          e.preventDefault();
+          var block = deleteBtn.closest('.comment-block');
+          if (block) {
+            $all('.comment-block.is-confirming', commentsList).forEach(function (b) {
+              if (b !== block) b.classList.remove('is-confirming');
+            });
+            block.classList.add('is-confirming');
+          }
+          return;
+        }
+        var cancelBtn = e.target.closest('[data-cancel-delete-comment]');
+        if (cancelBtn) {
+          e.preventDefault();
+          var cancelBlock = cancelBtn.closest('.comment-block');
+          if (cancelBlock) cancelBlock.classList.remove('is-confirming');
+          return;
+        }
+        var confirmBtn = e.target.closest('[data-confirm-delete-comment]');
+        if (confirmBtn) {
+          e.preventDefault();
+          var confirmBlock = confirmBtn.closest('.comment-block');
+          var commentId = confirmBlock && confirmBlock.getAttribute('data-comment-id');
+          if (commentId) deleteComment(commentId, itemId);
+        }
+      });
+    }
+
     card.addEventListener('mouseenter', function () {
       card.classList.add('is-hovered');
     });
@@ -288,6 +508,78 @@
     applyFilter();
   }
 
+  function renderCommentHtml(c) {
+    var isOwn = c.reviewer_id === state.reviewerId;
+    var ownActions = isOwn
+      ? '<div class="comment-actions">' +
+        '<button type="button" class="comment-delete-btn" data-delete-comment title="Delete comment" aria-label="Delete comment">' +
+        '<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M6 2.5A1.5 1.5 0 0 1 7.5 1h5A1.5 1.5 0 0 1 14 2.5V4h3.25a.75.75 0 0 1 0 1.5H17l-.65 11.03A2.5 2.5 0 0 1 13.86 18H6.14a2.5 2.5 0 0 1-2.49-2.47L3 5.5h-.25a.75.75 0 0 1 0-1.5H3V2.5zM8 2.5V4h4V2.5H8zm-.24 4.25a.75.75 0 0 0-1.5.06l.5 8.5a.75.75 0 0 0 1.49.09l-.5-8.65zm4.48 0a.75.75 0 0 0-1.5-.06l-.5 8.65a.75.75 0 0 0 1.49-.09l.5-8.5z"/></svg>' +
+        '</button></div>'
+      : '';
+    var confirmBlock = isOwn
+      ? '<div class="comment-delete-confirm">' +
+        '<p>Delete this comment? This cannot be undone.</p>' +
+        '<div class="comment-delete-confirm-actions">' +
+        '<button type="button" class="comment-delete-cancel" data-cancel-delete-comment>Cancel</button>' +
+        '<button type="button" class="comment-delete-confirm-btn" data-confirm-delete-comment>Delete</button>' +
+        '</div></div>'
+      : '';
+
+    return (
+      '<article class="comment-block" data-comment-id="' + escapeHtml(c.id) + '">' +
+      '<div class="comment-head">' +
+      '<p class="comment-author">' +
+      escapeHtml(c.reviewer_name) +
+      '<span class="comment-time">' +
+      escapeHtml(formatTime(c.created_at)) +
+      '</span></p>' +
+      ownActions +
+      '</div>' +
+      '<p class="comment-body">' +
+      escapeHtml(c.body) +
+      '</p>' +
+      confirmBlock +
+      '</article>'
+    );
+  }
+
+  function deleteComment(commentId, itemId) {
+    var client = getSupabase();
+    if (!client) return;
+
+    var existing = state.comments.find(function (c) {
+      return c.id === commentId && c.reviewer_id === state.reviewerId;
+    });
+    if (!existing) return;
+
+    client
+      .from('deck_review_comments')
+      .delete()
+      .eq('id', commentId)
+      .eq('reviewer_id', state.reviewerId)
+      .then(function (res) {
+        if (res.error) {
+          console.error(res.error);
+          return;
+        }
+        state.comments = state.comments.filter(function (c) {
+          return c.id !== commentId;
+        });
+        renderAllCards();
+      });
+  }
+
+  function getVoteStatusPill(itemId) {
+    var mine = myDecision(itemId);
+    if (!mine) {
+      return '<span class="pill pill-pending">No feedback</span>';
+    }
+    if (mine.status === 'approved') {
+      return '<span class="pill pill-approved">Approved</span>';
+    }
+    return '<span class="pill pill-rejected">Rejected</span>';
+  }
+
   function renderCardState(card) {
     var itemId = card.dataset.itemId;
     var mine = myDecision(itemId);
@@ -296,28 +588,24 @@
     var approveBtn = card.querySelector('[data-vote="approved"]');
     var rejectBtn = card.querySelector('[data-vote="rejected"]');
     if (approveBtn) {
-      approveBtn.classList.toggle('is-selected', mine && mine.status === 'approved');
+      approveBtn.classList.toggle('is-selected', !!(mine && mine.status === 'approved'));
       approveBtn.setAttribute('aria-pressed', mine && mine.status === 'approved' ? 'true' : 'false');
       approveBtn.title = mine && mine.status === 'approved' ? 'Approved · click again to clear' : 'Approve';
     }
     if (rejectBtn) {
-      rejectBtn.classList.toggle('is-selected', mine && mine.status === 'rejected');
+      rejectBtn.classList.toggle('is-selected', !!(mine && mine.status === 'rejected'));
       rejectBtn.setAttribute('aria-pressed', mine && mine.status === 'rejected' ? 'true' : 'false');
       rejectBtn.title = mine && mine.status === 'rejected' ? 'Rejected · click again to clear' : 'Reject';
     }
 
-    card.classList.toggle('is-approved', summary.approved > 0 && summary.rejected === 0);
-    card.classList.toggle('is-rejected', summary.rejected > 0 && summary.approved === 0);
-    card.classList.toggle('is-split', summary.approved > 0 && summary.rejected > 0);
+    card.classList.toggle('is-approved', !!(mine && mine.status === 'approved'));
+    card.classList.toggle('is-rejected', !!(mine && mine.status === 'rejected'));
+    card.classList.remove('is-split');
     card.classList.toggle('has-comments', summary.comments > 0);
 
     var consensus = card.querySelector('[data-consensus]');
     if (consensus) {
-      var bits = [];
-      if (summary.approved) bits.push('<span class="pill pill-approved">' + summary.approved + ' approved</span>');
-      if (summary.rejected) bits.push('<span class="pill pill-rejected">' + summary.rejected + ' rejected</span>');
-      if (summary.comments) bits.push('<span class="pill pill-comment">' + summary.comments + ' comment' + (summary.comments === 1 ? '' : 's') + '</span>');
-      consensus.innerHTML = bits.length ? bits.join('') : '<span class="pill pill-pending">No votes yet</span>';
+      consensus.innerHTML = getVoteStatusPill(itemId);
     }
 
     var list = card.querySelector('[data-comments]');
@@ -326,21 +614,7 @@
       if (!comments.length) {
         list.innerHTML = '<p class="comments-empty">No comments yet — add one below.</p>';
       } else {
-        list.innerHTML = comments
-          .map(function (c) {
-            return (
-              '<article class="comment-block">' +
-              '<p class="comment-author">' +
-              escapeHtml(c.reviewer_name) +
-              '<span class="comment-time">' +
-              escapeHtml(formatTime(c.created_at)) +
-              '</span></p>' +
-              '<p class="comment-body">' +
-              escapeHtml(c.body) +
-              '</p></article>'
-            );
-          })
-          .join('');
+        list.innerHTML = comments.map(renderCommentHtml).join('');
       }
     }
   }
@@ -351,23 +625,32 @@
       if (!client) return;
 
       var existing = myDecision(itemId);
+      var previousStatus = existing ? existing.status : null;
       var nextStatus = existing && existing.status === status ? null : status;
 
       if (!nextStatus) {
         if (!existing) return;
+        applyDecisionLocally(itemId, null);
+        showVoteToast(itemId, null, previousStatus);
         client
           .from('deck_review_decisions')
           .delete()
           .eq('item_id', itemId)
           .eq('reviewer_id', state.reviewerId)
-          .then(function () {
-            state.decisions = state.decisions.filter(function (d) {
-              return !(d.item_id === itemId && d.reviewer_id === state.reviewerId);
-            });
-            renderAllCards();
+          .then(function (res) {
+            if (res.error) {
+              console.error(res.error);
+              applyDecisionLocally(itemId, previousStatus);
+              clearVoteToast();
+              return;
+            }
+            loadData().then(renderAllCards);
           });
         return;
       }
+
+      applyDecisionLocally(itemId, nextStatus);
+      showVoteToast(itemId, nextStatus, previousStatus);
 
       client
         .from('deck_review_decisions')
@@ -383,6 +666,8 @@
         .then(function (res) {
           if (res.error) {
             console.error(res.error);
+            applyDecisionLocally(itemId, previousStatus);
+            clearVoteToast();
             return;
           }
           loadData().then(renderAllCards);
@@ -514,6 +799,13 @@
           loadData().then(renderAllCards);
         }
       )
+      .on(
+        'postgres_changes',
+        { event: 'DELETE', schema: 'public', table: 'deck_review_comments' },
+        function () {
+          loadData().then(renderAllCards);
+        }
+      )
       .subscribe();
   }
 
@@ -542,6 +834,7 @@
     loadData().then(function () {
       renderAllCards();
       initRealtime();
+      ensureToastHost();
     });
   }
 
